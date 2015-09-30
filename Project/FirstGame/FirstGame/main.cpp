@@ -261,7 +261,7 @@ public:
 
 int main()
 {
-	RenderWindow window(VideoMode(1180, 620), "FirstGame");
+	RenderWindow window(VideoMode(1180, 620), "FirstGame. Ildarkin Alexey; PS-22.");
 	view.reset(FloatRect(0, 0, 1030, 470));	
 
 	bool immortalFlag = false;
@@ -419,7 +419,9 @@ int main()
 				if (event.key.code == sf::Keyboard::Space) {
 					entities.push_back(new Bullet(BulletImage, "Bullet", lvl, weaponSprite.getPosition().x - 15, weaponSprite.getPosition().y - 10, 24, 23, rotation, pos.x, pos.y));
 					shoot.play();
+					//flashSprite.setScale(1, 1);
 					//flashSprite.setPosition(weaponSprite.getPosition().x, weaponSprite.getPosition().y);
+					//flashSprite.setScale(0, 0);
 				}
 				if (event.key.code == sf::Keyboard::Escape) {
 					if (!immortalFlag) {
@@ -450,7 +452,7 @@ int main()
 		for (it = entities.begin(); it != entities.end(); it++) {
 			for (at = entities.begin(); at != entities.end(); at++) {
 				if ((*it)->getRect().intersects((*at)->getRect()) && (((*at)->name == "Bullet") && ((*it)->name == "easyEnemy"))) {
-					(*it)->health -= 10;
+					(*it)->health -= 13;
 					(*at)->life = false;
 				}
 			}
@@ -462,7 +464,7 @@ int main()
 					}
 					if (!immortalFlag)
 					{
-						p.health -= 10;
+						p.health -= 7;
 					}
 				} 
 				else {
@@ -534,15 +536,14 @@ int main()
 			}
 			window.draw((*it)->sprite);
 		}
-		for (point = PUobjs.begin(); point != PUobjs.end(); point++) {
-			window.draw((*point)->sprite);
-		}
 		window.draw(flagSprite);
 		window.draw(weaponSprite);
 		window.draw(p.sprite);
 		window.draw(sightSprite);
 		//window.draw(flashSprite);
-		//flashSprite.setPosition(9999, 9999);
+		for (point = PUobjs.begin(); point != PUobjs.end(); point++) {
+			window.draw((*point)->sprite);
+		}
 		window.display();
 	}
 	return 0;
