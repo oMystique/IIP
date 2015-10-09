@@ -1,0 +1,15 @@
+﻿Build started 11.10.2015 17:58:20.
+     1>Project "C:\Users\Admin\Documents\Visual Studio 2015\Projects\FirstGame\FirstGame\FirstGame.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I"C:\Users\Admin\Documents\Visual Studio 2015\Projects\FirstGame\packages\tinyxml2.3.0.0\build\native\../..//build/native/include/" /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Release\\" /Fd"Release\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp TinyXML\tinystr.cpp TinyXML\tinyxml.cpp TinyXML\tinyxmlerror.cpp TinyXML\tinyxmlparser.cpp
+         main.cpp
+     1>main.cpp(1): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+         tinystr.cpp
+         tinyxml.cpp
+         tinyxmlerror.cpp
+         tinyxmlparser.cpp
+     1>Done Building Project "C:\Users\Admin\Documents\Visual Studio 2015\Projects\FirstGame\FirstGame\FirstGame.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:00.46
