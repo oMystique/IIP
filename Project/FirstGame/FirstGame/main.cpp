@@ -51,13 +51,6 @@ public:
 		}
 	}
 
-	/*if ((-90.0 <= rotation) && (rotation <= 90.0)) {
-		weaponSprite.setPosition(p.x + 41, p.y + 28);
-	}
-	else {
-		weaponSprite.setPosition(p.x + 11, p.y + 28);
-	}*/
-
 	void control() {
 		if (Keyboard::isKeyPressed) {
 			if (Keyboard::isKeyPressed(Keyboard::A)) {
@@ -90,19 +83,6 @@ public:
 
 	void checkCollisionWithMap(float Dx, float Dy)
 	{
-		/*вариант взаимодействия со старой картой.будет удален на след уроке
-		for (int i = y / 32; i < (y + h) / 32; i++)//проходимся по элементам карты
-		for (int j = x / 32; j<(x + w) / 32; j++)
-		{
-		if (TileMap[i][j] == '0')
-		{
-		if (Dy>0){ y = i * 32 - h;  dy = 0; onGround = true; }
-		if (Dy<0){ y = i * 32 + 32;  dy = 0; }
-		if (Dx>0){ x = j * 32 - w; }
-		if (Dx<0){ x = j * 32 + 32; }
-		}
-		}*/
-
 		for (int i = 0; i<obj.size(); i++)//проходимся по объектам
 			if (getRect().intersects(obj[i].rect))//проверяем пересечение игрока с объектом
 			{
@@ -140,6 +120,40 @@ public:
 	}
 };
 
+/*Texture noHealthTexture;
+noHealthTexture.loadFromFile("images/weapons.png");
+
+Sprite noHealthSprite;
+noHealthSprite.setTexture(noHealthTexture);
+noHealthSprite.setTextureRect(IntRect(738, 2, 61, 61));
+noHealthSprite.setPosition(1150, 10);*/
+
+class HealthPoints :public Entity {
+public:
+	HealthPoints(Image &image, String Name, float X, float Y, int W, int H) :Entity(image, Name, X, Y, W, H) {
+		if (name == "noHealth") {
+			sprite.setTextureRect(IntRect(738, 2, W, H));
+		}
+		else if (name == "Health") {
+			sprite.setTextureRect(IntRect(673, 2, W, H));
+		}
+	}
+
+	void update(float time) {
+		int dx = x;
+		for (int counter = 0; counter <= 100; counter += 10) {
+			dx -= 63;
+			if (health <= counter) {
+				name = "Healt";
+			}
+			else {
+				name = "noHealth";
+			}
+			sprite.setPosition(dx, y);
+		}
+
+	}
+};
 
 class Enemy :public Entity {
 public:
@@ -154,19 +168,6 @@ public:
 
 	void checkCollisionWithMap(float Dx, float Dy)
 	{
-		/*вариант взаимодействия со старой картой
-		for (int i = y / 32; i < (y + h) / 32; i++)
-		for (int j = x / 32; j<(x + w) / 32; j++)
-		{
-		if (TileMap[i][j] == '0')
-		{
-		if (Dy>0){ y = i * 32 - h; }
-		if (Dy<0){ y = i * 32 + 32; }
-		if (Dx>0){ x = j * 32 - w; dx = -0.1; sprite.scale(-1, 1); }
-		if (Dx<0){ x = j * 32 + 32; dx = 0.1; sprite.scale(-1, 1); }
-		}
-		}*/
-
 		for (int i = 0; i<obj.size(); i++)//проходимся по объектам
 			if (getRect().intersects(obj[i].rect))//проверяем пересечение игрока с объектом
 			{
@@ -194,44 +195,30 @@ public:
 class Bullet :public Entity {//класс пули
 public:
 	int direction;//направление пули
+	float tempy, tempx;
+	int distance = sqrt((tempx - x)*(tempy - x) + (tempy - y)*(tempy - y));
 
-	Bullet(Image &image, String Name, Level &lvl, float X, float Y, int W, int H, int dir) :Entity(image, Name, X, Y, W, H) {//всё так же, только взяли в конце состояние игрока (int dir)
+	Bullet(Image &image, String Name, Level &lvl, float X, float Y, int W, int H, int dir, float tempX, float tempY) :Entity(image, Name, X, Y, W, H) {//всё так же, только взяли в конце состояние игрока (int dir)
 		obj = lvl.GetObjects("solid");//инициализируем .получаем нужные объекты для взаимодействия пули с картой
 		x = X;
 		y = Y;
 		direction = dir;
-		speed = 0.8;
+		speed = 35;
 		w = h = 16;
+		tempx = tempX;
+		tempy = tempY;
 		life = true;
+		dx = x;
+		dy = y;
 		//выше инициализация в конструкторе
 	}
 
 
 	void update(float time)
 	{
-		/*switch (direction)
-		{
-		case 0: dx = -speed; dy = 0;   break;//интовое значение state = left
-		case 180: dx = speed; dy = 0;   break;//интовое значение state = right
-		case -90: dx = 0; dy = -speed;   break;//интовое значение state = up
-		case 90: dx = 0; dy = -speed;   break;//интовое значение не имеющее отношения к направлению, пока просто стрельнем вверх, нам сейчас это не важно
-		case 4: dx = 0; dy = -speed;   break;//интовое значение не имеющее отношения к направлению, пока просто стрельнем вверх, нам сейчас это не важно
-		case 5: dx = 0; dy = -speed;   break;//интовое значение не имеющее отношения к направлению, пока просто стрельнем вверх, нам сейчас это не важно
-		case 6: dx = speed; dy = -speed;   break;//интовое значение state = right_Top
-
-		}*/
-
-		//-90, 90 - y; 180, 0 - x
-
-		if (-90 < direction <= 0) {
-			dy = -speed;
-			dx = speed;
-		}
 		
-
-
-		x += dx*time;//само движение пули по х
-		y += dy*time;//по у
+		x += speed*(tempx - dx) / distance;//идем по иксу с помощью вектора нормали
+		y += speed*(tempy - dy) / distance;//идем по игреку так же
 
 		if (x <= 0) x = 1;// задержка пули в левой стене, чтобы при проседании кадров она случайно не вылетела за предел карты и не было ошибки
 		if (y <= 0) y = 1;
@@ -242,7 +229,6 @@ public:
 				life = false;// то пуля умирает
 			}
 		}
-
 		sprite.setPosition(x + w / 2, y + h / 2);//задается позицию пуле
 	}
 };
@@ -253,10 +239,19 @@ int main()
 	RenderWindow window(VideoMode(1180, 620), "FirstGame");
 	view.reset(FloatRect(0, 0, 1180, 620));	
 
+	Texture bgTexture;
+	bgTexture.loadFromFile("images/fon-nebo.png");
+
+	Sprite bgSprite;
+	bgSprite.setTexture(bgTexture);
+	bgSprite.setTextureRect(IntRect(0, 0, 2500, 2500));
+	bgSprite.setPosition(0, 0);
+	bgSprite.setOrigin(2500 / 2, 2500 / 2);
+
 	window.setMouseCursorVisible(false);
 
 	Level lvl;//создали экземпляр класса уровень
-	lvl.LoadFromFile("map.tmx");
+	lvl.LoadFromFile("new_map.tmx");
 
 	Image heroImage;
 	heroImage.loadFromFile("images/hero1.png");
@@ -265,11 +260,16 @@ int main()
 	easyEnemyImage.loadFromFile("images/putin.png");
 	easyEnemyImage.createMaskFromColor(Color(255, 0, 0));
 
+	Image healthImage;
+	healthImage.loadFromFile("images/weapons.png");
+
 	Object player = lvl.GetObject("player");//объект игрока на нашей карте.задаем координаты игроку в начале при помощи него
 	Object easyEnemyObject = lvl.GetObject("easyEnemy");//объект легкого врага на нашей карте.задаем координаты игроку в начале при помощи него
 
 	Player p(heroImage, "Player1", lvl, player.rect.left, player.rect.top, 36, 36);//передаем координаты прямоугольника player из карты в координаты нашего игрока
 	Enemy easyEnemy(easyEnemyImage, "EasyEnemy", lvl, easyEnemyObject.rect.left, easyEnemyObject.rect.top, 200, 97);//передаем координаты прямоугольника easyEnemy из карты в координаты нашего врага
+
+	HealthPoints health(healthImage, "Health", 1000, 20, 62, 62);//передаем координаты прямоугольника player из карты в координаты нашего игрока
 
 	Image BulletImage;//изображение для пули
 	BulletImage.loadFromFile("images/bullet.png");//загрузили картинку в объект изображения
@@ -284,6 +284,7 @@ int main()
 	sightSprite.setPosition(0, 0);
 	sightSprite.setScale(0.8, 0.8);
 
+
 	Texture weaponTexture;
 	sightTexture.loadFromFile("images/weapons.png");
 
@@ -294,6 +295,16 @@ int main()
 	weaponSprite.setScale(0.25, 0.25);
 	weaponSprite.setOrigin(215 / 2, 61 / 2);
 
+
+	Texture noHealthTexture;
+	noHealthTexture.loadFromFile("images/weapons.png");
+
+	/*Sprite noHealthSprite;
+	noHealthSprite.setTexture(noHealthTexture);
+	noHealthSprite.setTextureRect(IntRect(673, 2, 62, 62));
+	weaponSprite.setScale(0.25, 0.25);
+	//noHealthSprite.setPosition(p.x - 100, p.y - 100);*/
+
 	std::list<Entity*>  entities;
 	std::list<Entity*>::iterator it;
 
@@ -302,7 +313,7 @@ int main()
 	{
 
 		float time = clock.getElapsedTime().asMicroseconds();
-
+		int count = 0;
 		clock.restart();
 		time = time / 800;
 		float dX = 0;
@@ -319,11 +330,11 @@ int main()
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
-			if (event.type == sf::Event::KeyPressed)
+			if (event.type == sf::Event::KeyReleased)
 			{
 				if (event.key.code == sf::Keyboard::Space)
 				{
-					entities.push_back(new Bullet(BulletImage, "Bullet", lvl, weaponSprite.getPosition().x, weaponSprite.getPosition().y, 24, 23, rotation));
+					entities.push_back(new Bullet(BulletImage, "Bullet", lvl, weaponSprite.getPosition().x - 15, weaponSprite.getPosition().y - 10, 24, 23, rotation, pos.x, pos.y));
 				}
 			}
 		}
@@ -334,27 +345,19 @@ int main()
 			if (b->life == false) { it = entities.erase(it); delete b; }// если этот объект мертв, то удаляем его
 			else it++;//и идем курсором (итератором) к след объекту. так делаем со всеми объектами списка
 		}
+
 		p.update(time);
+		window.draw(health.sprite);
+		health.update(time);
 		easyEnemy.update(time);
 		window.setView(view);
 		window.clear();
 		sightSprite.setPosition(pos.x - 24.5, pos.y - 24.5);
-		lvl.Draw(window);//рисуем новую карту
+		bgSprite.setPosition(p.x, p.y);
+		window.draw(bgSprite);
+		window.draw(health.sprite);
+		lvl.Draw(window);
 
-						 /*рисование старой карты будет удалено на след уроке
-						 for (int i = 0; i < HEIGHT_MAP; i++)
-						 for (int j = 0; j < WIDTH_MAP; j++)
-						 {
-						 if (TileMap[i][j] == ' ')  s_map.setTextureRect(IntRect(0, 0, 32, 32));
-						 if (TileMap[i][j] == 's')  s_map.setTextureRect(IntRect(32, 0, 32, 32));
-						 if ((TileMap[i][j] == '0')) s_map.setTextureRect(IntRect(64, 0, 32, 32));
-						 if ((TileMap[i][j] == 'f')) s_map.setTextureRect(IntRect(96, 0, 32, 32));
-						 if ((TileMap[i][j] == 'h')) s_map.setTextureRect(IntRect(128, 0, 32, 32));
-						 s_map.setPosition(j * 32, i * 32);
-
-						 window.draw(s_map);
-						 }
-						 */
 		if ((-90.0 <= rotation) && (rotation <= 90.0)) {
 			weaponSprite.setPosition(p.x + 41, p.y + 28);
 			p.stateWeapon(false);
@@ -368,10 +371,12 @@ int main()
 			window.draw((*it)->sprite);
 		}
 
+
 		window.draw(easyEnemy.sprite);
 		window.draw(weaponSprite);
 		window.draw(p.sprite);
 		window.draw(sightSprite);
+		window.draw(health.sprite);
 		window.display();
 	}
 	return 0;
