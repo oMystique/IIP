@@ -144,7 +144,7 @@ public:
 		for (int counter = 0; counter <= 100; counter += 10) {
 			dx -= 63;
 			if (health <= counter) {
-				name = "Healt";
+				name = "Health";
 			}
 			else {
 				name = "noHealth";
@@ -159,9 +159,8 @@ class Enemy :public Entity {
 public:
 	Enemy(Image &image, String Name, Level &lvl, float X, float Y, int W, int H) :Entity(image, Name, X, Y, W, H) {
 		obj = lvl.GetObjects("solid");//инициализируем.получаем нужные объекты для взаимодействия врага с картой
-		if (name == "EasyEnemy") {
-			sprite.setTextureRect(IntRect(0, 0, 600, 700));
-			sprite.setScale(0.3, 0.3);
+		if (name == "easyEnemy") {
+			sprite.setTextureRect(IntRect(0, 0, 97, 107));
 			dx = 0.1;
 		}
 	}
@@ -182,7 +181,7 @@ public:
 
 	void update(float time)
 	{
-		if (name == "EasyEnemy") {
+		if (name == "easyEnemy") {
 			//moveTimer += time;if (moveTimer>3000){ dx *= -1; moveTimer = 0; }//меняет направление примерно каждые 3 сек
 			checkCollisionWithMap(dx, 0);
 			x += dx*time;
@@ -203,7 +202,7 @@ public:
 		x = X;
 		y = Y;
 		direction = dir;
-		speed = 35;
+		speed = 50;
 		w = h = 16;
 		tempx = tempX;
 		tempy = tempY;
@@ -216,7 +215,6 @@ public:
 
 	void update(float time)
 	{
-		
 		x += speed*(tempx - dx) / distance;//идем по иксу с помощью вектора нормали
 		y += speed*(tempy - dy) / distance;//идем по игреку так же
 
@@ -257,19 +255,18 @@ int main()
 	heroImage.loadFromFile("images/hero1.png");
 
 	Image easyEnemyImage;
-	easyEnemyImage.loadFromFile("images/putin.png");
-	easyEnemyImage.createMaskFromColor(Color(255, 0, 0));
+	easyEnemyImage.loadFromFile("images/easyEnemy.png");
+	easyEnemyImage.createMaskFromColor(Color(255, 255, 255));//маска для пули по белому цвету
 
 	Image healthImage;
 	healthImage.loadFromFile("images/weapons.png");
 
 	Object player = lvl.GetObject("player");//объект игрока на нашей карте.задаем координаты игроку в начале при помощи него
-	Object easyEnemyObject = lvl.GetObject("easyEnemy");//объект легкого врага на нашей карте.задаем координаты игроку в начале при помощи него
+	std::vector<Object> e = lvl.GetObjects("easyEnemy");//все объекты врага на tmx карте хранятся в этом векторе
 
 	Player p(heroImage, "Player1", lvl, player.rect.left, player.rect.top, 36, 36);//передаем координаты прямоугольника player из карты в координаты нашего игрока
-	Enemy easyEnemy(easyEnemyImage, "EasyEnemy", lvl, easyEnemyObject.rect.left, easyEnemyObject.rect.top, 200, 97);//передаем координаты прямоугольника easyEnemy из карты в координаты нашего врага
 
-	HealthPoints health(healthImage, "Health", 1000, 20, 62, 62);//передаем координаты прямоугольника player из карты в координаты нашего игрока
+	HealthPoints health(healthImage, "Health", p.x, p.y, 62, 62);//передаем координаты прямоугольника player из карты в координаты нашего игрока
 
 	Image BulletImage;//изображение для пули
 	BulletImage.loadFromFile("images/bullet.png");//загрузили картинку в объект изображения
@@ -296,8 +293,8 @@ int main()
 	weaponSprite.setOrigin(215 / 2, 61 / 2);
 
 
-	Texture noHealthTexture;
-	noHealthTexture.loadFromFile("images/weapons.png");
+	//Texture noHealthTexture;
+	//noHealthTexture.loadFromFile("images/weapons.png");
 
 	/*Sprite noHealthSprite;
 	noHealthSprite.setTexture(noHealthTexture);
@@ -307,6 +304,9 @@ int main()
 
 	std::list<Entity*>  entities;
 	std::list<Entity*>::iterator it;
+
+	for (int i = 0; i < e.size(); i++)//проходимся по элементам этого вектора(а именно по врагам)
+		entities.push_back(new Enemy(easyEnemyImage, "easyEnemy", lvl, e[i].rect.left, e[i].rect.top, 97, 107));//и закидываем в список всех наших врагов с карты
 
 	Clock clock;
 	while (window.isOpen())
@@ -347,15 +347,12 @@ int main()
 		}
 
 		p.update(time);
-		window.draw(health.sprite);
 		health.update(time);
-		easyEnemy.update(time);
 		window.setView(view);
 		window.clear();
 		sightSprite.setPosition(pos.x - 24.5, pos.y - 24.5);
 		bgSprite.setPosition(p.x, p.y);
 		window.draw(bgSprite);
-		window.draw(health.sprite);
 		lvl.Draw(window);
 
 		if ((-90.0 <= rotation) && (rotation <= 90.0)) {
@@ -370,13 +367,9 @@ int main()
 		for (it = entities.begin(); it != entities.end(); it++) {
 			window.draw((*it)->sprite);
 		}
-
-
-		window.draw(easyEnemy.sprite);
 		window.draw(weaponSprite);
 		window.draw(p.sprite);
 		window.draw(sightSprite);
-		window.draw(health.sprite);
 		window.display();
 	}
 	return 0;
