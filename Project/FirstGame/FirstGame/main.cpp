@@ -202,7 +202,7 @@ public:
 		x = X;
 		y = Y;
 		direction = dir;
-		speed = 50;
+		speed = 70;
 		w = h = 16;
 		tempx = tempX;
 		tempy = tempY;
@@ -304,9 +304,10 @@ int main()
 
 	std::list<Entity*>  entities;
 	std::list<Entity*>::iterator it;
+	std::list<Entity*>::iterator at;
 
 	for (int i = 0; i < e.size(); i++)//проходимся по элементам этого вектора(а именно по врагам)
-		entities.push_back(new Enemy(easyEnemyImage, "easyEnemy", lvl, e[i].rect.left, e[i].rect.top, 97, 107));//и закидываем в список всех наших врагов с карты
+		entities.push_back(new Enemy(easyEnemyImage, "easyEnemy", lvl, e[i].rect.left, e[i].rect.top, 36, 36));//и закидываем в список всех наших врагов с карты
 
 	Clock clock;
 	while (window.isOpen())
@@ -344,6 +345,15 @@ int main()
 			b->update(time);//вызываем ф-цию update для всех объектов (по сути для тех, кто жив)
 			if (b->life == false) { it = entities.erase(it); delete b; }// если этот объект мертв, то удаляем его
 			else it++;//и идем курсором (итератором) к след объекту. так делаем со всеми объектами списка
+		}
+
+		for (it = entities.begin(); it != entities.end(); it++) {
+			for (at = entities.begin(); at != entities.end(); at++) {
+				if ((*it)->getRect().intersects((*at)->getRect()) && (((*at)->name == "Bullet") && ((*it)->name == "easyEnemy"))) {
+					(*it)->health -= 15;
+					(*at)->life = false;
+				}
+			}
 		}
 
 		p.update(time);
