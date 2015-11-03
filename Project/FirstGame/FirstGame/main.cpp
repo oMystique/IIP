@@ -283,14 +283,32 @@ int main()
 
 
 	Texture weaponTexture;
-	sightTexture.loadFromFile("images/weapons.png");
+	weaponTexture.loadFromFile("images/weapons.png");
 
 	Sprite weaponSprite;
-	weaponSprite.setTexture(sightTexture);
+	weaponSprite.setTexture(weaponTexture);
 	weaponSprite.setTextureRect(IntRect(66, 391, 215, 61));
 	weaponSprite.setPosition(p.x + 16, p.y + 16);
 	weaponSprite.setScale(0.25, 0.25);
 	weaponSprite.setOrigin(215 / 2, 61 / 2);
+
+
+	Texture molotTexture;
+	molotTexture.loadFromFile("images/weapons.png");
+
+	Sprite molotSprite;
+	molotSprite.setTexture(molotTexture);
+	molotSprite.setTextureRect(IntRect(63, 42, 130, 80));
+	molotSprite.setScale(0.3, 0.3);
+	molotSprite.setOrigin(130 / 2, 80 / 2);
+
+	Texture flashTexture;
+	flashTexture.loadFromFile("images/weapons.png");
+
+	Sprite flashSprite;
+	flashSprite.setTexture(flashTexture);
+	flashSprite.setTextureRect(IntRect(633, 190, 78, 67));
+	flashSprite.setOrigin(67 / 2, 78 / 2);
 
 
 	//Texture noHealthTexture;
@@ -310,9 +328,8 @@ int main()
 		entities.push_back(new Enemy(easyEnemyImage, "easyEnemy", lvl, e[i].rect.left, e[i].rect.top, 36, 36));//и закидываем в список всех наших врагов с карты
 
 	Clock clock;
-	while (window.isOpen())
+	while ((window.isOpen()) && (p.life == true))
 	{
-
 		float time = clock.getElapsedTime().asMicroseconds();
 		int count = 0;
 		clock.restart();
@@ -327,15 +344,13 @@ int main()
 		//std::cout << rotation << "\n";//смотрим на градусы в консольке
 		weaponSprite.setRotation(rotation);//поворачиваем спрайт на эти градусы
 		Event event;
-		while (window.pollEvent(event))
-		{
+		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::Closed)
 				window.close();
-			if (event.type == sf::Event::KeyReleased)
-			{
-				if (event.key.code == sf::Keyboard::Space)
-				{
+			if (event.type == sf::Event::KeyReleased) {
+				if (event.key.code == sf::Keyboard::Space) {
 					entities.push_back(new Bullet(BulletImage, "Bullet", lvl, weaponSprite.getPosition().x - 15, weaponSprite.getPosition().y - 10, 24, 23, rotation, pos.x, pos.y));
+					flashSprite.setPosition(weaponSprite.getPosition().x, weaponSprite.getPosition().y);
 				}
 			}
 		}
@@ -352,6 +367,10 @@ int main()
 				if ((*it)->getRect().intersects((*at)->getRect()) && (((*at)->name == "Bullet") && ((*it)->name == "easyEnemy"))) {
 					(*it)->health -= 15;
 					(*at)->life = false;
+				}
+				if ((*it)->getRect().intersects(p.getRect()) && ((*it)->name == "easyEnemy"))
+				{
+					p.health -= 30 ;
 				}
 			}
 		}
@@ -375,12 +394,24 @@ int main()
 		}
 
 		for (it = entities.begin(); it != entities.end(); it++) {
+			if ((*it)->name == "easyEnemy") {
+				if ((*it)->dx < 0) {
+					molotSprite.setPosition((*it)->x + 5, (*it)->y + 30);
+				}
+				else {
+					molotSprite.setPosition((*it)->x + 45, (*it)->y + 30);
+				}
+				window.draw(molotSprite);
+			}
 			window.draw((*it)->sprite);
 		}
 		window.draw(weaponSprite);
 		window.draw(p.sprite);
 		window.draw(sightSprite);
+		window.draw(flashSprite);
+		_mm_pause;
+		flashSprite.setPosition(9999, 9999);
 		window.display();
 	}
-	return 0;
+	return 0;ddddd
 }
