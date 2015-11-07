@@ -14,7 +14,7 @@ using namespace sf;
 class Entity {
 public:
 	std::vector<Object> obj;//вектор объектов карты
-	float dx, dy, x, y, speed, moveTimer;
+	float dx, dy, x, y, speed, moveTimer, vec;
 	int w, h, health;
 	bool life, isMove, onGround;
 	Texture texture;
@@ -32,6 +32,10 @@ public:
 
 	FloatRect getRect() {//ф-ция получения прямоугольника. его коорд,размеры (шир,высот).
 		return FloatRect(x, y, w, h);//эта ф-ция нужна для проверки столкновений 
+	}
+
+	FloatRect getEnemyview() {//ф-ция получения поля зрения врага.
+		return FloatRect(x, y, w + vec, h);// vec вектор взгляда врага
 	}
 
 	virtual void update(float time) = 0; 
@@ -157,6 +161,8 @@ public:
 
 class Enemy :public Entity {
 public:
+	enum { left, right, stay } EnemyState;
+
 	Enemy(Image &image, String Name, Level &lvl, float X, float Y, int W, int H) :Entity(image, Name, X, Y, W, H) {
 		obj = lvl.GetObjects("solid");//инициализируем.получаем нужные объекты для взаимодействия врага с картой
 		if (name == "easyEnemy") {
@@ -173,14 +179,19 @@ public:
 				//if (obj[i].name == "solid"){//если встретили препятствие (объект с именем solid)
 				if (Dy>0) { y = obj[i].rect.top - h;  dy = 0; onGround = true; }
 				if (Dy<0) { y = obj[i].rect.top + obj[i].rect.height;   dy = 0; }
-				if (Dx>0) { x = obj[i].rect.left - w;  dx = -0.1; sprite.scale(-1, 1); }
-				if (Dx<0) { x = obj[i].rect.left + obj[i].rect.width; dx = 0.1; sprite.scale(-1, 1); }
+				if (Dx > 0) { x = obj[i].rect.left - w;  dx = -0.1; sprite.scale(-1, 1); EnemyState = left; }
+				if (Dx < 0) { x = obj[i].rect.left + obj[i].rect.width; dx = 0.1; sprite.scale(-1, 1); EnemyState = right; }
 				//}
 			}
 	}
 
 	void update(float time)
 	{
+		switch (EnemyState)
+		{
+		case right: vec = 110; break;// 300 дальность взгляда врага.
+		case left: vec = -110; break;
+		}
 		if (name == "easyEnemy") {
 			//moveTimer += time;if (moveTimer>3000){ dx *= -1; moveTimer = 0; }//меняет направление примерно каждые 3 сек
 			checkCollisionWithMap(dx, 0);
@@ -190,6 +201,11 @@ public:
 		}
 	}
 };
+
+/*class Weapon :public Entity {
+public:
+
+};*/
 
 class Bullet :public Entity {//класс пули
 public:
@@ -202,7 +218,7 @@ public:
 		x = X;
 		y = Y;
 		direction = dir;
-		speed = 70;
+		speed = 0.1;
 		w = h = 16;
 		tempx = tempX;
 		tempy = tempY;
@@ -215,8 +231,8 @@ public:
 
 	void update(float time)
 	{
-		x += speed*(tempx - dx) / distance;//идем по иксу с помощью вектора нормали
-		y += speed*(tempy - dy) / distance;//идем по игреку так же
+		x += speed * (tempx - dx);//идем по иксу с помощью вектора нормали
+		y += speed * (tempy - dy) ;//идем по игреку так же
 
 		if (x <= 0) x = 1;// задержка пули в левой стене, чтобы при проседании кадров она случайно не вылетела за предел карты и не было ошибки
 		if (y <= 0) y = 1;
@@ -350,8 +366,11 @@ int main()
 			if (event.type == sf::Event::KeyReleased) {
 				if (event.key.code == sf::Keyboard::Space) {
 					entities.push_back(new Bullet(BulletImage, "Bullet", lvl, weaponSprite.getPosition().x - 15, weaponSprite.getPosition().y - 10, 24, 23, rotation, pos.x, pos.y));
-					flashSprite.setPosition(weaponSprite.getPosition().x, weaponSprite.getPosition().y);
+					//flashSprite.setPosition(weaponSprite.getPosition().x, weaponSprite.getPosition().y);
 				}
+				/*if (event.key.code == sf::Keyboard::Escape) {
+					//MENU;
+				}*/
 			}
 		}
 		for (it = entities.begin(); it != entities.end();)//говорим что проходимся от начала до конца
@@ -403,15 +422,21 @@ int main()
 				}
 				window.draw(molotSprite);
 			}
+			if ((*it)->getEnemyview().intersects(p.getRect())) {
+				(*it)->sprite.setColor(Color::Red);
+			}
+			else {
+				(*it)->sprite.setColor(Color::White);
+			}
 			window.draw((*it)->sprite);
 		}
 		window.draw(weaponSprite);
 		window.draw(p.sprite);
 		window.draw(sightSprite);
-		window.draw(flashSprite);
+		//window.draw(flashSprite);
 		_mm_pause;
-		flashSprite.setPosition(9999, 9999);
+		//flashSprite.setPosition(9999, 9999);
 		window.display();
 	}
-	return 0;ddddd
+	return 0;
 }
