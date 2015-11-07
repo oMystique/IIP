@@ -1,4 +1,7 @@
 #include <SFML/Graphics.hpp>
+#include <Windows.h>
+#include <thread>
+#include <chrono>
 #include "view.h"
 #include <iostream>
 #include <sstream>
@@ -52,6 +55,7 @@ public:
 		playerScore = 0; state = stay; obj = lev.GetAllObjects();//инициализируем.получаем все объекты для взаимодействия персонажа с картой
 		if (name == "Player1") {
 			sprite.setTextureRect(IntRect(37, 0, 90, 90));
+			health = 1000;
 		}
 	}
 
@@ -162,12 +166,12 @@ public:
 class Enemy :public Entity {
 public:
 	enum { left, right, stay } EnemyState;
-
 	Enemy(Image &image, String Name, Level &lvl, float X, float Y, int W, int H) :Entity(image, Name, X, Y, W, H) {
 		obj = lvl.GetObjects("solid");//инициализируем.получаем нужные объекты для взаимодействия врага с картой
 		if (name == "easyEnemy") {
 			sprite.setTextureRect(IntRect(0, 0, 97, 107));
-			dx = 0.1;
+			sprite.scale(-1, 1);
+			dx = -0.1;
 		}
 	}
 
@@ -176,12 +180,10 @@ public:
 		for (int i = 0; i<obj.size(); i++)//проходимся по объектам
 			if (getRect().intersects(obj[i].rect))//проверяем пересечение игрока с объектом
 			{
-				//if (obj[i].name == "solid"){//если встретили препятствие (объект с именем solid)
 				if (Dy>0) { y = obj[i].rect.top - h;  dy = 0; onGround = true; }
 				if (Dy<0) { y = obj[i].rect.top + obj[i].rect.height;   dy = 0; }
 				if (Dx > 0) { x = obj[i].rect.left - w;  dx = -0.1; sprite.scale(-1, 1); EnemyState = left; }
 				if (Dx < 0) { x = obj[i].rect.left + obj[i].rect.width; dx = 0.1; sprite.scale(-1, 1); EnemyState = right; }
-				//}
 			}
 	}
 
@@ -189,15 +191,18 @@ public:
 	{
 		switch (EnemyState)
 		{
-		case right: vec = 110; break;// 300 дальность взгляда врага.
-		case left: vec = -110; break;
+		case right: vec = 300; dx = 0.1; break;// 300 дальность взгляда врага.
+		case left: vec = -300; dx = -0.1; break;
 		}
 		if (name == "easyEnemy") {
-			//moveTimer += time;if (moveTimer>3000){ dx *= -1; moveTimer = 0; }//меняет направление примерно каждые 3 сек
-			checkCollisionWithMap(dx, 0);
-			x += dx*time;
-			sprite.setPosition(x + w / 2, y + h / 2);
-			if (health <= 0) { life = false; }
+			if (isMove) {
+				checkCollisionWithMap(dx, 0);
+				x += dx*time;
+				sprite.setPosition(x + w / 2, y + h / 2);
+			}
+			if (health <= 0) {
+				life = false; 
+			}
 		}
 	}
 };
@@ -248,6 +253,7 @@ public:
 };
 
 
+
 int main()
 {
 	RenderWindow window(VideoMode(1180, 620), "FirstGame");
@@ -255,6 +261,9 @@ int main()
 
 	Texture bgTexture;
 	bgTexture.loadFromFile("images/fon-nebo.png");
+	
+	bool flagInterPlayer = false;
+
 
 	Sprite bgSprite;
 	bgSprite.setTexture(bgTexture);
@@ -344,6 +353,7 @@ int main()
 		entities.push_back(new Enemy(easyEnemyImage, "easyEnemy", lvl, e[i].rect.left, e[i].rect.top, 36, 36));//и закидываем в список всех наших врагов с карты
 
 	Clock clock;
+	sf::Time delayTime = sf::seconds(0.01);
 	while ((window.isOpen()) && (p.life == true))
 	{
 		float time = clock.getElapsedTime().asMicroseconds();
@@ -387,9 +397,24 @@ int main()
 					(*it)->health -= 15;
 					(*at)->life = false;
 				}
-				if ((*it)->getRect().intersects(p.getRect()) && ((*it)->name == "easyEnemy"))
-				{
-					p.health -= 30 ;
+			}
+			if ((*it)->name == "easyEnemy") {
+				if ((*it)->getRect().intersects(p.getRect())) {
+					(*it)->isMove = false;
+					p.health -= 1;
+					std::cout << p.health << "\n";
+				}
+				else {
+					(*it)->isMove = true;
+					if ((*it)->getEnemyview().intersects(p.getRect())) {
+						(*it)->dx = p.dx;
+						(*it)->update(time);
+						(*it)->sprite.setColor(Color::Red);
+					}
+					else {
+						(*it)->sprite.setColor(Color::White);
+						(*it)->dx = -p.dx;
+					}
 				}
 			}
 		}
@@ -421,12 +446,6 @@ int main()
 					molotSprite.setPosition((*it)->x + 45, (*it)->y + 30);
 				}
 				window.draw(molotSprite);
-			}
-			if ((*it)->getEnemyview().intersects(p.getRect())) {
-				(*it)->sprite.setColor(Color::Red);
-			}
-			else {
-				(*it)->sprite.setColor(Color::White);
 			}
 			window.draw((*it)->sprite);
 		}

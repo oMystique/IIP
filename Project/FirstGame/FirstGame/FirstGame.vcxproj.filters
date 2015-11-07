@@ -30,6 +30,9 @@
     <ClCompile Include="TinyXML\tinyxmlparser.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
+    <ClCompile Include="de_timer.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="view.h">
@@ -42,6 +45,9 @@
       <Filter>Файлы исходного кода</Filter>
     </ClInclude>
     <ClInclude Include="TinyXML\tinystr.h">
+      <Filter>Файлы исходного кода</Filter>
+    </ClInclude>
+    <ClInclude Include="de_timer.h">
       <Filter>Файлы исходного кода</Filter>
     </ClInclude>
   </ItemGroup>
