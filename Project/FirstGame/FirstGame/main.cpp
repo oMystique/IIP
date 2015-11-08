@@ -49,6 +49,8 @@ class Player :public Entity {
 public:
 	enum { left, right, up, down, jump, stay } state;
 	int playerScore;
+	bool flag;
+	bool missionComplete;
 
 
 	Player(Image &image, String Name, Level &lev, float X, float Y, int W, int H) :Entity(image, Name, X, Y, W, H) {
@@ -56,6 +58,8 @@ public:
 		if (name == "Player1") {
 			sprite.setTextureRect(IntRect(37, 0, 90, 90));
 			health = 1000;
+			flag = false;
+			missionComplete = false;
 		}
 	}
 
@@ -101,6 +105,10 @@ public:
 					if (Dx>0) { x = obj[i].rect.left - w; }
 					if (Dx<0) { x = obj[i].rect.left + obj[i].rect.width; }
 				}
+				if ((obj[i].name == "finish") && (flag))
+				{
+					missionComplete = true;
+				}
 			}
 	}
 
@@ -136,38 +144,38 @@ noHealthSprite.setTexture(noHealthTexture);
 noHealthSprite.setTextureRect(IntRect(738, 2, 61, 61));
 noHealthSprite.setPosition(1150, 10);*/
 
-class HealthPoints :public Entity {
+class PickUpObj :public Entity {
 public:
-	HealthPoints(Image &image, String Name, float X, float Y, int W, int H) :Entity(image, Name, X, Y, W, H) {
+	int dx = 0.1;
+	int dy = 0.1;
+	PickUpObj(Image &image, String Name, float X, float Y, int W, int H) :Entity(image, Name, X, Y, W, H) {
 		if (name == "noHealth") {
-			sprite.setTextureRect(IntRect(738, 2, W, H));
+			sprite.setTextureRect(IntRect(738, 2, 62, 62));
 		}
 		else if (name == "Health") {
-			sprite.setTextureRect(IntRect(673, 2, W, H));
+			sprite.setTextureRect(IntRect(673, 2, 62, 62));
 		}
 	}
 
 	void update(float time) {
-		int dx = x;
-		for (int counter = 0; counter <= 100; counter += 10) {
-			dx -= 63;
-			if (health <= counter) {
-				name = "Health";
-			}
-			else {
-				name = "noHealth";
-			}
-			sprite.setPosition(dx, y);
+		if (name == "noHealth") {
+			sprite.setTextureRect(IntRect(738, 2, 62, 62));
 		}
-
+		else if (name == "Health") {
+			sprite.setTextureRect(IntRect(673, 2, 62, 62));
+		}
+		x += dx * time;
+		y += dy * time;
+		sprite.setPosition(x, y);
 	}
+
 };
 
 class Enemy :public Entity {
 public:
 	enum { left, right, stay } EnemyState;
 	Enemy(Image &image, String Name, Level &lvl, float X, float Y, int W, int H) :Entity(image, Name, X, Y, W, H) {
-		obj = lvl.GetObjects("solid");//инициализируем.получаем нужные объекты дл€ взаимодействи€ врага с картой
+		obj = lvl.GetObjects("stopEnemy"); //инициализируем.получаем нужные объекты дл€ взаимодействи€ врага с картой
 		if (name == "easyEnemy") {
 			sprite.setTextureRect(IntRect(0, 0, 97, 107));
 			sprite.scale(-1, 1);
@@ -191,8 +199,8 @@ public:
 	{
 		switch (EnemyState)
 		{
-		case right: vec = 300; dx = 0.1; break;// 300 дальность взгл€да врага.
-		case left: vec = -300; dx = -0.1; break;
+		case right: vec = 450; dx = 0.15; break;// 300 дальность взгл€да врага.
+		case left: vec = -450; dx = -0.15; break;
 		}
 		if (name == "easyEnemy") {
 			if (isMove) {
@@ -207,16 +215,12 @@ public:
 	}
 };
 
-/*class Weapon :public Entity {
-public:
-
-};*/
 
 class Bullet :public Entity {//класс пули
 public:
-	int direction;//направление пули
+	int direction; //направление пули
 	float tempy, tempx;
-	int distance = sqrt((tempx - x)*(tempy - x) + (tempy - y)*(tempy - y));
+	//int distance = sqrt((tempx - x)*(tempy - x) + (tempy - y)*(tempy - y));
 
 	Bullet(Image &image, String Name, Level &lvl, float X, float Y, int W, int H, int dir, float tempX, float tempY) :Entity(image, Name, X, Y, W, H) {//всЄ так же, только вз€ли в конце состо€ние игрока (int dir)
 		obj = lvl.GetObjects("solid");//инициализируем .получаем нужные объекты дл€ взаимодействи€ пули с картой
@@ -257,13 +261,13 @@ public:
 int main()
 {
 	RenderWindow window(VideoMode(1180, 620), "FirstGame");
-	view.reset(FloatRect(0, 0, 1180, 620));	
+	view.reset(FloatRect(0, 0, 1030, 470));	
+
+	bool immortalFlag = false;
+	bool missionTarget = false;
 
 	Texture bgTexture;
 	bgTexture.loadFromFile("images/fon-nebo.png");
-	
-	bool flagInterPlayer = false;
-
 
 	Sprite bgSprite;
 	bgSprite.setTexture(bgTexture);
@@ -288,14 +292,24 @@ int main()
 
 	Object player = lvl.GetObject("player");//объект игрока на нашей карте.задаем координаты игроку в начале при помощи него
 	std::vector<Object> e = lvl.GetObjects("easyEnemy");//все объекты врага на tmx карте хран€тс€ в этом векторе
+	Object flag = lvl.GetObject("flag");//объект игрока на нашей карте.задаем координаты игроку в начале при помощи него
 
 	Player p(heroImage, "Player1", lvl, player.rect.left, player.rect.top, 36, 36);//передаем координаты пр€моугольника player из карты в координаты нашего игрока
 
-	HealthPoints health(healthImage, "Health", p.x, p.y, 62, 62);//передаем координаты пр€моугольника player из карты в координаты нашего игрока
 
 	Image BulletImage;//изображение дл€ пули
 	BulletImage.loadFromFile("images/bullet.png");//загрузили картинку в объект изображени€
 	BulletImage.createMaskFromColor(Color(255, 255, 255));//маска дл€ пули по белому цвету
+
+	Texture flagTexture;
+	flagTexture.loadFromFile("images/weapons.png");
+
+	Sprite flagSprite;
+	flagSprite.setTexture(flagTexture);
+	flagSprite.setTextureRect(IntRect(387, 268, 127, 240));
+	flagSprite.setPosition(flag.rect.left, flag.rect.top);
+	flagSprite.setScale(0.9, 0.9);
+
 
 	Texture sightTexture;
 	sightTexture.loadFromFile("images/weapons.png");
@@ -336,25 +350,31 @@ int main()
 	flashSprite.setOrigin(67 / 2, 78 / 2);
 
 
-	//Texture noHealthTexture;
-	//noHealthTexture.loadFromFile("images/weapons.png");
+	Texture noHealthTexture;
+	noHealthTexture.loadFromFile("images/weapons.png");
 
-	/*Sprite noHealthSprite;
+	Sprite noHealthSprite;
 	noHealthSprite.setTexture(noHealthTexture);
 	noHealthSprite.setTextureRect(IntRect(673, 2, 62, 62));
 	weaponSprite.setScale(0.25, 0.25);
-	//noHealthSprite.setPosition(p.x - 100, p.y - 100);*/
 
 	std::list<Entity*>  entities;
+	std::list<PickUpObj*> PUobjs;
+	std::list<PickUpObj*>::iterator point;
 	std::list<Entity*>::iterator it;
 	std::list<Entity*>::iterator at;
 
-	for (int i = 0; i < e.size(); i++)//проходимс€ по элементам этого вектора(а именно по врагам)
+	for (int i = 0; i < e.size(); i++) {//проходимс€ по элементам этого вектора(а именно по врагам) 
 		entities.push_back(new Enemy(easyEnemyImage, "easyEnemy", lvl, e[i].rect.left, e[i].rect.top, 36, 36));//и закидываем в список всех наших врагов с карты
-
+	}
+	int counter = 0;
+	while (counter != 10) {
+		PUobjs.push_back(new PickUpObj(healthImage, "Health", p.x, p.y - 300, 62, 62)); //передаем координаты пр€моугольника player из карты в координаты нашего игрока
+		counter += 1;
+	}
 	Clock clock;
 	sf::Time delayTime = sf::seconds(0.01);
-	while ((window.isOpen()) && (p.life == true))
+	while ((window.isOpen()) && (p.life) && (!p.missionComplete))
 	{
 		float time = clock.getElapsedTime().asMicroseconds();
 		int count = 0;
@@ -378,11 +398,17 @@ int main()
 					entities.push_back(new Bullet(BulletImage, "Bullet", lvl, weaponSprite.getPosition().x - 15, weaponSprite.getPosition().y - 10, 24, 23, rotation, pos.x, pos.y));
 					//flashSprite.setPosition(weaponSprite.getPosition().x, weaponSprite.getPosition().y);
 				}
-				/*if (event.key.code == sf::Keyboard::Escape) {
-					//MENU;
-				}*/
+				if (event.key.code == sf::Keyboard::Escape) {
+					if (!immortalFlag) {
+						immortalFlag = true;
+					}
+					else {
+						immortalFlag = false;
+					}
+				}
 			}
 		}
+
 		for (it = entities.begin(); it != entities.end();)//говорим что проходимс€ от начала до конца
 		{
 			Entity *b = *it;//дл€ удобства, чтобы не писать (*it)->
@@ -391,18 +417,21 @@ int main()
 			else it++;//и идем курсором (итератором) к след объекту. так делаем со всеми объектами списка
 		}
 
+
 		for (it = entities.begin(); it != entities.end(); it++) {
 			for (at = entities.begin(); at != entities.end(); at++) {
 				if ((*it)->getRect().intersects((*at)->getRect()) && (((*at)->name == "Bullet") && ((*it)->name == "easyEnemy"))) {
-					(*it)->health -= 15;
+					(*it)->health -= 10;
 					(*at)->life = false;
 				}
 			}
 			if ((*it)->name == "easyEnemy") {
 				if ((*it)->getRect().intersects(p.getRect())) {
 					(*it)->isMove = false;
-					p.health -= 1;
-					std::cout << p.health << "\n";
+					if (!immortalFlag)
+					{
+						p.health -= 10;
+					}
 				}
 				else {
 					(*it)->isMove = true;
@@ -418,15 +447,37 @@ int main()
 				}
 			}
 		}
+		counter = p.x + 500;
+		int healthCounter = 1000;
+		for (point = PUobjs.begin(); point != PUobjs.end(); point++) {
+			if (p.health < healthCounter) {
+				(*point)->name = "noHealth";
+			}
+			(*point)->x = counter;
+			(*point)->y = p.y - 220;
+			(*point)->update(time);
+			counter -= 35;
+			healthCounter -= 100;
+		}
 
 		p.update(time);
-		health.update(time);
 		window.setView(view);
 		window.clear();
 		sightSprite.setPosition(pos.x - 24.5, pos.y - 24.5);
 		bgSprite.setPosition(p.x, p.y);
 		window.draw(bgSprite);
 		lvl.Draw(window);
+
+		if (!missionTarget) {
+			if (FloatRect(flagSprite.getPosition().x, flagSprite.getPosition().y, 127, 240).intersects(p.getRect())) {
+				missionTarget = true;
+				flagSprite.setScale(0.3, 0.3); 
+				p.flag = true;
+			}
+		}
+		else {
+			flagSprite.setPosition(p.x + 20, p.y - 50);
+		}
 
 		if ((-90.0 <= rotation) && (rotation <= 90.0)) {
 			weaponSprite.setPosition(p.x + 41, p.y + 28);
@@ -439,7 +490,7 @@ int main()
 
 		for (it = entities.begin(); it != entities.end(); it++) {
 			if ((*it)->name == "easyEnemy") {
-				if ((*it)->dx < 0) {
+				if ((*it)->sprite.getScale().x < 0) {
 					molotSprite.setPosition((*it)->x + 5, (*it)->y + 30);
 				}
 				else {
@@ -449,11 +500,14 @@ int main()
 			}
 			window.draw((*it)->sprite);
 		}
+		for (point = PUobjs.begin(); point != PUobjs.end(); point++) {
+			window.draw((*point)->sprite);
+		}
+		window.draw(flagSprite);
 		window.draw(weaponSprite);
 		window.draw(p.sprite);
 		window.draw(sightSprite);
 		//window.draw(flashSprite);
-		_mm_pause;
 		//flashSprite.setPosition(9999, 9999);
 		window.display();
 	}
