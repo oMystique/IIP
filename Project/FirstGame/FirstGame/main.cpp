@@ -491,10 +491,12 @@ int main()
 		for (it = entities.begin(); it != entities.end(); it++) {
 			if ((*it)->name == "easyEnemy") {
 				if ((*it)->sprite.getScale().x < 0) {
-					molotSprite.setPosition((*it)->x + 5, (*it)->y + 30);
+					molotSprite.setPosition((*it)->x - 7, (*it)->y + 30);
+					molotSprite.setRotation(210);
 				}
 				else {
 					molotSprite.setPosition((*it)->x + 45, (*it)->y + 30);
+					molotSprite.setRotation(-30);
 				}
 				window.draw(molotSprite);
 			}
