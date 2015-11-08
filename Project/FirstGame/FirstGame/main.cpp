@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <Windows.h>
 #include <thread>
 #include <chrono>
@@ -358,6 +359,27 @@ int main()
 	noHealthSprite.setTextureRect(IntRect(673, 2, 62, 62));
 	weaponSprite.setScale(0.25, 0.25);
 
+	SoundBuffer shootBuffer;//создаём буфер для звука
+	shootBuffer.loadFromFile("sounds/shoot.ogg");//загружаем в него звук
+	Sound shoot(shootBuffer);//создаем звук и загружаем в него звук из буфера
+	shoot.setVolume(40);
+
+	SoundBuffer kickHitBuffer;
+	kickHitBuffer.loadFromFile("sounds/kickHit.ogg");//загружаем в него звук
+	Sound kickHit(kickHitBuffer);//создаем звук и загружаем в него звук из буфера
+	kickHit.setVolume(40);
+
+
+	SoundBuffer enemyDieBuffer;
+	enemyDieBuffer.loadFromFile("sounds/catCrash.ogg");//загружаем в него звук
+	Sound enemyDie(enemyDieBuffer);//создаем звук и загружаем в него звук из буфера
+
+	Music music;//создаем объект музыки
+	music.openFromFile("sounds/fonMM.ogg");//загружаем файл
+	music.play();//воспроизводим музыку
+	music.setVolume(45);
+	music.setLoop(true);
+
 	std::list<Entity*>  entities;
 	std::list<PickUpObj*> PUobjs;
 	std::list<PickUpObj*>::iterator point;
@@ -396,6 +418,7 @@ int main()
 			if (event.type == sf::Event::KeyReleased) {
 				if (event.key.code == sf::Keyboard::Space) {
 					entities.push_back(new Bullet(BulletImage, "Bullet", lvl, weaponSprite.getPosition().x - 15, weaponSprite.getPosition().y - 10, 24, 23, rotation, pos.x, pos.y));
+					shoot.play();
 					//flashSprite.setPosition(weaponSprite.getPosition().x, weaponSprite.getPosition().y);
 				}
 				if (event.key.code == sf::Keyboard::Escape) {
@@ -413,7 +436,13 @@ int main()
 		{
 			Entity *b = *it;//для удобства, чтобы не писать (*it)->
 			b->update(time);//вызываем ф-цию update для всех объектов (по сути для тех, кто жив)
-			if (b->life == false) { it = entities.erase(it); delete b; }// если этот объект мертв, то удаляем его
+			if (b->life == false) {
+				if (b->name == "easyEnemy")
+				{
+					enemyDie.play();
+				}
+				it = entities.erase(it); delete b; 
+			}// если этот объект мертв, то удаляем его
 			else it++;//и идем курсором (итератором) к след объекту. так делаем со всеми объектами списка
 		}
 
@@ -428,11 +457,14 @@ int main()
 			if ((*it)->name == "easyEnemy") {
 				if ((*it)->getRect().intersects(p.getRect())) {
 					(*it)->isMove = false;
+					if (!kickHit.getStatus()) {
+						kickHit.play();
+					}
 					if (!immortalFlag)
 					{
 						p.health -= 10;
 					}
-				}
+				} 
 				else {
 					(*it)->isMove = true;
 					if ((*it)->getEnemyview().intersects(p.getRect())) {
