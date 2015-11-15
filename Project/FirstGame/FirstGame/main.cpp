@@ -42,6 +42,11 @@ public:
 		return FloatRect(x, y, w + vec, h);// vec вектор взгляда врага
 	}
 
+	FloatRect getMediumEnemyView() {//ф-ция получения поля зрения врага.
+		return FloatRect(x, y, w + vec, h + vec);// vec вектор взгляда врага
+	}
+
+
 	virtual void update(float time) = 0; 
 };
 ////////////////////////////////////////////////////КЛАСС ИГРОКА////////////////////////
@@ -52,25 +57,34 @@ public:
 	int playerScore;
 	bool flag;
 	bool missionComplete;
+	float currentFrame;
 
 
 	Player(Image &image, String Name, Level &lev, float X, float Y, int W, int H) :Entity(image, Name, X, Y, W, H) {
 		playerScore = 0; state = stay; obj = lev.GetAllObjects();//инициализируем.получаем все объекты для взаимодействия персонажа с картой
 		if (name == "Player1") {
 			sprite.setTextureRect(IntRect(37, 0, 90, 90));
+			currentFrame = 0;
 			health = 1000;
 			flag = false;
 			missionComplete = false;
 		}
 	}
 
+	void animation(float time)
+	{
+		if (state == right) { currentFrame += 0.005*time; if (currentFrame > 5) currentFrame -= 5; sprite.setTextureRect(IntRect(180 * int(currentFrame), 0, 90, 90)); }
+		if (state == left) { currentFrame += 0.005*time; if (currentFrame > 5) currentFrame -= 5; sprite.setTextureRect(IntRect(37 * int(currentFrame), 0, 90, 90)); }
+	}
+
+
 	void control() {
 		if (Keyboard::isKeyPressed) {
 			if (Keyboard::isKeyPressed(Keyboard::A)) {
-				state = left; speed = 0.1; sprite.setTextureRect(IntRect(37, 0, 90, 90)); //sprite.setScale(0.33, 0.33);
+				state = left; speed = 0.1; //sprite.setTextureRect(IntRect(37, 0, 90, 90)); //sprite.setScale(0.33, 0.33);
 			}
 			if (Keyboard::isKeyPressed(Keyboard::D)) {
-				state = right; speed = 0.1; sprite.setTextureRect(IntRect(180, 0, 90, 90)); //sprite.setScale(0.33, 0.33);
+				state = right; speed = 0.1; //sprite.setTextureRect(IntRect(180, 0, 90, 90)); //sprite.setScale(0.33, 0.33);
 			}
 
 			if ((Keyboard::isKeyPressed(Keyboard::W)) && (onGround)) {
@@ -83,13 +97,14 @@ public:
 		}
 	}
 
-	void stateWeapon(bool stateNow) {
+	bool stateWeapon(bool stateNow) {
 		if (stateNow) {
 			sprite.setTextureRect(IntRect(37, 0, 90, 90));
 		}
 		else {
 			sprite.setTextureRect(IntRect(180, 0, 90, 90));
 		}
+		return stateNow;
 	}
 
 
@@ -115,6 +130,7 @@ public:
 
 	void update(float time)
 	{
+		animation(time);
 		control();
 		switch (state)
 		{
@@ -147,8 +163,8 @@ noHealthSprite.setPosition(1150, 10);*/
 
 class PickUpObj :public Entity {
 public:
-	int dx = 0.1;
-	int dy = 0.1;
+	int dx = 0.9;
+	int dy = 0.9;
 	PickUpObj(Image &image, String Name, float X, float Y, int W, int H) :Entity(image, Name, X, Y, W, H) {
 		if (name == "noHealth") {
 			sprite.setTextureRect(IntRect(738, 2, 62, 62));
@@ -165,8 +181,8 @@ public:
 		else if (name == "Health") {
 			sprite.setTextureRect(IntRect(673, 2, 62, 62));
 		}
-		x += dx * time;
-		y += dy * time;
+		//x += dx * time;
+		//y += dy * time;
 		sprite.setPosition(x, y);
 	}
 
@@ -181,6 +197,10 @@ public:
 			sprite.setTextureRect(IntRect(0, 0, 97, 107));
 			sprite.scale(-1, 1);
 			dx = -0.1;
+		}
+		else if (name == "mediumEnemy") {
+			sprite.setTextureRect(IntRect(0, 0, 244, 230));
+			sprite.setScale(-0.15, 0.15);
 		}
 	}
 
@@ -200,8 +220,8 @@ public:
 	{
 		switch (EnemyState)
 		{
-		case right: vec = 450; dx = 0.15; break;// 300 дальность взгляда врага.
-		case left: vec = -450; dx = -0.15; break;
+		case right: vec = 450; dx = 0.18; break;// 300 дальность взгляда врага.
+		case left: vec = -450; dx = -0.18; break;
 		}
 		if (name == "easyEnemy") {
 			if (isMove) {
@@ -211,6 +231,12 @@ public:
 			}
 			if (health <= 0) {
 				life = false; 
+			}
+		}
+		else if (name == "mediumEnemy") {
+			sprite.setPosition(x + w / 2, y + h / 2);
+			if (health <= 0) {
+				life = false;
 			}
 		}
 	}
@@ -266,6 +292,8 @@ int main()
 
 	bool immortalFlag = false;
 	bool missionTarget = false;
+	bool scaleWeapon = true;
+	bool scaleEnemyWeapon = false;
 
 	Texture bgTexture;
 	bgTexture.loadFromFile("images/fon-nebo.png");
@@ -288,15 +316,20 @@ int main()
 	easyEnemyImage.loadFromFile("images/easyEnemy.png");
 	easyEnemyImage.createMaskFromColor(Color(255, 255, 255));//маска для пули по белому цвету
 
+
+	Image mediumEnemyImage;
+	mediumEnemyImage.loadFromFile("images/mediumEnemy.png");
+	mediumEnemyImage.createMaskFromColor(Color(255, 255, 255));//маска для пули по белому цвету
+
 	Image healthImage;
 	healthImage.loadFromFile("images/weapons.png");
 
 	Object player = lvl.GetObject("player");//объект игрока на нашей карте.задаем координаты игроку в начале при помощи него
 	std::vector<Object> e = lvl.GetObjects("easyEnemy");//все объекты врага на tmx карте хранятся в этом векторе
+	std::vector<Object> m = lvl.GetObjects("mediumEnemy");
 	Object flag = lvl.GetObject("flag");//объект игрока на нашей карте.задаем координаты игроку в начале при помощи него
 
 	Player p(heroImage, "Player1", lvl, player.rect.left, player.rect.top, 36, 36);//передаем координаты прямоугольника player из карты в координаты нашего игрока
-
 
 	Image BulletImage;//изображение для пули
 	BulletImage.loadFromFile("images/bullet.png");//загрузили картинку в объект изображения
@@ -327,10 +360,18 @@ int main()
 
 	Sprite weaponSprite;
 	weaponSprite.setTexture(weaponTexture);
-	weaponSprite.setTextureRect(IntRect(66, 391, 215, 61));
+	//weaponSprite.setTextureRect(IntRect(66, 391, 215, 61));
+	weaponSprite.setTextureRect(IntRect(66, 194, 227, 60));
 	weaponSprite.setPosition(p.x + 16, p.y + 16);
 	weaponSprite.setScale(0.25, 0.25);
-	weaponSprite.setOrigin(215 / 2, 61 / 2);
+	//weaponSprite.setOrigin(215 / 2, 61 / 2);
+
+	Sprite enemyWeaponSprite;
+	enemyWeaponSprite.setTexture(weaponTexture);
+	//weaponSprite.setTextureRect(IntRect(66, 391, 215, 61));
+	enemyWeaponSprite.setTextureRect(IntRect(68, 130, 123, 63));
+	enemyWeaponSprite.setScale(-0.3, 0.3);
+	enemyWeaponSprite.setOrigin(123 / 2, 63 / 2);
 
 
 	Texture molotTexture;
@@ -389,6 +430,9 @@ int main()
 	for (int i = 0; i < e.size(); i++) {//проходимся по элементам этого вектора(а именно по врагам) 
 		entities.push_back(new Enemy(easyEnemyImage, "easyEnemy", lvl, e[i].rect.left, e[i].rect.top, 36, 36));//и закидываем в список всех наших врагов с карты
 	}
+	for (int i = 0; i < m.size(); i++) {//проходимся по элементам этого вектора(а именно по врагам) 
+		entities.push_back(new Enemy(mediumEnemyImage, "mediumEnemy", lvl, m[i].rect.left, m[i].rect.top, 36, 36));
+	}
 	int counter = 0;
 	while (counter != 10) {
 		PUobjs.push_back(new PickUpObj(healthImage, "Health", p.x, p.y - 300, 62, 62)); //передаем координаты прямоугольника player из карты в координаты нашего игрока
@@ -409,6 +453,7 @@ int main()
 		dX = pos.x - p.x;//вектор , колинеарный прямой, которая пересекает спрайт и курсор
 		dY = pos.y - p.y;//он же, координата y
 		float rotation = (atan2(dY, dX)) * 180 / 3.14159265;//получаем угол в радианах и переводим его в градусы
+		float rotationEnemyWeapon = 30;
 		//std::cout << rotation << "\n";//смотрим на градусы в консольке
 		weaponSprite.setRotation(rotation);//поворачиваем спрайт на эти градусы
 		Event event;
@@ -417,8 +462,10 @@ int main()
 				window.close();
 			if (event.type == sf::Event::KeyReleased) {
 				if (event.key.code == sf::Keyboard::Space) {
-					entities.push_back(new Bullet(BulletImage, "Bullet", lvl, weaponSprite.getPosition().x - 15, weaponSprite.getPosition().y - 10, 24, 23, rotation, pos.x, pos.y));
+					weaponSprite.setOrigin(215, 61);
+					entities.push_back(new Bullet(BulletImage, "Bullet", lvl, weaponSprite.getPosition().x, weaponSprite.getPosition().y, 24, 23, rotation, pos.x, pos.y));
 					shoot.play();
+					weaponSprite.setOrigin(0, 0);
 					//flashSprite.setScale(1, 1);
 					//flashSprite.setPosition(weaponSprite.getPosition().x, weaponSprite.getPosition().y);
 					//flashSprite.setScale(0, 0);
@@ -451,12 +498,12 @@ int main()
 
 		for (it = entities.begin(); it != entities.end(); it++) {
 			for (at = entities.begin(); at != entities.end(); at++) {
-				if ((*it)->getRect().intersects((*at)->getRect()) && (((*at)->name == "Bullet") && ((*it)->name == "easyEnemy"))) {
+				if ((*it)->getRect().intersects((*at)->getRect()) && (((*at)->name == "Bullet") && (((*it)->name == "easyEnemy") || ((*it)->name == "mediumEnemy")))) {
 					(*it)->health -= 13;
 					(*at)->life = false;
 				}
 			}
-			if ((*it)->name == "easyEnemy") {
+			if (((*it)->name == "easyEnemy") || ((*it)->name == "mediumEnemy")) {
 				if ((*it)->getRect().intersects(p.getRect())) {
 					(*it)->isMove = false;
 					if (!kickHit.getStatus()) {
@@ -469,26 +516,35 @@ int main()
 				} 
 				else {
 					(*it)->isMove = true;
-					if ((*it)->getEnemyview().intersects(p.getRect())) {
-						(*it)->dx = p.dx;
-						(*it)->update(time);
+					if (((*it)->getEnemyview().intersects(p.getRect())) || (((*it)->getMediumEnemyView().intersects(p.getRect())) && ((*it)->name == "mediumEnemy"))) {
+						if ((*it)->name == "easyEnemy") {
+							(*it)->dx = p.dx;
+						}
+						if ((*it)->name == "mediumEnemy") {
+							dX = p.x - (*it)->x;//вектор , колинеарный прямой, которая пересекает спрайт и курсор
+							dY = p.y - (*it)->y;//он же, координата y
+							rotationEnemyWeapon = (atan2(dY, dX)) * 180 / 3.14159265;//получаем угол в радианах и переводим его в градусы
+						}
 						(*it)->sprite.setColor(Color::Red);
 					}
 					else {
 						(*it)->sprite.setColor(Color::White);
-						(*it)->dx = -p.dx;
 					}
 				}
 			}
 		}
-		counter = p.x + 500;
+		//counter = Cpos.x + 600;
+		//counter = p.x + 500;
+		counter = view.getCenter().x + 500;
 		int healthCounter = 1000;
 		for (point = PUobjs.begin(); point != PUobjs.end(); point++) {
 			if (p.health < healthCounter) {
 				(*point)->name = "noHealth";
 			}
 			(*point)->x = counter;
-			(*point)->y = p.y - 220;
+			//(*point)->y = p.y - 220;
+			(*point)->y = view.getCenter().y - 220;
+			//(*point)->y = Cpos.y - 150;
 			(*point)->update(time);
 			counter -= 35;
 			healthCounter -= 100;
@@ -514,11 +570,19 @@ int main()
 		}
 
 		if ((-90.0 <= rotation) && (rotation <= 90.0)) {
-			weaponSprite.setPosition(p.x + 41, p.y + 28);
+			weaponSprite.setPosition(p.x + 32, p.y + 20);
+			if (!scaleWeapon) {
+				weaponSprite.scale(1, -1);
+				scaleWeapon = true;
+			}
 			p.stateWeapon(false);
 		}
 		else {
-			weaponSprite.setPosition(p.x + 11, p.y + 28);
+			weaponSprite.setPosition(p.x + 21, p.y + 20);
+			if (scaleWeapon) {
+				weaponSprite.scale(1, -1);
+				scaleWeapon = false;
+			}
 			p.stateWeapon(true);
 		}
 
@@ -534,13 +598,38 @@ int main()
 				}
 				window.draw(molotSprite);
 			}
+			if ((*it)->name == "mediumEnemy") {
+				if ((*it)->sprite.getScale().x < 0) {
+					enemyWeaponSprite.setPosition((*it)->x - 7, (*it)->y + 30);
+					enemyWeaponSprite.setRotation(rotationEnemyWeapon);
+				}
+				else {
+					enemyWeaponSprite.setPosition((*it)->x + 45, (*it)->y + 30);
+					enemyWeaponSprite.setRotation(rotationEnemyWeapon);
+				}
+				if ((-90.0 <= rotationEnemyWeapon) && (rotationEnemyWeapon <= 90.0)) {
+					if (!scaleEnemyWeapon) {
+						enemyWeaponSprite.scale(1, -1);
+						(*it)->sprite.scale(-1, 1);
+						scaleEnemyWeapon = true;
+					}
+				}
+				else {
+					if (scaleEnemyWeapon) {
+						enemyWeaponSprite.scale(1, -1);
+						(*it)->sprite.scale(-1, 1);
+						scaleEnemyWeapon = false;
+					}
+				}
+				window.draw(enemyWeaponSprite);
+			}
 			window.draw((*it)->sprite);
 		}
 		window.draw(flagSprite);
 		window.draw(weaponSprite);
 		window.draw(p.sprite);
 		window.draw(sightSprite);
-		//window.draw(flashSprite);
+		window.draw(flashSprite);
 		for (point = PUobjs.begin(); point != PUobjs.end(); point++) {
 			window.draw((*point)->sprite);
 		}
