@@ -121,8 +121,7 @@ public:
 					if (Dx>0) { x = obj[i].rect.left - w; }
 					if (Dx<0) { x = obj[i].rect.left + obj[i].rect.width; }
 				}
-				if ((obj[i].name == "finish") && (flag))
-				{
+				if ((obj[i].name == "finish") && (flag)) {
 					missionComplete = true;
 				}
 			}
@@ -201,6 +200,7 @@ public:
 		else if (name == "mediumEnemy") {
 			sprite.setTextureRect(IntRect(0, 0, 244, 230));
 			sprite.setScale(-0.15, 0.15);
+			//dx = -0.01;
 		}
 	}
 
@@ -211,8 +211,8 @@ public:
 			{
 				if (Dy>0) { y = obj[i].rect.top - h;  dy = 0; onGround = true; }
 				if (Dy<0) { y = obj[i].rect.top + obj[i].rect.height;   dy = 0; }
-				if (Dx > 0) { x = obj[i].rect.left - w;  dx = -0.1; sprite.scale(-1, 1); EnemyState = left; }
-				if (Dx < 0) { x = obj[i].rect.left + obj[i].rect.width; dx = 0.1; sprite.scale(-1, 1); EnemyState = right; }
+				if (Dx > 0) {x = obj[i].rect.left - w;  if (name == "easyEnemy") { dx = -0.1; } else { dx = -0.01; } sprite.scale(-1, 1); EnemyState = left;}
+				if (Dx < 0) { x = obj[i].rect.left + obj[i].rect.width; if (name == "easyEnemy") { dx = 0.1; } else { dx = 0.01; } sprite.scale(-1, 1); EnemyState = right; }
 			}
 	}
 
@@ -220,8 +220,8 @@ public:
 	{
 		switch (EnemyState)
 		{
-		case right: vec = 450; dx = 0.18; break;// 300 дальность взгляда врага.
-		case left: vec = -450; dx = -0.18; break;
+		case right: if (name == "easyEnemy") { dx = 0.18; vec = 450; } else { vec = 750; } break;// 300 дальность взгляда врага.
+		case left: if (name == "easyEnemy") { dx = -0.18; vec = -450; } else { vec = -750; }break;
 		}
 		if (name == "easyEnemy") {
 			if (isMove) {
@@ -234,7 +234,11 @@ public:
 			}
 		}
 		else if (name == "mediumEnemy") {
-			sprite.setPosition(x + w / 2, y + h / 2);
+			if (isMove) {
+				//checkCollisionWithMap(dx, 0);
+				//x += dx*time;
+				sprite.setPosition(x + w / 2, y + h / 2);
+			}
 			if (health <= 0) {
 				life = false;
 			}
@@ -247,7 +251,8 @@ class Bullet :public Entity {//класс пули
 public:
 	int direction; //направление пули
 	float tempy, tempx;
-	//int distance = sqrt((tempx - x)*(tempy - x) + (tempy - y)*(tempy - y));
+	//int distance = sqrt((tempx - x)*(tempx - x) + (tempy - y)*(tempy - y));
+	bool flash;
 
 	Bullet(Image &image, String Name, Level &lvl, float X, float Y, int W, int H, int dir, float tempX, float tempY) :Entity(image, Name, X, Y, W, H) {//всё так же, только взяли в конце состояние игрока (int dir)
 		obj = lvl.GetObjects("solid");//инициализируем .получаем нужные объекты для взаимодействия пули с картой
@@ -259,6 +264,7 @@ public:
 		tempx = tempX;
 		tempy = tempY;
 		life = true;
+		flash = false;
 		dx = x;
 		dy = y;
 		//выше инициализация в конструкторе
@@ -267,8 +273,8 @@ public:
 
 	void update(float time)
 	{
-		x += speed * (tempx - dx);//идем по иксу с помощью вектора нормали
-		y += speed * (tempy - dy) ;//идем по игреку так же
+		x += speed * (tempx - dx); //идем по иксу с помощью вектора нормали
+		y += speed * (tempy - dy) ; //идем по игреку так же
 
 		if (x <= 0) x = 1;// задержка пули в левой стене, чтобы при проседании кадров она случайно не вылетела за предел карты и не было ошибки
 		if (y <= 0) y = 1;
@@ -440,12 +446,20 @@ int main()
 	}
 	Clock clock;
 	sf::Time delayTime = sf::seconds(0.01);
+	int distance = 0;
+	float currentFrame = 0;
+	float shootTime = 6;
+	float shootFlag = false;
 	while ((window.isOpen()) && (p.life) && (!p.missionComplete))
 	{
 		float time = clock.getElapsedTime().asMicroseconds();
 		int count = 0;
 		clock.restart();
 		time = time / 800;
+		currentFrame += 0.05*time;
+		if (shootFlag) {
+			shootTime += 0.005*time;
+		}
 		float dX = 0;
 		float dY = 0;
 		Vector2i pixelPos = Mouse::getPosition(window);//забираем коорд курсора
@@ -457,18 +471,19 @@ int main()
 		//std::cout << rotation << "\n";//смотрим на градусы в консольке
 		weaponSprite.setRotation(rotation);//поворачиваем спрайт на эти градусы
 		Event event;
+		if (currentFrame > 2) {
+			flashSprite.setScale(0, 0);
+			currentFrame -= 2;
+		}
 		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::Closed)
 				window.close();
 			if (event.type == sf::Event::KeyReleased) {
 				if (event.key.code == sf::Keyboard::Space) {
-					weaponSprite.setOrigin(215, 61);
 					entities.push_back(new Bullet(BulletImage, "Bullet", lvl, weaponSprite.getPosition().x, weaponSprite.getPosition().y, 24, 23, rotation, pos.x, pos.y));
 					shoot.play();
-					weaponSprite.setOrigin(0, 0);
-					//flashSprite.setScale(1, 1);
-					//flashSprite.setPosition(weaponSprite.getPosition().x, weaponSprite.getPosition().y);
-					//flashSprite.setScale(0, 0);
+					flashSprite.setPosition(weaponSprite.getPosition().x, weaponSprite.getPosition().y);
+					flashSprite.setScale(1.5, 1.5);
 				}
 				if (event.key.code == sf::Keyboard::Escape) {
 					if (!immortalFlag) {
@@ -503,20 +518,30 @@ int main()
 					(*at)->life = false;
 				}
 			}
-			if (((*it)->name == "easyEnemy") || ((*it)->name == "mediumEnemy")) {
+			if (((*it)->name == "easyEnemy") || ((*it)->name == "mediumEnemy") || ((*it)->name == "enemyBullet")) {
+				if ((*it)->name == "mediumEnemy") {
+					distance = sqrt((p.x - (*it)->x)*(p.x - (*it)->x) + (p.y - (*it)->y)*(p.y - (*it)->y));
+				}
 				if ((*it)->getRect().intersects(p.getRect())) {
 					(*it)->isMove = false;
 					if (!kickHit.getStatus()) {
 						kickHit.play();
 					}
-					if (!immortalFlag)
+					if (!immortalFlag) 
 					{
-						p.health -= 7;
+
+						if ((*it)->name == "enemyBullet") {
+							p.health -= 100;
+							(*it)->life = false;
+						}
+						else {
+							p.health -= 7;
+						}
 					}
 				} 
 				else {
 					(*it)->isMove = true;
-					if (((*it)->getEnemyview().intersects(p.getRect())) || (((*it)->getMediumEnemyView().intersects(p.getRect())) && ((*it)->name == "mediumEnemy"))) {
+					if ((((*it)->getEnemyview().intersects(p.getRect())) && ((*it)->name == "easyEnemy")) || ((distance < 430) && ((*it)->name == "mediumEnemy"))) {
 						if ((*it)->name == "easyEnemy") {
 							(*it)->dx = p.dx;
 						}
@@ -524,10 +549,19 @@ int main()
 							dX = p.x - (*it)->x;//вектор , колинеарный прямой, которая пересекает спрайт и курсор
 							dY = p.y - (*it)->y;//он же, координата y
 							rotationEnemyWeapon = (atan2(dY, dX)) * 180 / 3.14159265;//получаем угол в радианах и переводим его в градусы
+							(*it)->isMove = false;
+							if (shootTime > 4) {
+								entities.push_back(new Bullet(BulletImage, "enemyBullet", lvl, (*it)->x, (*it)->y + 21, 24, 23, rotation, p.x + 11, p.y + 11));
+								shootTime = 0;
+								shootFlag = true;
+							}
 						}
 						(*it)->sprite.setColor(Color::Red);
 					}
 					else {
+						if ((*it)->name == "mediumEnemy") {
+							(*it)->isMove = true;
+						}
 						(*it)->sprite.setColor(Color::White);
 					}
 				}
@@ -568,7 +602,6 @@ int main()
 		else {
 			flagSprite.setPosition(p.x + 20, p.y - 50);
 		}
-
 		if ((-90.0 <= rotation) && (rotation <= 90.0)) {
 			weaponSprite.setPosition(p.x + 32, p.y + 20);
 			if (!scaleWeapon) {
