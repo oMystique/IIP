@@ -270,6 +270,14 @@ public:
 		flash = false;
 		dx = x;
 		dy = y;
+		sprite.setScale(0.2, 0.2);
+		if (name == "Bullet") {
+			sprite.setTextureRect(IntRect(339, 394, 27, 48));
+			sprite.setRotation(90);
+		}
+		else if (name == "enemyBullet") {
+			sprite.setTextureRect(IntRect(321, 271, 60, 36));
+		}
 		//выше инициализация в конструкторе
 	}
 
@@ -343,8 +351,8 @@ int main()
 	Player p(heroImage, "Player1", lvl, player.rect.left, player.rect.top, 36, 36);//передаем координаты прямоугольника player из карты в координаты нашего игрока
 
 	Image BulletImage;//изображение для пули
-	BulletImage.loadFromFile("images/bullet.png");//загрузили картинку в объект изображения
-	BulletImage.createMaskFromColor(Color(255, 255, 255));//маска для пули по белому цвету
+	BulletImage.loadFromFile("images/weapons.png");//загрузили картинку в объект изображения
+	//BulletImage.createMaskFromColor(Color(255, 255, 255));//маска для пули по белому цвету
 
 	Texture flagTexture;
 	flagTexture.loadFromFile("images/weapons.png");
