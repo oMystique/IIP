@@ -293,13 +293,14 @@ public:
 
 int main()
 {
-	RenderWindow window(VideoMode(1180, 620), "FirstGame. Ildarkin Alexey; PS-22.");
-	view.reset(FloatRect(0, 0, 1030, 470));	
+	RenderWindow window(VideoMode(1280, 720), "FirstGame. Ildarkin Alexey; PS-22.");
+	view.reset(FloatRect(0, 0, 880, 370));	
 
 	bool immortalFlag = false;
 	bool missionTarget = false;
 	bool scaleWeapon = true;
 	bool scaleEnemyWeapon = false;
+	bool startFight = false;
 
 	Texture bgTexture;
 	bgTexture.loadFromFile("images/fon-nebo.png");
@@ -478,8 +479,8 @@ int main()
 		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::Closed)
 				window.close();
-			if (event.type == sf::Event::KeyReleased) {
-				if (event.key.code == sf::Keyboard::Space) {
+			if ((event.type == sf::Event::KeyReleased) || (event.type == sf::Event::MouseButtonReleased)) {
+				if ((event.key.code == sf::Keyboard::Space) || (event.MouseLeft)) {
 					entities.push_back(new Bullet(BulletImage, "Bullet", lvl, weaponSprite.getPosition().x, weaponSprite.getPosition().y, 24, 23, rotation, pos.x, pos.y));
 					shoot.play();
 					flashSprite.setPosition(weaponSprite.getPosition().x, weaponSprite.getPosition().y);
@@ -504,6 +505,9 @@ int main()
 				if (b->name == "easyEnemy")
 				{
 					enemyDie.play();
+				}
+				else if (b->name == "mediumEnemy") {
+					scaleEnemyWeapon = false; 
 				}
 				it = entities.erase(it); delete b; 
 			}// если этот объект мертв, то удаляем его
@@ -545,7 +549,7 @@ int main()
 						if ((*it)->name == "easyEnemy") {
 							(*it)->dx = p.dx;
 						}
-						if ((*it)->name == "mediumEnemy") {
+						if ((*it)->name == "mediumEnemy") { 
 							dX = p.x - (*it)->x;//вектор , колинеарный прямой, которая пересекает спрайт и курсор
 							dY = p.y - (*it)->y;//он же, координата y
 							rotationEnemyWeapon = (atan2(dY, dX)) * 180 / 3.14159265;//получаем угол в радианах и переводим его в градусы
@@ -554,6 +558,9 @@ int main()
 								entities.push_back(new Bullet(BulletImage, "enemyBullet", lvl, (*it)->x, (*it)->y + 21, 24, 23, rotation, p.x + 11, p.y + 11));
 								shootTime = 0;
 								shootFlag = true;
+								flashSprite.setPosition((*it)->x, (*it)->y + 21);
+								flashSprite.setScale(1.5, 1.5);
+								break;
 							}
 						}
 						(*it)->sprite.setColor(Color::Red);
@@ -569,7 +576,7 @@ int main()
 		}
 		//counter = Cpos.x + 600;
 		//counter = p.x + 500;
-		counter = view.getCenter().x + 500;
+		counter = view.getCenter().x + 400;
 		int healthCounter = 1000;
 		for (point = PUobjs.begin(); point != PUobjs.end(); point++) {
 			if (p.health < healthCounter) {
@@ -577,7 +584,7 @@ int main()
 			}
 			(*point)->x = counter;
 			//(*point)->y = p.y - 220;
-			(*point)->y = view.getCenter().y - 220;
+			(*point)->y = view.getCenter().y - 150;
 			//(*point)->y = Cpos.y - 150;
 			(*point)->update(time);
 			counter -= 35;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="30" tilewidth="32" tileheight="32" backgroundcolor="#aaffff" nextobjectid="249">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="30" tilewidth="32" tileheight="32" backgroundcolor="#aaffff" nextobjectid="250">
  <tileset firstgid="1" name="9462348" tilewidth="32" tileheight="32" tilecount="1024">
   <image source="images/9462348.png" width="1024" height="1024"/>
  </tileset>
@@ -12107,7 +12107,7 @@
   <object id="226" name="player" x="542.167" y="523.167" width="34.6667" height="34.6667"/>
   <object id="227" name="mediumEnemy" x="973.999" y="537.416" width="36.0017" height="33.1667"/>
   <object id="228" name="mediumEnemy" x="2283.33" y="440.75" width="36.0017" height="33.1667"/>
-  <object id="229" name="mediumEnemy" x="3015.33" y="448.75" width="36.0017" height="33.1667"/>
+  <object id="229" name="mediumEnemy" x="3011.33" y="445.417" width="36.0017" height="33.1667"/>
   <object id="230" name="mediumEnemy" x="3320" y="665.417" width="36.0017" height="33.1667"/>
   <object id="231" name="mediumEnemy" x="3743.33" y="696.75" width="36.0017" height="33.1667"/>
   <object id="232" name="mediumEnemy" x="3942" y="504.083" width="36.0017" height="33.1667"/>
@@ -12123,9 +12123,9 @@
   <object id="242" name="stopEnemy" x="4655.33" y="457.167" width="8" height="79"/>
   <object id="243" name="mediumEnemy" x="4934.67" y="405.417" width="36.0017" height="33.1667"/>
   <object id="244" name="stopEnemy" x="3954.67" y="653.833" width="8" height="79"/>
-  <object id="245" name="mediumEnemy" x="4327.33" y="628.75" width="36.0017" height="33.1667"/>
   <object id="246" name="mediumEnemy" x="5900.67" y="227.417" width="36.0017" height="33.1667"/>
   <object id="247" name="mediumEnemy" x="5920" y="216.083" width="36.0017" height="33.1667"/>
   <object id="248" name="mediumEnemy" x="5626.67" y="504.75" width="36.0017" height="33.1667"/>
+  <object id="249" name="easyEnemy" x="3821.33" y="686.833" width="41.3367" height="38.334"/>
  </objectgroup>
 </map>
