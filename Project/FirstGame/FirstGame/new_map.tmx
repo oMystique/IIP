@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="30" tilewidth="32" tileheight="32" backgroundcolor="#aaffff" nextobjectid="250">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="30" tilewidth="32" tileheight="32" backgroundcolor="#aaffff" nextobjectid="267">
  <tileset firstgid="1" name="9462348" tilewidth="32" tileheight="32" tilecount="1024">
   <image source="images/9462348.png" width="1024" height="1024"/>
  </tileset>
@@ -2778,10 +2778,10 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="813"/>
+   <tile gid="814"/>
+   <tile gid="815"/>
+   <tile gid="816"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -2978,10 +2978,10 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="845"/>
+   <tile gid="846"/>
+   <tile gid="847"/>
+   <tile gid="848"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -2992,7 +2992,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="822"/>
-   <tile gid="0"/>
+   <tile gid="446"/>
    <tile gid="0"/>
    <tile gid="1019"/>
    <tile gid="1020"/>
@@ -3178,10 +3178,10 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="877"/>
+   <tile gid="878"/>
+   <tile gid="879"/>
+   <tile gid="880"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -3378,10 +3378,10 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="909"/>
+   <tile gid="910"/>
+   <tile gid="911"/>
+   <tile gid="912"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -3578,18 +3578,18 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
+   <tile gid="941"/>
+   <tile gid="942"/>
+   <tile gid="0"/>
+   <tile gid="950"/>
    <tile gid="951"/>
    <tile gid="952"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="307"/>
+   <tile gid="308"/>
    <tile gid="0"/>
    <tile gid="832"/>
    <tile gid="832"/>
@@ -3778,22 +3778,22 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
+   <tile gid="973"/>
+   <tile gid="974"/>
+   <tile gid="981"/>
+   <tile gid="982"/>
    <tile gid="983"/>
    <tile gid="984"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="338"/>
+   <tile gid="339"/>
+   <tile gid="340"/>
+   <tile gid="341"/>
+   <tile gid="342"/>
+   <tile gid="343"/>
+   <tile gid="344"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -3978,22 +3978,22 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
+   <tile gid="1005"/>
+   <tile gid="1006"/>
+   <tile gid="1013"/>
+   <tile gid="1014"/>
    <tile gid="1015"/>
    <tile gid="1016"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="370"/>
+   <tile gid="371"/>
+   <tile gid="372"/>
+   <tile gid="373"/>
+   <tile gid="374"/>
+   <tile gid="375"/>
+   <tile gid="376"/>
    <tile gid="859"/>
    <tile gid="860"/>
    <tile gid="861"/>
@@ -9584,8 +9584,8 @@
    <tile gid="140"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="405"/>
-   <tile gid="406"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -9784,20 +9784,20 @@
    <tile gid="172"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="437"/>
-   <tile gid="438"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="338"/>
-   <tile gid="339"/>
-   <tile gid="340"/>
-   <tile gid="341"/>
-   <tile gid="342"/>
-   <tile gid="343"/>
-   <tile gid="344"/>
+   <tile gid="967"/>
+   <tile gid="968"/>
+   <tile gid="969"/>
+   <tile gid="970"/>
+   <tile gid="971"/>
+   <tile gid="972"/>
    <tile gid="987"/>
    <tile gid="988"/>
    <tile gid="989"/>
@@ -9984,20 +9984,20 @@
    <tile gid="859"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="469"/>
-   <tile gid="470"/>
-   <tile gid="471"/>
-   <tile gid="472"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="370"/>
-   <tile gid="371"/>
-   <tile gid="372"/>
-   <tile gid="373"/>
-   <tile gid="374"/>
-   <tile gid="375"/>
-   <tile gid="376"/>
+   <tile gid="999"/>
+   <tile gid="1000"/>
+   <tile gid="1001"/>
+   <tile gid="1002"/>
+   <tile gid="1003"/>
+   <tile gid="1004"/>
    <tile gid="1019"/>
    <tile gid="1020"/>
    <tile gid="1021"/>
@@ -12012,8 +12012,8 @@
   </data>
  </layer>
  <objectgroup name="Collision">
-  <object id="17" name="solid" x="960" y="584" width="60" height="47.6667"/>
-  <object id="20" name="solid" x="160" y="136" width="12" height="504"/>
+  <object id="17" name="solid" x="960" y="575" width="60" height="56.6667"/>
+  <object id="20" name="solid" x="160" y="207.091" width="12" height="428.242"/>
   <object id="27" name="solid" x="164" y="636" width="2810.67" height="324"/>
   <object id="85" name="solid" x="2114.36" y="614.364" width="35.5455" height="20.5455"/>
   <object id="86" name="solid" x="2142" y="540" width="386" height="71"/>
@@ -12053,10 +12053,10 @@
   <object id="137" name="solid" x="5444" y="427" width="59" height="19.6667"/>
   <object id="139" name="solid" x="5508" y="440" width="22.6667" height="205.333"/>
   <object id="140" name="solid" x="5536" y="637.333" width="512" height="12"/>
-  <object id="142" name="solid" x="6043" y="170" width="15" height="478"/>
+  <object id="142" name="solid" x="6043" y="207.333" width="15" height="430.042"/>
   <object id="146" name="easyEnemy" x="3503.92" y="660.667" width="25.58" height="27.083"/>
   <object id="147" name="easyEnemy" x="428.915" y="596.75" width="36.0017" height="33.1667"/>
-  <object id="155" name="solid" x="168" y="148" width="5904" height="12"/>
+  <object id="155" name="solid" x="168" y="195" width="5904" height="12"/>
   <object id="160" name="easyEnemy" x="3383.33" y="750.833" width="41.3367" height="38.334"/>
   <object id="161" name="easyEnemy" x="3631.33" y="749.833" width="41.3367" height="38.334"/>
   <object id="162" name="easyEnemy" x="2742.83" y="593.833" width="41.3367" height="38.334"/>
@@ -12090,7 +12090,7 @@
   <object id="203" name="stopEnemy" x="3382" y="464.5" width="8" height="79"/>
   <object id="204" name="stopEnemy" x="3541" y="616.5" width="8" height="79"/>
   <object id="205" name="stopEnemy" x="3395" y="617.5" width="8" height="79"/>
-  <object id="206" name="stopEnemy" x="5537" y="555.5" width="8" height="79"/>
+  <object id="206" name="stopEnemy" x="5719" y="555.5" width="8" height="79"/>
   <object id="207" name="stopEnemy" x="6032" y="552.5" width="8" height="79"/>
   <object id="208" name="solid" x="529.494" y="568.497" width="25.5219" height="65.9681" rotation="0.837647"/>
   <object id="210" name="solid" x="556.447" y="573.096" width="25.5219" height="61.5241" rotation="0.837647"/>
@@ -12103,12 +12103,12 @@
   <object id="217" name="easyEnemy" x="1883.04" y="598.292" width="36.0017" height="33.1667"/>
   <object id="218" name="easyEnemy" x="2034.33" y="598.417" width="36.0017" height="33.1667"/>
   <object id="220" name="easyEnemy" x="5456.66" y="375.5" width="41.3367" height="38.334"/>
-  <object id="221" name="finish" x="5664" y="509" width="60.5" height="125.667"/>
+  <object id="221" name="finish" x="5912.67" y="532" width="60.5" height="80.667"/>
   <object id="226" name="player" x="542.167" y="523.167" width="34.6667" height="34.6667"/>
   <object id="227" name="mediumEnemy" x="973.999" y="537.416" width="36.0017" height="33.1667"/>
   <object id="228" name="mediumEnemy" x="2283.33" y="440.75" width="36.0017" height="33.1667"/>
-  <object id="229" name="mediumEnemy" x="3011.33" y="445.417" width="36.0017" height="33.1667"/>
-  <object id="230" name="mediumEnemy" x="3320" y="665.417" width="36.0017" height="33.1667"/>
+  <object id="229" name="mediumEnemy" x="3011.33" y="438.75" width="36.0017" height="33.1667"/>
+  <object id="230" name="mediumEnemy" x="3311.33" y="662.084" width="36.0017" height="33.1667"/>
   <object id="231" name="mediumEnemy" x="3743.33" y="696.75" width="36.0017" height="33.1667"/>
   <object id="232" name="mediumEnemy" x="3942" y="504.083" width="36.0017" height="33.1667"/>
   <object id="233" name="mediumEnemy" x="4610" y="492.75" width="36.0017" height="33.1667"/>
@@ -12125,7 +12125,21 @@
   <object id="244" name="stopEnemy" x="3954.67" y="653.833" width="8" height="79"/>
   <object id="246" name="mediumEnemy" x="5900.67" y="227.417" width="36.0017" height="33.1667"/>
   <object id="247" name="mediumEnemy" x="5920" y="216.083" width="36.0017" height="33.1667"/>
-  <object id="248" name="mediumEnemy" x="5626.67" y="504.75" width="36.0017" height="33.1667"/>
+  <object id="248" name="mediumEnemy" x="5566" y="373.417" width="36.0017" height="33.1667"/>
   <object id="249" name="easyEnemy" x="3821.33" y="686.833" width="41.3367" height="38.334"/>
+  <object id="250" name="healthPoint" x="1947.58" y="512" width="26.0606" height="25.5758"/>
+  <object id="251" name="healthPoint" x="2835.64" y="578.545" width="26.0606" height="25.5758"/>
+  <object id="252" name="healthPoint" x="4187.64" y="547.879" width="26.0606" height="25.5758"/>
+  <object id="253" name="solid" x="3420" y="634.667" width="64.6667" height="58.4167"/>
+  <object id="255" name="healthPoint" x="3058.3" y="427.212" width="26.0606" height="25.5758"/>
+  <object id="256" name="healthPoint" x="725.636" y="561.879" width="26.0606" height="25.5758"/>
+  <object id="259" name="healthPoint" x="2287.64" y="406.545" width="26.0606" height="25.5758"/>
+  <object id="260" name="healthPoint" x="5334.3" y="343.879" width="26.0606" height="25.5758"/>
+  <object id="261" name="healthPoint" x="5756.3" y="600.545" width="26.0606" height="25.5758"/>
+  <object id="262" name="solid" x="5550" y="424" width="52.6667" height="209.333"/>
+  <object id="263" name="solid" x="5604.67" y="517.333" width="34.6667" height="16.6665"/>
+  <object id="264" name="solid" x="5623.33" y="472" width="19.3333" height="42.6665"/>
+  <object id="265" name="solid" x="5685.33" y="548.667" width="33.3333" height="88.6667"/>
+  <object id="266" name="solid" x="5666" y="580" width="18.6667" height="21.3332"/>
  </objectgroup>
 </map>

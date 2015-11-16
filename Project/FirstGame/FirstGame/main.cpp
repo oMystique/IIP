@@ -171,6 +171,9 @@ public:
 		else if (name == "Health") {
 			sprite.setTextureRect(IntRect(673, 2, 62, 62));
 		}
+		else if (name == "healthPoint") {
+			sprite.setTextureRect(IntRect(673, 2, 62, 62));
+		}
 	}
 
 	void update(float time) {
@@ -334,6 +337,7 @@ int main()
 	Object player = lvl.GetObject("player");//объект игрока на нашей карте.задаем координаты игроку в начале при помощи него
 	std::vector<Object> e = lvl.GetObjects("easyEnemy");//все объекты врага на tmx карте хран€тс€ в этом векторе
 	std::vector<Object> m = lvl.GetObjects("mediumEnemy");
+	std::vector<Object> healthPoints = lvl.GetObjects("healthPoint");
 	Object flag = lvl.GetObject("flag");//объект игрока на нашей карте.задаем координаты игроку в начале при помощи него
 
 	Player p(heroImage, "Player1", lvl, player.rect.left, player.rect.top, 36, 36);//передаем координаты пр€моугольника player из карты в координаты нашего игрока
@@ -440,6 +444,9 @@ int main()
 	for (int i = 0; i < m.size(); i++) {//проходимс€ по элементам этого вектора(а именно по врагам) 
 		entities.push_back(new Enemy(mediumEnemyImage, "mediumEnemy", lvl, m[i].rect.left, m[i].rect.top, 36, 36));
 	}
+	for (int i = 0; i < healthPoints.size(); i++) {//проходимс€ по элементам этого вектора(а именно по врагам) 
+		entities.push_back(new PickUpObj(healthImage, "healthPoint", healthPoints[i].rect.left, healthPoints[i].rect.top, 44, 44));
+	}
 	int counter = 0;
 	while (counter != 10) {
 		PUobjs.push_back(new PickUpObj(healthImage, "Health", p.x, p.y - 300, 62, 62)); //передаем координаты пр€моугольника player из карты в координаты нашего игрока
@@ -479,20 +486,18 @@ int main()
 		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::Closed)
 				window.close();
-			if ((event.type == sf::Event::KeyReleased) || (event.type == sf::Event::MouseButtonReleased)) {
-				if ((event.key.code == sf::Keyboard::Space) || (event.MouseLeft)) {
-					entities.push_back(new Bullet(BulletImage, "Bullet", lvl, weaponSprite.getPosition().x, weaponSprite.getPosition().y, 24, 23, rotation, pos.x, pos.y));
-					shoot.play();
-					flashSprite.setPosition(weaponSprite.getPosition().x, weaponSprite.getPosition().y);
-					flashSprite.setScale(1.5, 1.5);
+			if (((event.type == sf::Event::KeyReleased) && (event.key.code == sf::Keyboard::Space)) || ((event.type == Event::MouseButtonReleased) && (event.key.code == Mouse::Left))) {
+				entities.push_back(new Bullet(BulletImage, "Bullet", lvl, weaponSprite.getPosition().x, weaponSprite.getPosition().y, 24, 23, rotation, pos.x, pos.y));
+				shoot.play();
+				flashSprite.setPosition(weaponSprite.getPosition().x, weaponSprite.getPosition().y);
+				flashSprite.setScale(1.5, 1.5);
+			}
+			else if ((event.type == sf::Event::KeyReleased) && (event.key.code == sf::Keyboard::Escape)) {
+				if (!immortalFlag) { 
+					immortalFlag = true; 
 				}
-				if (event.key.code == sf::Keyboard::Escape) {
-					if (!immortalFlag) {
-						immortalFlag = true;
-					}
-					else {
-						immortalFlag = false;
-					}
+				else {
+					immortalFlag = false;
 				}
 			}
 		}
@@ -573,6 +578,10 @@ int main()
 					}
 				}
 			}
+			else if (((*it)->name == "healthPoint") && ((*it)->getRect().intersects(p.getRect()) && (p.health < 1000))) {
+				p.health += 100;
+				(*it)->life = false;
+			}
 		}
 		//counter = Cpos.x + 600;
 		//counter = p.x + 500;
@@ -581,6 +590,9 @@ int main()
 		for (point = PUobjs.begin(); point != PUobjs.end(); point++) {
 			if (p.health < healthCounter) {
 				(*point)->name = "noHealth";
+			}
+			else {
+				(*point)->name = "Health";
 			}
 			(*point)->x = counter;
 			//(*point)->y = p.y - 220;
