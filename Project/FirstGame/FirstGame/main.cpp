@@ -75,7 +75,7 @@ public:
 	{
 		if (state == right) { currentFrame += 0.005*time; if (currentFrame > 5) currentFrame -= 5; sprite.setTextureRect(IntRect(180 * int(currentFrame), 0, 90, 90)); }
 		if (state == left) { currentFrame += 0.005*time; if (currentFrame > 5) currentFrame -= 5; sprite.setTextureRect(IntRect(37 * int(currentFrame), 0, 90, 90)); }
-	}
+	}	
 
 
 	void control() {
@@ -567,7 +567,7 @@ int main()
 							dY = p.y - (*it)->y;//он же, координата y
 							rotationEnemyWeapon = (atan2(dY, dX)) * 180 / 3.14159265;//получаем угол в радианах и переводим его в градусы
 							(*it)->isMove = false;
-							if (shootTime > 4) {
+							if (shootTime > 5 ) {
 								entities.push_back(new Bullet(BulletImage, "enemyBullet", lvl, (*it)->x, (*it)->y + 21, 24, 23, rotation, p.x + 11, p.y + 11));
 								shootTime = 0;
 								shootFlag = true;
