@@ -5,6 +5,8 @@ struct Weapon {
 	Weapon(Image &image, String name, float x, float y, int w, int h);
 	Image weaponsImage;
 	float x, y;
+	float shootTimer;
+	bool shootFlag;
 	int w, h;
 	Texture weaponsTexture;
 	Sprite playerWeaponSprite;

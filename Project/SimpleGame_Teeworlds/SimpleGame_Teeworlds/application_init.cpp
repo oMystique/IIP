@@ -16,7 +16,7 @@ void Application::Run() {
 		time = time / GAME_SPEED;
 		GetMouseCoords();
 		ProcessEvents();
-		InteractObjects();
+		InteractObjects(time);
 		Update(time);
 		Render();
 	}

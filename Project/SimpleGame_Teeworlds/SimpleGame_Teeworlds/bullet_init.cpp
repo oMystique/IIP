@@ -10,8 +10,8 @@ Bullet::Bullet(Image &image, String name, Level lvl, float x, float y, int w, in
 	speed = DEFAULT_UNIT_SPEED;
 	life = true;
 	sprite.setScale(BULLET_SCALE, BULLET_SCALE);
-	sprite.setRotation(rotation + QUARTER_CIRCLE);
 	if (name == "Bullet") {
+		sprite.setRotation(rotation + QUARTER_CIRCLE);
 		sprite.setTextureRect(IntRect(339, 394, 27, 48));
 	}
 	else if (name == "enemyBullet") {

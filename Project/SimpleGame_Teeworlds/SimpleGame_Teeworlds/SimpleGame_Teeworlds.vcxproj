@@ -94,6 +94,8 @@
     <ClCompile Include="enemy_logic.cpp" />
     <ClCompile Include="enemy_update.cpp" />
     <ClCompile Include="entity.cpp" />
+    <ClCompile Include="lifebar_init.cpp" />
+    <ClCompile Include="lifebar_update_draw.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="interface.cpp" />
     <ClCompile Include="player.cpp" />
@@ -120,6 +122,7 @@
     <ClInclude Include="entity.h" />
     <ClInclude Include="level.h" />
     <ClInclude Include="interface.h" />
+    <ClInclude Include="lifebar.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="player_init.h" />
     <ClInclude Include="resource.h" />

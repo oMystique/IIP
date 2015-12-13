@@ -1,8 +1,21 @@
 #include "world.h"
 
 
-void World::InteractObjects() {
+void CalculateShootTime(float &time, Weapon &playerWeapon) {
+	if (playerWeapon.shootFlag) {
+		if (playerWeapon.shootTimer < 2000) {
+			playerWeapon.shootTimer += time;
+		}
+		else {
+			playerWeapon.shootFlag = false;
+		}
+	}
+}
+
+
+void World::InteractObjects(float time) {
 	float distance = 0;
+	CalculateShootTime(time, *playerWeapon);
 	for (it = entities.begin(); it != entities.end(); it++) {
 		for (at = entities.begin(); at != entities.end(); at++) {
 			if ((*it)->getRect().intersects((*at)->getRect()) && (((*at)->name == "Bullet") && (((*it)->name == "easyEnemy") || ((*it)->name == "mediumEnemy")))) {
@@ -37,8 +50,12 @@ void World::InteractObjects() {
 						else if (((*it)->sprite.getScale().x < 0) && ((*it)->sprite.getPosition().x < player->sprite.getPosition().x)) {
 							(*it)->sprite.setScale(MEDIUM_ENEMY_SCALE, MEDIUM_ENEMY_SCALE);
 						}
-						entities.push_back(new Bullet(bulletImage, "enemyBullet", lvl, (*it)->x, (*it)->y + 21, 24, 23, player->x + 11, player->y + 11, (*it)->sprite.getRotation()));
-						break;
+						if (playerWeapon->shootTimer > 1000) {
+							entities.push_back(new Bullet(bulletImage, "enemyBullet", lvl, (*it)->x, (*it)->y + 10, 24, 23, player->x + 11, player->y + 11, (*it)->sprite.getRotation()));
+							playerWeapon->shootFlag = true;
+							playerWeapon->shootTimer = 0;
+							break;
+						}
 					}
 					(*it)->sprite.setColor(Color::Red);
 				}
@@ -58,6 +75,6 @@ void World::InteractObjects() {
 void World::Shoot(String subject, float mouseX, float mouseY) {
 	if (subject == "player") {
 		shoot.play();
-		entities.push_back(new Bullet(bulletImage, "Bullet", lvl, playerWeapon->x + playerWeapon->playerWeaponSprite.getGlobalBounds().width * playerWeapon->playerWeaponSprite.getScale().y, playerWeapon->y - 10, 24, 23, mouseX, mouseY + sightSprite.getGlobalBounds().height / 2, playerWeapon->playerWeaponSprite.getRotation()));
+		entities.push_back(new Bullet(bulletImage, "Bullet", lvl, playerWeapon->x + (playerWeapon->playerWeaponSprite.getGlobalBounds().width * playerWeapon->playerWeaponSprite.getScale().y), playerWeapon->y - 8, 24, 23, mouseX, mouseY + sightSprite.getGlobalBounds().height / 2, playerWeapon->playerWeaponSprite.getRotation()));
 	}
 }

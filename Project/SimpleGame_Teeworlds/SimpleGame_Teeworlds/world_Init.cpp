@@ -8,6 +8,8 @@ void World::InitObjects() {
 
 	player = make_unique<Player>(heroImage, "Player1", lvl, playerObj.rect.left, playerObj.rect.top, 36, 36);
 	playerWeapon = make_unique<Weapon>(weaponsImage, "playerWeapon", player->x, player->y, 227, 60);
+	//lifebar = make_unique<Lifebar>(healthImage, 62, 62);
+	view = make_unique<View>();
 
 	easyEnemyObj = lvl.GetObjects("easyEnemy");
 	for (unsigned int i = 0; i < easyEnemyObj.size(); i++) {//проходимся по элементам этого вектора(а именно по врагам) 
@@ -25,8 +27,6 @@ void World::InitObjects() {
 	}
 
 	flagObj = lvl.GetObject("flag");
-
-	view = make_unique<View>();
 }
 
 
@@ -59,26 +59,23 @@ void World::InitSprites() {
 	sightSprite.setTexture(objectsTexture);
 	sightSprite.setTextureRect(IntRect(0, 0, 61, 61));
 	sightSprite.setScale(SIGHT_SCALE, SIGHT_SCALE);
-
-	healthSprite.setTexture(objectsTexture);
-	healthSprite.setTextureRect(IntRect(673, 2, 62, 62));
 }
 
 
 void World::InitSounds() {
 	shootBuffer.loadFromFile("sounds/shoot.ogg");
 	shoot.setBuffer(shootBuffer);
-	shoot.setVolume(40);
+	shoot.setVolume(SOUND_VOLUME);
 
 	kickHitBuffer.loadFromFile("sounds/kickHit.ogg");
 	kickHit.setBuffer(kickHitBuffer);
-	kickHit.setVolume(40);
+	kickHit.setVolume(SOUND_VOLUME);
 
 	enemyDieBuffer.loadFromFile("sounds/catCrash.ogg");
 	enemyDie.setBuffer(enemyDieBuffer);
 
 	bgMusic.openFromFile("sounds/fonMM.ogg");
 	bgMusic.play();
-	bgMusic.setVolume(40);
+	bgMusic.setVolume(SOUND_VOLUME);
 	bgMusic.setLoop(true);
 }

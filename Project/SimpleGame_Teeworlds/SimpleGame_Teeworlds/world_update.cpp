@@ -2,11 +2,15 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
+float GetRotation(float mouseX, float mouseY, float x, float y) {
+	float dX = mouseX - x; //вектор , колинеарный прямой, которая пересекает спрайт и курсор
+	float dY = mouseY - y; //он же, координата y
+	return (atan2(dY, dX)) * GET_CIRCLE_HALF / M_PI; //получаем угол в радианах и переводим его в градусы
+}
+
 
 void World::UpdateWorld(float time, float mouseX, float mouseY, View &view) {
-	float dX = mouseX - player->x; //вектор , колинеарный прямой, которая пересекает спрайт и курсор
-	float dY = mouseY - player->y; //он же, координата y
-	float rotation = (atan2(dY, dX)) * GET_CIRCLE_HALF / M_PI; //получаем угол в радианах и переводим его в градусы
+	float rotation = GetRotation(mouseX, mouseY, player->x, player->y); 
 	for (it = entities.begin(); it != entities.end();) {
 		Entity *b = *it;
 		(*it)->Update(time);
@@ -19,6 +23,7 @@ void World::UpdateWorld(float time, float mouseX, float mouseY, View &view) {
 		}
 	}
 	player->Update(time);
+	//lifebar->Update(player->health);
 	playerWeapon->Update(time, rotation, player->x, player->y, "playerWeapon");
 	player->weaponRotation = rotation;
 	view.setCenter(player->x, player->y);

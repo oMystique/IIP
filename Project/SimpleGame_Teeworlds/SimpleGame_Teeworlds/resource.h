@@ -26,6 +26,7 @@ static const float PLAYER_JUMP_SPEED = 0.6f;
 
 //CORRECTION_________________________:
 static const float FRAME_CORRECTION = 0.005f;
+static const float SOUND_VOLUME = 40.f;
 
 
 //OTHER______________________________:

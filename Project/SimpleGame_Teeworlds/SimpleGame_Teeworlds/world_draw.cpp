@@ -9,5 +9,6 @@ void World::DrawObjects(RenderWindow *window) {
 	}
 	window->draw(playerWeapon->playerWeaponSprite);
 	window->draw(player->sprite);
+	//lifebar->Draw(*window);
 	window->draw(sightSprite);
 }

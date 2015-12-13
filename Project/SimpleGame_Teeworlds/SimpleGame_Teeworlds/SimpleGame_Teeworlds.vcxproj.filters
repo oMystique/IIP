@@ -64,6 +64,12 @@
     <Filter Include="Header Files\weapon">
       <UniqueIdentifier>{6989e4c4-056c-46b3-800e-6e0c19e07d50}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\interface\lifebar">
+      <UniqueIdentifier>{7227951a-81d1-414f-8e90-e5a24b85888a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\interface\lifebar">
+      <UniqueIdentifier>{fb6aab8f-4c97-429f-be03-240c5e8ee131}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -153,6 +159,12 @@
     <ClCompile Include="application_init.cpp">
       <Filter>Source Files\application</Filter>
     </ClCompile>
+    <ClCompile Include="lifebar_init.cpp">
+      <Filter>Source Files\interface\lifebar</Filter>
+    </ClCompile>
+    <ClCompile Include="lifebar_update_draw.cpp">
+      <Filter>Source Files\interface\lifebar</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -199,6 +211,9 @@
     </ClInclude>
     <ClInclude Include="weapon.h">
       <Filter>Header Files\weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="lifebar.h">
+      <Filter>Header Files\interface\lifebar</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

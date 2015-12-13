@@ -7,7 +7,7 @@ struct World: public WorldInit {
 	void UpdateWorld(float time, float mouseX, float mouseY, View &view);
 	void DrawObjects(RenderWindow *window);
 	void Shoot(String subject, float mouseX, float mouseY);
-	void InteractObjects();
+	void InteractObjects(float time);
 private:
 	void InitImages();
 	void InitTextures();

@@ -4,6 +4,7 @@
 #include "weapon.h"
 #include "bonuses.h"
 #include <list>
+#include "lifebar.h"
 
 
 struct WorldInit {
@@ -55,4 +56,5 @@ struct WorldInit {
 	unique_ptr<Player> player = nullptr;
 	unique_ptr<View> view = nullptr;
 	unique_ptr<Weapon> playerWeapon = nullptr;
+	unique_ptr<Lifebar> lifebar = nullptr;
 };
