@@ -8,21 +8,21 @@ void World::InitObjects() {
 
 	player = make_unique<Player>(heroImage, "Player1", lvl, playerObj.rect.left, playerObj.rect.top, 36, 36);
 	playerWeapon = make_unique<Weapon>(weaponsImage, "playerWeapon", player->x, player->y, 227, 60);
-	//lifebar = make_unique<Lifebar>(healthImage, 62, 62);
+	lifebar = make_unique<Lifebar>(healthImage, 62, 62);
 	view = make_unique<View>();
 
 	easyEnemyObj = lvl.GetObjects("easyEnemy");
-	for (unsigned int i = 0; i < easyEnemyObj.size(); i++) {//проходимся по элементам этого вектора(а именно по врагам) 
-		entities.push_back(new Enemy(easyEnemyImage, "easyEnemy", lvl, easyEnemyObj[i].rect.left, easyEnemyObj[i].rect.top, 36, 36));//и закидываем в список всех наших врагов с карты
+	for (unsigned int i = 0; i < easyEnemyObj.size(); i++) { 
+		entities.push_back(new Enemy(easyEnemyImage, "easyEnemy", lvl, easyEnemyObj[i].rect.left, easyEnemyObj[i].rect.top, 36, 36));
 	}
 
 	mediumEnemyObj = lvl.GetObjects("mediumEnemy");
-	for (unsigned int i = 0; i < mediumEnemyObj.size(); i++) {//проходимся по элементам этого вектора(а именно по врагам) 
+	for (unsigned int i = 0; i < mediumEnemyObj.size(); i++) { 
 		entities.push_back(new Enemy(mediumEnemyImage, "mediumEnemy", lvl, mediumEnemyObj[i].rect.left, mediumEnemyObj[i].rect.top, 36, 36));
 	}
 
 	healthPoints = lvl.GetObjects("healthPoint");
-	for (unsigned int i = 0; i < healthPoints.size(); i++) {//проходимся по элементам этого вектора(а именно по врагам) 
+	for (unsigned int i = 0; i < healthPoints.size(); i++) {
 		entities.push_back(new Bonuses(healthImage, "healthPoint", healthPoints[i].rect.left, healthPoints[i].rect.top, 44, 44));
 	}
 

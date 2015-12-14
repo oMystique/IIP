@@ -6,7 +6,7 @@ struct Lifebar: public Interface {
 
 	Lifebar(Image &image, int w, int h);
 	
-	void Update(float healthCount);
+	void Update(float healthCount, RenderWindow &window);
 
 	void Draw(RenderWindow &window);
 

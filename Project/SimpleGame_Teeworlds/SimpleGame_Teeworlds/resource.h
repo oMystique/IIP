@@ -8,6 +8,10 @@ using namespace std;
 
 //**********CONST_BLOCK**********\\
 
+//PARAMETHERS_______________________:
+static const float COUNT_PLAYER_HEALTH = 1000.f;
+static const float BONUS_HEALTH = 100.f;
+
 //SCALE_____________________________:
 static const float WEAPON_SCALE = 0.3f;
 static const float BULLET_SCALE = 0.2f;
@@ -22,11 +26,13 @@ static const float SIGHT_SCALE = 0.8f;
 static const float GAME_SPEED = 800.f;
 static const float DEFAULT_UNIT_SPEED = 0.1f;
 static const float PLAYER_JUMP_SPEED = 0.6f;
+static const float DEFAULT_ENEMY_SHOOT_SPEED = 2000.f;
 
 
 //CORRECTION_________________________:
 static const float FRAME_CORRECTION = 0.005f;
 static const float SOUND_VOLUME = 40.f;
+static const Vector2f LIFEBAR_POS_CORRECTION = { 2.3f, 170.f };
 
 
 //OTHER______________________________:

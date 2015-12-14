@@ -216,7 +216,4 @@
       <Filter>Header Files\interface\lifebar</Filter>
     </ClInclude>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
-  </ItemGroup>
 </Project>

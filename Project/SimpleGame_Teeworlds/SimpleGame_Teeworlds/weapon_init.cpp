@@ -5,7 +5,7 @@ Weapon::Weapon(Image &image, String name, float x, float y, int w, int h) {
 	weaponsImage.loadFromFile("images/weapons.png");
 	weaponsTexture.loadFromImage(weaponsImage);
 	playerWeaponSprite.setScale(WEAPON_SCALE, WEAPON_SCALE);
-	shootTimer = 2000;
+	shootTimer = DEFAULT_ENEMY_SHOOT_SPEED;
 	shootFlag = false;
 
 	if (name == "playerWeapon") {

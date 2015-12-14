@@ -6,7 +6,7 @@ Player::Player(Image &image, String name, Level lvl, float x, float y, int w, in
 	action = stay;
 	obj = lvl.GetAllObjects();
 	currentFrame = 0;
-	health = 1000;
+	health = COUNT_PLAYER_HEALTH;
 	flag = false;
 	aX = 0;
 	aY = 0;
