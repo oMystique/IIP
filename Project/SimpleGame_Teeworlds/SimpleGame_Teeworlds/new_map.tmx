@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="30" tilewidth="32" tileheight="32" backgroundcolor="#aaffff" nextobjectid="270">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="30" tilewidth="32" tileheight="32" backgroundcolor="#aaffff" nextobjectid="275">
  <tileset firstgid="1" name="9462348" tilewidth="32" tileheight="32" tilecount="1024">
   <image source="images/9462348.png" width="1024" height="1024"/>
  </tileset>
@@ -1907,8 +1907,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="787"/>
+   <tile gid="788"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -2107,8 +2107,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="819"/>
+   <tile gid="820"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -7911,8 +7911,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="413"/>
+   <tile gid="414"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -8111,8 +8111,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="445"/>
+   <tile gid="446"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -8311,8 +8311,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="477"/>
+   <tile gid="478"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -8511,8 +8511,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="509"/>
+   <tile gid="510"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -8711,8 +8711,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="541"/>
+   <tile gid="542"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -8911,8 +8911,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="573"/>
+   <tile gid="574"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -9111,8 +9111,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="605"/>
+   <tile gid="606"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -9311,8 +9311,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="637"/>
+   <tile gid="638"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -12054,40 +12054,30 @@
   <object id="139" name="solid" x="5508" y="440" width="22.6667" height="205.333"/>
   <object id="140" name="solid" x="5536" y="637.333" width="512" height="12"/>
   <object id="142" name="solid" x="6043" y="207.333" width="15" height="430.042"/>
-  <object id="146" name="easyEnemy" x="3503.92" y="660.667" width="25.58" height="27.083"/>
   <object id="147" name="easyEnemy" x="428.915" y="596.75" width="36.0017" height="33.1667"/>
   <object id="155" name="solid" x="168" y="195" width="5904" height="12"/>
   <object id="160" name="easyEnemy" x="3383.33" y="750.833" width="41.3367" height="38.334"/>
-  <object id="161" name="easyEnemy" x="3631.33" y="749.833" width="41.3367" height="38.334"/>
-  <object id="162" name="easyEnemy" x="2742.83" y="593.833" width="41.3367" height="38.334"/>
+  <object id="162" name="easyEnemy" x="2570.5" y="593.833" width="41.3367" height="38.334"/>
   <object id="163" name="easyEnemy" x="4557.58" y="626.083" width="41.3367" height="38.334"/>
   <object id="166" name="solid" x="2812.41" y="622.301" width="77.4463" height="11.1996" rotation="-360.452"/>
-  <object id="173" name="easyEnemy" x="3202.33" y="501.833" width="41.3367" height="38.334"/>
   <object id="174" name="easyEnemy" x="4270.08" y="626.333" width="41.3367" height="38.334"/>
-  <object id="175" name="easyEnemy" x="5946" y="595.5" width="41.3367" height="38.334"/>
+  <object id="175" name="easyEnemy" x="5741" y="593.5" width="41.3367" height="38.334"/>
   <object id="176" name="flag" x="3417.53" y="430.288" width="69.4697" height="163.712"/>
-  <object id="180" name="stopEnemy" x="2143" y="456.5" width="8" height="79"/>
-  <object id="181" name="stopEnemy" x="2519" y="456.5" width="8" height="79"/>
   <object id="182" name="easyEnemy" x="2197.33" y="495.833" width="41.3367" height="38.334"/>
-  <object id="183" name="easyEnemy" x="2361.33" y="496.833" width="41.3367" height="38.334"/>
-  <object id="184" name="easyEnemy" x="3740.33" y="432.833" width="41.3367" height="38.334"/>
-  <object id="185" name="stopEnemy" x="3654" y="393.5" width="8" height="79"/>
-  <object id="186" name="stopEnemy" x="3869.33" y="397.5" width="8" height="79"/>
   <object id="188" name="stopEnemy" x="4941" y="362.5" width="8" height="79"/>
-  <object id="189" name="easyEnemy" x="5030.33" y="400.833" width="41.3367" height="38.334"/>
   <object id="191" name="stopEnemy" x="5516" y="351.167" width="8" height="79"/>
-  <object id="192" name="easyEnemy" x="5200.66" y="374.166" width="41.3367" height="38.334"/>
-  <object id="193" name="stopEnemy" x="5152.67" y="346.5" width="8" height="79"/>
+  <object id="192" name="easyEnemy" x="5319.83" y="371.083" width="41.3367" height="38.334"/>
+  <object id="193" name="stopEnemy" x="5152.67" y="346.5" width="8" height="97.5"/>
   <object id="194" name="stopEnemy" x="4713" y="584.5" width="8" height="79"/>
   <object id="195" name="stopEnemy" x="4031" y="582.5" width="8" height="79"/>
   <object id="196" name="stopEnemy" x="3702" y="672.667" width="8" height="119.833"/>
   <object id="197" name="stopEnemy" x="3282" y="713.5" width="8" height="79"/>
-  <object id="198" name="stopEnemy" x="2803" y="553.5" width="8" height="79"/>
-  <object id="199" name="stopEnemy" x="2555" y="554.5" width="8" height="79"/>
-  <object id="200" name="stopEnemy" x="2102" y="552.5" width="8" height="79"/>
-  <object id="201" name="stopEnemy" x="196" y="552.5" width="8" height="79"/>
-  <object id="202" name="stopEnemy" x="3136" y="463.5" width="8" height="79"/>
-  <object id="203" name="stopEnemy" x="3382" y="464.5" width="8" height="79"/>
+  <object id="198" name="stopEnemy" x="2964.5" y="557" width="8" height="79"/>
+  <object id="199" name="stopEnemy" x="2531.33" y="377.667" width="31.6667" height="255.833"/>
+  <object id="200" name="stopEnemy" x="2102" y="400" width="38" height="231.5"/>
+  <object id="201" name="stopEnemy" x="177" y="552.5" width="8" height="79"/>
+  <object id="202" name="stopEnemy" x="3136" y="463.5" width="8" height="83"/>
+  <object id="203" name="stopEnemy" x="3382" y="464.5" width="11" height="79"/>
   <object id="204" name="stopEnemy" x="3541" y="616.5" width="8" height="79"/>
   <object id="205" name="stopEnemy" x="3395" y="617.5" width="8" height="79"/>
   <object id="206" name="stopEnemy" x="5719" y="555.5" width="8" height="79"/>
@@ -12100,33 +12090,26 @@
   <object id="214" name="easyEnemy" x="1163" y="597.417" width="36.0017" height="33.1667"/>
   <object id="215" name="easyEnemy" x="1461" y="597.75" width="36.0017" height="33.1667"/>
   <object id="216" name="easyEnemy" x="1651.67" y="598.083" width="36.0017" height="33.1667"/>
-  <object id="217" name="easyEnemy" x="1883.04" y="598.292" width="36.0017" height="33.1667"/>
-  <object id="218" name="easyEnemy" x="2034.33" y="598.417" width="36.0017" height="33.1667"/>
-  <object id="220" name="easyEnemy" x="5456.66" y="375.5" width="41.3367" height="38.334"/>
+  <object id="217" name="easyEnemy" x="1583.04" y="596.292" width="36.0017" height="33.1667"/>
+  <object id="218" name="easyEnemy" x="1731.66" y="598.417" width="36.0017" height="33.1667"/>
+  <object id="220" name="easyEnemy" x="5270.33" y="370.917" width="41.3367" height="38.334"/>
   <object id="221" name="finish" x="5912.67" y="532" width="60.5" height="80.667"/>
-  <object id="226" name="player" x="542.167" y="523.167" width="34.6667" height="34.6667"/>
-  <object id="227" name="mediumEnemy" x="975.499" y="529.166" width="36.0017" height="33.1667"/>
+  <object id="227" name="mediumEnemy" x="983.499" y="534.166" width="36.0017" height="33.1667"/>
   <object id="228" name="mediumEnemy" x="2282.78" y="434.75" width="36.0017" height="33.1667"/>
-  <object id="229" name="mediumEnemy" x="3011.33" y="438.75" width="36.0017" height="33.1667"/>
-  <object id="230" name="mediumEnemy" x="3311.33" y="662.084" width="36.0017" height="33.1667"/>
-  <object id="231" name="mediumEnemy" x="3743.69" y="688.932" width="36.0017" height="33.1667"/>
-  <object id="232" name="mediumEnemy" x="3942" y="504.083" width="36.0017" height="33.1667"/>
+  <object id="229" name="mediumEnemy" x="3011.33" y="441.75" width="36.0017" height="33.1667"/>
+  <object id="230" name="mediumEnemy" x="3313.33" y="656.084" width="36.0017" height="33.1667"/>
+  <object id="231" name="mediumEnemy" x="3661.19" y="751.932" width="36.0017" height="33.1667"/>
+  <object id="232" name="mediumEnemy" x="3671.33" y="439.416" width="36.0017" height="33.1667"/>
   <object id="233" name="mediumEnemy" x="4610" y="492.75" width="36.0017" height="33.1667"/>
-  <object id="234" name="stopEnemy" x="952" y="499.167" width="8" height="79"/>
-  <object id="235" name="stopEnemy" x="1024" y="502.5" width="8" height="79"/>
   <object id="236" name="stopEnemy" x="2248.67" y="402.5" width="8" height="79"/>
   <object id="237" name="stopEnemy" x="2348" y="402.5" width="8" height="79"/>
   <object id="238" name="stopEnemy" x="3018" y="413.833" width="8" height="79"/>
   <object id="239" name="stopEnemy" x="3112" y="417.833" width="8" height="79"/>
-  <object id="240" name="stopEnemy" x="3813.33" y="397.167" width="8" height="79"/>
-  <object id="241" name="stopEnemy" x="4590.67" y="453.833" width="8" height="79"/>
-  <object id="242" name="stopEnemy" x="4655.33" y="457.167" width="8" height="79"/>
   <object id="243" name="mediumEnemy" x="4934.67" y="405.417" width="36.0017" height="33.1667"/>
   <object id="244" name="stopEnemy" x="3954.67" y="653.833" width="8" height="79"/>
   <object id="246" name="mediumEnemy" x="5900.67" y="227.417" width="36.0017" height="33.1667"/>
   <object id="247" name="mediumEnemy" x="5920" y="216.083" width="36.0017" height="33.1667"/>
   <object id="248" name="mediumEnemy" x="5566" y="373.417" width="36.0017" height="33.1667"/>
-  <object id="249" name="easyEnemy" x="3821.33" y="686.833" width="41.3367" height="38.334"/>
   <object id="250" name="healthPoint" x="1947.58" y="512" width="26.0606" height="25.5758"/>
   <object id="251" name="healthPoint" x="2835.64" y="578.545" width="26.0606" height="25.5758"/>
   <object id="252" name="healthPoint" x="4187.64" y="547.879" width="26.0606" height="25.5758"/>
@@ -12142,7 +12125,9 @@
   <object id="265" name="solid" x="5685.33" y="548.667" width="33.3333" height="88.6667"/>
   <object id="266" name="solid" x="5666" y="580" width="18.6667" height="21.3332"/>
   <object id="267" name="mediumEnemy" x="1599.5" y="377.417" width="36.0017" height="33.1667"/>
-  <object id="268" name="healthPoint" x="3318.97" y="619.712" width="26.0606" height="25.5758"/>
+  <object id="268" name="healthPoint" x="3320.97" y="645.712" width="26.0606" height="25.5758"/>
   <object id="269" name="healthPoint" x="3503.47" y="667.212" width="26.0606" height="25.5758"/>
+  <object id="271" name="mediumEnemy" x="3305.33" y="268.75" width="36.0017" height="33.1667"/>
+  <object id="274" name="player" x="539.667" y="219.167" width="34.6667" height="34.6667"/>
  </objectgroup>
 </map>

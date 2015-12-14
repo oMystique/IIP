@@ -2,15 +2,16 @@
 
 
 Weapon::Weapon(Image &image, String name, float x, float y, int w, int h) {
-	weaponsImage.loadFromFile("images/weapons.png");
-	weaponsTexture.loadFromImage(weaponsImage);
+	weaponsTexture.loadFromImage(image);
 	playerWeaponSprite.setScale(WEAPON_SCALE, WEAPON_SCALE);
-	shootTimer = DEFAULT_ENEMY_SHOOT_SPEED;
-	shootFlag = false;
+	shootEnemyTimer = DEFAULT_ENEMY_SHOOT_SPEED;
+	shootEnemyFlag = false;
+	currentFrame = 0;
+	shootPlayerFlag = false;
 
 	if (name == "playerWeapon") {
 		playerWeaponSprite.setTexture(weaponsTexture);
-		playerWeaponSprite.setTextureRect(IntRect(66, 194, 227, 60));
+		playerWeaponSprite.setTextureRect(IntRect(0, 68, 265, 68));
 		playerWeaponSprite.setPosition(x, y);
 	}
 }

@@ -38,6 +38,9 @@ struct WorldInit {
 	SoundBuffer enemyDieBuffer;
 	Sound enemyDie;
 
+	SoundBuffer missSoundBuffer;
+	Sound missSound;
+
 	Music bgMusic;
 
 	Level lvl;

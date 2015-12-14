@@ -98,6 +98,7 @@
     <ClCompile Include="lifebar_update_draw.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="interface.cpp" />
+    <ClCompile Include="menu.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="player_graphic.cpp" />
     <ClCompile Include="player_logic.cpp" />
@@ -106,6 +107,7 @@
     <ClCompile Include="TinyXML\tinyxml.cpp" />
     <ClCompile Include="TinyXML\tinyxmlerror.cpp" />
     <ClCompile Include="TinyXML\tinyxmlparser.cpp" />
+    <ClCompile Include="weapon_graphic.cpp" />
     <ClCompile Include="weapon_init.cpp" />
     <ClCompile Include="weapon_update.cpp" />
     <ClCompile Include="world.cpp" />
@@ -123,6 +125,7 @@
     <ClInclude Include="level.h" />
     <ClInclude Include="interface.h" />
     <ClInclude Include="lifebar.h" />
+    <ClInclude Include="menu.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="player_init.h" />
     <ClInclude Include="resource.h" />

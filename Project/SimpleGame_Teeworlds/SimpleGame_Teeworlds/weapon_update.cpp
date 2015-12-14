@@ -1,6 +1,7 @@
 #include "weapon.h"
 
 void Weapon::Update(float time, float rotation, float tempX, float tempY, String name) {
+	Animation(time);
 	if ((-90.0 <= rotation) && (rotation <= 90.0)) {
 		x = tempX + 32;
 		y = tempY + 20;

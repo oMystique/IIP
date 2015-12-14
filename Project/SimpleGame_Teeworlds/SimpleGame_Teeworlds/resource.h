@@ -32,7 +32,7 @@ static const float DEFAULT_ENEMY_SHOOT_SPEED = 2000.f;
 //CORRECTION_________________________:
 static const float FRAME_CORRECTION = 0.005f;
 static const float SOUND_VOLUME = 40.f;
-static const Vector2f LIFEBAR_POS_CORRECTION = { 2.3f, 170.f };
+static const Vector2f LIFEBAR_POS_CORRECTION = { 2.3f, 176.f };
 
 
 //OTHER______________________________:

@@ -9,6 +9,6 @@ void World::DrawObjects(RenderWindow *window) {
 	}
 	window->draw(playerWeapon->playerWeaponSprite);
 	window->draw(player->sprite);
-	lifebar->Update(player->health, *window);
+	lifebar->Update(player->health, player->armor, *window);
 	window->draw(sightSprite);
 }

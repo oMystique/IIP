@@ -18,7 +18,7 @@ void Enemy::Update(float time) {
 		if (isMove) {
 			checkCollisionWithMap(dx, 0);
 			x += dx*time;
-			sprite.setPosition(x, y + h / 3);
+			sprite.setPosition(x + w / 2, y + h / 3);
 		}
 	}
 	else if (name == "mediumEnemy") {

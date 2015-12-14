@@ -7,6 +7,7 @@ Player::Player(Image &image, String name, Level lvl, float x, float y, int w, in
 	obj = lvl.GetAllObjects();
 	currentFrame = 0;
 	health = COUNT_PLAYER_HEALTH;
+	armor = COUNT_PLAYER_HEALTH;
 	flag = false;
 	aX = 0;
 	aY = 0;

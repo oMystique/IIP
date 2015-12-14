@@ -12,6 +12,7 @@ struct PlayerInit {
 	} action;
 	bool flag;
 	bool missionComplete;
+	float armor;
 	float currentFrame;
 	int aX;
 	int aY;

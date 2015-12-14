@@ -9,7 +9,7 @@ Enemy::Enemy(Image &image, String name, Level &lvl, float x, float y, int w, int
 	aX = 0;
 	if (name == "easyEnemy") {
 		sprite.setTextureRect(IntRect(aX, 0, 149, 103));
-		dx = DEFAULT_UNIT_SPEED;
+		dx = DEFAULT_UNIT_SPEED / GET_HALF;
 	}
 	else if (name == "mediumEnemy") {
 		sprite.setTextureRect(IntRect(0, 0, 244, 230));

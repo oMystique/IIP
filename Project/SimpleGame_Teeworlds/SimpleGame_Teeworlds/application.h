@@ -1,6 +1,7 @@
 #pragma once
 
 #include "world.h"
+#include "menu.h"
 
 struct Application: public World {
 	RenderWindow *window;
@@ -16,4 +17,7 @@ private:
 	void Render();
 	void Update(float time);
 	void GetMouseCoords();
+	void InitMenu();
+
+	unique_ptr<Menu> menu;
 };

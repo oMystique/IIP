@@ -6,7 +6,15 @@ Application::Application() : World(),
 }
 
 
+void Application::InitMenu() {
+	unique_ptr<Image> menuImage = make_unique<Image>();
+	menuImage->loadFromFile("images/bgmenu.png");
+	menu = make_unique<Menu>(*menuImage, 1280, 720);
+	menu->DrawMenu(*window);
+}
+
 void Application::Run() {
+	InitMenu();
 	window->setMouseCursorVisible(false);
 	InitWorldObjects();
 	view.reset(FloatRect(player->x, player->y, 880, 370));
@@ -21,4 +29,5 @@ void Application::Run() {
 		Render();
 	}
 	delete window;
+	entities.clear();
 }

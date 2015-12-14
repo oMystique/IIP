@@ -1,22 +1,32 @@
 #include "lifebar.h"
 
-void Lifebar::Update(float healthCount, RenderWindow &window) {
+void Lifebar::Update(float healthCount, float armorCount, RenderWindow &window) {
 	Vector2f center = window.getView().getCenter();
 	Vector2f size = window.getView().getSize();
-	float counter = COUNT_PLAYER_HEALTH;
-	while (counter != 0) {
-		if (healthCount < counter) {
-			sprite.setTextureRect(IntRect(738, 2, 62, 62));
+	float healthCounter = COUNT_PLAYER_HEALTH;
+	float armorCounter = COUNT_PLAYER_HEALTH;
+	while (healthCounter != 0) {
+		if (healthCount < healthCounter) {
+			healthSprite.setTextureRect(IntRect(738, 2, 62, 62));
 		}
 		else {
-			sprite.setTextureRect(IntRect(673, 2, 62, 62));
+			healthSprite.setTextureRect(IntRect(673, 2, 62, 62));
 		}
-		counter -= BONUS_HEALTH;
-		sprite.setPosition(center.x + counter / LIFEBAR_POS_CORRECTION.x, center.y - LIFEBAR_POS_CORRECTION.y);
+		if (armorCount < armorCounter) {
+			armorSprite.setTextureRect(IntRect(738, 64, 62, 62));
+		}
+		else {
+			armorSprite.setTextureRect(IntRect(673, 64, 62, 62));
+		}
+		healthCounter -= BONUS_HEALTH;
+		armorCounter -= BONUS_HEALTH;
+		healthSprite.setPosition(center.x + healthCounter / LIFEBAR_POS_CORRECTION.x, center.y - LIFEBAR_POS_CORRECTION.y);
+		armorSprite.setPosition(center.x + healthCounter / LIFEBAR_POS_CORRECTION.x, center.y - LIFEBAR_POS_CORRECTION.y + 30);
 		Draw(window);
 	}
 }
 
 void Lifebar::Draw(RenderWindow &window) {
-	window.draw(sprite);
+	window.draw(healthSprite);
+	window.draw(armorSprite);
 }

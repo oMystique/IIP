@@ -38,6 +38,7 @@ void World::InitImages() {
 	mediumEnemyImage.createMaskFromColor(Color(255, 255, 255));
 	healthImage.loadFromFile("images/weapons.png");
 	bulletImage.loadFromFile("images/weapons.png");
+	weaponsImage.loadFromFile("images/shotgun.png");
 }
 
 
@@ -73,6 +74,9 @@ void World::InitSounds() {
 
 	enemyDieBuffer.loadFromFile("sounds/catCrash.ogg");
 	enemyDie.setBuffer(enemyDieBuffer);
+
+	missSoundBuffer.loadFromFile("sounds/miss1.ogg");
+	missSound.setBuffer(missSoundBuffer);
 
 	bgMusic.openFromFile("sounds/fonMM.ogg");
 	bgMusic.play();
