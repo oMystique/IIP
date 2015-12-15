@@ -23,7 +23,10 @@ void World::UpdateWorld(float time, float mouseX, float mouseY, View &view) {
 		}
 	}
 	player->Update(time);
-	playerWeapon->Update(time, rotation, player->x, player->y, "playerWeapon");
+	if (missionTarget) { //TODO
+		flagSprite.setPosition(player->x + 20, player->y - 50);
+	}
+	playerWeapon->Update(time, rotation, player->x, player->y - 4, "playerWeapon");
 	player->weaponRotation = rotation;
 	view.setCenter(player->x, player->y);
 	sightSprite.setPosition(mouseX, mouseY);

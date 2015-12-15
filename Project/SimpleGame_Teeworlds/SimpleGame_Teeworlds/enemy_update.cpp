@@ -11,19 +11,18 @@ void Enemy::Update(float time) {
 	}
 	if (health <= 0) {
 		life = false;
+		enemyDie.play();
 		return;
 	}
 	if (name == "easyEnemy") {
 		Animation(time);
 		if (isMove) {
-			checkCollisionWithMap(dx, 0);
 			x += dx*time;
-			sprite.setPosition(x + w / 2, y + h / 3);
+			checkCollisionWithMap(dx, 0);
+			sprite.setPosition(x + w / 4, y + h / 3);
 		}
 	}
 	else if (name == "mediumEnemy") {
-		if (isMove) {
-			sprite.setPosition(x + w / 2, y + h / 2);
-		}
+		sprite.setPosition(x + w / 2, y + h / 2);
 	}
 }

@@ -76,6 +76,9 @@
     <Filter Include="Source Files\interface\menu">
       <UniqueIdentifier>{cc8b7b56-6f5e-41ad-ba6b-c9f5e6d5d1e6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\mission">
+      <UniqueIdentifier>{a91e773f-f6fb-4a03-b083-62d476e051c0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -129,9 +132,6 @@
     <ClCompile Include="enemy_logic.cpp">
       <Filter>Source Files\enemy</Filter>
     </ClCompile>
-    <ClCompile Include="player.cpp">
-      <Filter>Source Files\player</Filter>
-    </ClCompile>
     <ClCompile Include="player_graphic.cpp">
       <Filter>Source Files\player</Filter>
     </ClCompile>
@@ -176,6 +176,9 @@
     </ClCompile>
     <ClCompile Include="menu.cpp">
       <Filter>Source Files\interface\menu</Filter>
+    </ClCompile>
+    <ClCompile Include="player_init.cpp">
+      <Filter>Source Files\player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

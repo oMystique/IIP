@@ -3,9 +3,13 @@
 
 Enemy::Enemy(Image &image, String name, Level &lvl, float x, float y, int w, int h) : Entity(image, name, x, y, w, h) {
 	obj = lvl.GetObjects("stopEnemy"); //инициализируем.получаем нужные объекты для взаимодействия врага с картой
+	fightTexture.loadFromFile("images/easyFight.png"); // TODO
 	sprite.setPosition(x, y);
 	isMove = true;
+	isFight = false;
 	currentFrame = 0;
+	enemyDieBuffer.loadFromFile("sounds/catCrash.ogg");
+	enemyDie.setBuffer(enemyDieBuffer);
 	aX = 0;
 	if (name == "easyEnemy") {
 		sprite.setTextureRect(IntRect(aX, 0, 149, 103));

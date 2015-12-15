@@ -62,11 +62,11 @@ void Menu::DrawMenu(RenderWindow &window) {
 	exit.setString("EXIT");
 	exit.setPosition(30, 90);
 	while (isMenu) {
+		window.clear();
 		newGame.setColor(Color::Red);
 		aboutProgram.setColor(Color::Red);
 		exit.setColor(Color::Red);
 		GetChoose(window);
-		window.clear();
 		window.draw(sprite);
 		window.draw(newGame);
 		window.draw(aboutProgram);

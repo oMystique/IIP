@@ -7,7 +7,7 @@ public:
 	vector<Object> obj;
 	float dx, dy, x, y, speed, moveTimer, vec;
 	int w, h, health;
-	bool life, isMove, onGround;
+	bool life, isMove, onGround, isFight;
 	Texture texture;
 	Sprite sprite;
 	String name;

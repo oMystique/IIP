@@ -2,9 +2,15 @@
 
 
 void Enemy::Animation(float time) {
+	if (isFight) {
+		sprite.setTexture(fightTexture);
+	}
+	else {
+		sprite.setTexture(texture);
+	}
 	currentFrame += FRAME_CORRECTION*time;
-	if (currentFrame > 1) {
-		currentFrame -= 1;
+	if (currentFrame > 2) {
+		currentFrame -= 2;
 		aX += 149;
 	}
 	if (aX > 150) {

@@ -56,6 +56,7 @@ void World::InitSprites() {
 	flagSprite.setTextureRect(IntRect(387, 268, 127, 240));
 	flagSprite.setPosition(flagObj.rect.left, flagObj.rect.top);
 	flagSprite.setScale(FLAG_SCALE, FLAG_SCALE);
+	missionTarget = false;
 
 	sightSprite.setTexture(objectsTexture);
 	sightSprite.setTextureRect(IntRect(0, 0, 61, 61));
@@ -71,9 +72,6 @@ void World::InitSounds() {
 	kickHitBuffer.loadFromFile("sounds/kickHit.ogg");
 	kickHit.setBuffer(kickHitBuffer);
 	kickHit.setVolume(SOUND_VOLUME);
-
-	enemyDieBuffer.loadFromFile("sounds/catCrash.ogg");
-	enemyDie.setBuffer(enemyDieBuffer);
 
 	missSoundBuffer.loadFromFile("sounds/miss1.ogg");
 	missSound.setBuffer(missSoundBuffer);

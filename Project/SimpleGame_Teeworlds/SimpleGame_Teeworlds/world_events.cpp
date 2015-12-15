@@ -13,15 +13,32 @@ void CalculateShootTime(float &time, Weapon &playerWeapon) {
 }
 
 
+float GetDistance(Player &player, Entity &enemy) {
+	return float(sqrt((player.x - enemy.x)*(player.x - enemy.x) + (player.y - enemy.y)*(player.y - enemy.y)));
+}
+
+
 void World::InteractObjects(float time) {
 	float distance = 0;
 	CalculateShootTime(time, *playerWeapon);
+
+	//TODO
+	if (!missionTarget) {
+		if (FloatRect(flagSprite.getPosition().x, flagSprite.getPosition().y, 127, 240).intersects(player->getRect())) {
+			missionTarget = true;
+			flagSprite.setScale(0.3, 0.3);
+			player->flag = true;
+		}
+	}
+
+
 	for (it = entities.begin(); it != entities.end(); it++) {
 		for (at = entities.begin(); at != entities.end(); at++) {
 			if ((*it)->getRect().intersects((*at)->getRect()) && (((*at)->name == "Bullet") && (((*it)->name == "easyEnemy") || ((*it)->name == "mediumEnemy")))) {
 				if (((*it)->name == "easyEnemy") && (177 > player->weaponRotation) && (player->weaponRotation > 3)) {
 					missSound.play();
 					(*at)->speed = -(*at)->speed;
+					(*at)->dx += rand() % 500 - 500;
 				}
 				else {
 					(*it)->health -= 20;
@@ -31,7 +48,7 @@ void World::InteractObjects(float time) {
 		}
 		if (((*it)->name == "easyEnemy") || ((*it)->name == "mediumEnemy") || ((*it)->name == "enemyBullet")) {
 			if ((*it)->name == "mediumEnemy") {
-				distance = sqrt((player->x - (*it)->x)*(player->x - (*it)->x) + (player->y - (*it)->y)*(player->y - (*it)->y));
+				distance = GetDistance(*player, **it);
 			}
 			if ((*it)->getRect().intersects(player->getRect())) {
 				(*it)->isMove = false;
@@ -49,8 +66,9 @@ void World::InteractObjects(float time) {
 					(*it)->life = false;
 				}
 				else {
-					player->health -= 4;
-					player->armor -= 7;
+					(*it)->isFight = true;
+					player->health -= 2;
+					player->armor -= 5;
 				}
 			}
 			else {
@@ -77,6 +95,7 @@ void World::InteractObjects(float time) {
 				}
 				else {
 					(*it)->sprite.setColor(Color::White);
+					(*it)->isFight = false;
 				}
 			}
 		}
@@ -92,8 +111,8 @@ void World::Shoot(String subject, float mouseX, float mouseY) {
 	if (subject == "player") {
 		shoot.play();
 		entities.push_back(new Bullet(bulletImage, "Bullet", lvl,
-			playerWeapon->x + (playerWeapon->playerWeaponSprite.getGlobalBounds().width * playerWeapon->playerWeaponSprite.getScale().y), playerWeapon->y - 8, 24, 23,
-			mouseX, mouseY + sightSprite.getGlobalBounds().height / 2, playerWeapon->playerWeaponSprite.getRotation()));
+			playerWeapon->x + (playerWeapon->playerWeaponSprite.getGlobalBounds().width * playerWeapon->playerWeaponSprite.getScale().y), playerWeapon->y - 4 , 24, 23,
+			mouseX, mouseY + sightSprite.getGlobalBounds().height / 4, playerWeapon->playerWeaponSprite.getRotation()));
 		playerWeapon->shootPlayerFlag = true;
 	}
 }

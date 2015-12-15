@@ -8,7 +8,9 @@ Entity::Entity(Image &image, String Name, float X, float Y, int W, int H) {
 	dx = 0;
 	dy = 0;
 	texture.loadFromImage(image);
-	life = true; onGround = false; isMove = false;
+	life = true;
+	onGround = false;
+	isMove = false;
 	sprite.setTexture(texture);
 	sprite.setOrigin(float(w) / GET_HALF, float(h) / GET_HALF);
 	sprite.setScale(ENTITY_BASE_SCALE, ENTITY_BASE_SCALE);

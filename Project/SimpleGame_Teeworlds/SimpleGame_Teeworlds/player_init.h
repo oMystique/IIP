@@ -10,8 +10,8 @@ struct PlayerInit {
 		stay,
 		down
 	} action;
-	bool flag;
-	bool missionComplete;
+	bool flag; //TODO
+	bool missionComplete; //TODO
 	float armor;
 	float currentFrame;
 	int aX;

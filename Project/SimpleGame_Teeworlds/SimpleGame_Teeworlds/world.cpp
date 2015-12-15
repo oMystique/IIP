@@ -4,7 +4,7 @@
 void World::InitWorldObjects() {
 	InitTextures();
 	InitImages();
+	InitSounds();
 	InitObjects();
 	InitSprites();
-	InitSounds();
 }

@@ -35,9 +35,6 @@ struct WorldInit {
 	SoundBuffer kickHitBuffer;
 	Sound kickHit;
 
-	SoundBuffer enemyDieBuffer;
-	Sound enemyDie;
-
 	SoundBuffer missSoundBuffer;
 	Sound missSound;
 
@@ -60,4 +57,6 @@ struct WorldInit {
 	unique_ptr<View> view = nullptr;
 	unique_ptr<Weapon> playerWeapon = nullptr;
 	unique_ptr<Lifebar> lifebar = nullptr;
+
+	bool missionTarget; //TODO
 };

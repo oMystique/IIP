@@ -19,7 +19,7 @@ static const float QUARTER_CIRCLE = 90.f;
 static const float MEDIUM_ENEMY_SCALE = 0.15f;
 static const float ENTITY_BASE_SCALE = 0.4f;
 static const float FLAG_SCALE = 0.9f;
-static const float SIGHT_SCALE = 0.8f;
+static const float SIGHT_SCALE = 0.6f;
 
 
 //SPEED______________________________:
