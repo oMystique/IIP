@@ -13,8 +13,9 @@ struct PlayerInit {
 	bool flag; //TODO
 	bool missionComplete; //TODO
 	float armor;
-	float currentFrame;
-	int aX;
-	int aY;
 	float weaponRotation;
+	float currentFrame;
+	/*int aX;
+	int aY;*/
+	Vector2f offset;
 };

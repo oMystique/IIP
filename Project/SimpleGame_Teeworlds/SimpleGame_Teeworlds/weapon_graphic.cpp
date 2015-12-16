@@ -2,11 +2,11 @@
 
 void Weapon::Animation(float time) {
 	if (shootPlayerFlag) {
-		playerWeaponSprite.setTextureRect(IntRect(0, 0, 265, 68));
-		currentFrame += 0.005*time;
-		if (currentFrame > 0.5) {
-			playerWeaponSprite.setTextureRect(IntRect(0, 68, 265, 68));
-			currentFrame -= 0.5;
+		playerWeaponSprite.setTextureRect(WEAPON_SHOOT_RECT);
+		currentFrame += ANIMATION_TIME_BOOST*time;
+		if (currentFrame > WEAPON_ANIMATION_FRAME) {
+			playerWeaponSprite.setTextureRect(WEAPON_NO_SHOOT_RECT);
+			currentFrame -= WEAPON_ANIMATION_FRAME;
 			shootPlayerFlag = false;
 		}
 	}

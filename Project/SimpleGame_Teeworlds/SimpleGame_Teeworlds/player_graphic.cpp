@@ -1,12 +1,12 @@
 #include "player.h"
 
 void Player::Animation(float time) {
-	currentFrame += 0.005*time;
-	if (currentFrame > 1) {
-		aX += 90;
-		currentFrame -= 1;
+	currentFrame += ANIMATION_TIME_BOOST*time;
+	if (currentFrame > ANIMATION_FRAME) {
+		offset.x += PLAYER_SPRITE_BOUND;
+		currentFrame -= ANIMATION_FRAME;
 	}
-	if (aX > 179) {
-		aX = 0;
+	if (offset.x > PLAYER_TEXTURE_RESOLUTION) {
+		offset.x = 0;
 	}
 }

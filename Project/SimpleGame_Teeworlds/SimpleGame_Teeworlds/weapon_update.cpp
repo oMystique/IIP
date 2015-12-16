@@ -1,21 +1,21 @@
 #include "weapon.h"
 
-void Weapon::Update(float time, float rotation, float tempX, float tempY, String name) {
+void Weapon::Update(float time, float rotation, Vector2f temp, String name) {
 	Animation(time);
-	if ((-90.0 <= rotation) && (rotation <= 90.0)) {
-		x = tempX + 32;
-		y = tempY + 20;
+	if ((-QUARTER_CIRCLE <= rotation) && (rotation <= QUARTER_CIRCLE)) {
+		rect.left = temp.x + WEAPON_CORRECTION_COORD_X.x;
+		rect.top = temp.y + WEAPON_CORRECTION_COORD_Y;
 		if (playerWeaponSprite.getScale().y < 0) {
 			playerWeaponSprite.scale(1, -1);
 		}
 	}
 	else {
-		x = tempX + 25;
-		y = tempY + 20;
+		rect.left = temp.x + WEAPON_CORRECTION_COORD_X.y;
+		rect.top = temp.y + WEAPON_CORRECTION_COORD_Y;
 		if (playerWeaponSprite.getScale().y > 0) {
 			playerWeaponSprite.scale(1, -1);
 		}
 	}
-	playerWeaponSprite.setPosition(x, y);
+	playerWeaponSprite.setPosition(rect.left, rect.top);
 	playerWeaponSprite.setRotation(rotation);
 }

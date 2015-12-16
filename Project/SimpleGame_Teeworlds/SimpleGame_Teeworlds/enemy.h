@@ -13,7 +13,8 @@ public:
 	
 	float currentFrame;
 	int aX;
-	Enemy(Image &image, String name, Level &lvl, float x, float y, int w, int h);
+	//Enemy(Image &image, String name, Level &lvl, float x, float y, int w, int h);
+	Enemy(Image &image, String name, Level lvl, FloatRect rect);
 
 	Texture fightTexture; //TODO
 

@@ -5,22 +5,22 @@ void Player::Update(float time) {
 	Control(time);
 	switch (action)
 	{
-	case moveRight: dx = speed; break;
-	case moveLeft: dx = -speed; break;
+	case moveRight: boost.x = speed; break;
+	case moveLeft: boost.x = -speed; break;
 	case jump: break;
 	case stay: break;
-	case down: dx = 0; break;
+	case down: boost.y = 0; break;
 	}
-	x += dx*time;
-	CheckCollisionWithMap(dx, 0);
-	y += dy*time;
-	CheckCollisionWithMap(0, dy);
-	sprite.setPosition(x + w / 2, y + h / 3);
+	rect.left += boost.x*time;
+	CheckCollisionWithMap(boost.x, 0);
+	rect.top += boost.y*time;
+	CheckCollisionWithMap(0, boost.y);
+	sprite.setPosition(rect.left + rect.width / GET_HALF, rect.top + rect.height / GET_THIRD);
 	if (health <= 0) {
 		life = false;
 	}
 	if (!isMove) {
 		speed = 0;
 	}
-	dy = dy + 0.0015f*time;
+	boost.y = boost.y + PLAYER_BOOST_CORRECTION*time;
 }

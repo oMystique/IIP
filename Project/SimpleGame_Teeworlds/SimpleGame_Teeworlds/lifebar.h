@@ -3,12 +3,12 @@
 #include <vector>
 
 struct Lifebar: public Interface {
-	Sprite healthSprite;
-	Sprite armorSprite;
-
-	Lifebar(Image &image, int w, int h);
+	//Lifebar(Image &image, int w, int h);
+	Lifebar(Image &image, Vector2f bounds);
 	
 	void Update(float healthCount, float armorCount, RenderWindow &window);
-
 	void Draw(RenderWindow &window);
+private:
+	Sprite healthSprite;
+	Sprite armorSprite;
 };

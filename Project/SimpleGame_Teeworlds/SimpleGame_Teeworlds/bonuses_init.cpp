@@ -1,9 +1,9 @@
 #include "bonuses.h"
 
-Bonuses::Bonuses(Image &image, String name, float x, float y, int w, int h) :Entity(image, name, x, y, w, h) {
+Bonuses::Bonuses(Image &image, String name, FloatRect rect) :Entity(image, name, rect) {
 if (name == "healthPoint") {
-		sprite.setTextureRect(IntRect(673, 2, 62, 62));
+		sprite.setTextureRect(BONUS_HP_RECT);
 	}
-dy = -STEP_BONUSES_ANIMATION;
-startYPos = y;
+boost.y = 0;
+startYPos = rect.top;
 }

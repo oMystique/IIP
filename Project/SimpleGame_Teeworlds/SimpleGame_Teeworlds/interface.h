@@ -2,14 +2,16 @@
 #include "enemy.h"
 
 struct Interface {
+	Interface(Image &image, Vector2f bounds);
+
 	Texture texture;
 	Sprite sprite;
-	float x;
+	/*float x;
 	float y;
 	int w;
-	int h;
+	int h;*/
+	FloatRect rect;
 	String name;
 
-	Interface(Image &image, int w, int h);
 	void Update(float time);
 };

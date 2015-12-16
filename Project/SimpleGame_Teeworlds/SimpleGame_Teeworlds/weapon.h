@@ -2,13 +2,13 @@
 #include "player.h"
 
 struct Weapon {
-	Weapon(Image &image, String name, float x, float y, int w, int h);
+	Weapon(Image &image, String name, FloatRect rect);
 	Image weaponsImage;
-	float x, y;
+	//float x, y;
 	float shootEnemyTimer;
 	bool shootEnemyFlag;
-	int w, h;
-
+	//int w, h;
+	FloatRect rect;
 	float currentFrame;
 	bool shootPlayerFlag;
 
@@ -16,6 +16,6 @@ struct Weapon {
 	Sprite playerWeaponSprite;
 	String name;
 
-	void Update(float time, float rotation, float tempX, float tempY, String name);
+	void Update(float time, float rotation, Vector2f temp, String name);
 	void Animation(float time);
 };

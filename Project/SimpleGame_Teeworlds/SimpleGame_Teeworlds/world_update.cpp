@@ -2,15 +2,15 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
-float GetRotation(float mouseX, float mouseY, float x, float y) {
-	float dX = mouseX - x; 
-	float dY = mouseY - y; 
-	return (atan2(dY, dX)) * GET_CIRCLE_HALF / M_PI; //получаем угол в радианах и переводим его в градусы
+float GetRotation(Vector2f mousePos, Vector2f playerPos) {
+	float dX = mousePos.x - playerPos.x; 
+	float dY = mousePos.y - playerPos.y; 
+	return float((atan2(dY, dX)) * GET_CIRCLE_HALF / M_PI); //получаем угол в радианах и переводим его в градусы
 }
 
 
-void World::UpdateWorld(float time, float mouseX, float mouseY, View &view) {
-	float rotation = GetRotation(mouseX, mouseY, player->x, player->y); 
+void World::UpdateWorld(float time, Vector2f mousePos, View &view) {
+	float rotation = GetRotation(mousePos, Vector2f(player->rect.left, player->rect.top));
 	for (it = entities.begin(); it != entities.end();) {
 		Entity *b = *it;
 		(*it)->Update(time);
@@ -24,11 +24,11 @@ void World::UpdateWorld(float time, float mouseX, float mouseY, View &view) {
 	}
 	player->Update(time);
 	if (missionTarget) { //TODO
-		flagSprite.setPosition(player->x + 20, player->y - 50);
+		flagSprite.setPosition(player->rect.left + FLAG_SPRITE_POS_CORRECTION.x, player->rect.top - FLAG_SPRITE_POS_CORRECTION.y);
 	}
-	playerWeapon->Update(time, rotation, player->x, player->y - 4, "playerWeapon");
+	playerWeapon->Update(time, rotation,  Vector2f(player->rect.left, player->rect.top - GET_FOURTH), "playerWeapon");
 	player->weaponRotation = rotation;
-	view.setCenter(player->x, player->y);
-	sightSprite.setPosition(mouseX, mouseY);
-	bgSprite.setPosition(player->x, player->y);
+	view.setCenter(player->rect.left, player->rect.top);
+	sightSprite.setPosition(mousePos);
+	bgSprite.setPosition(player->rect.left, player->rect.top);
 }

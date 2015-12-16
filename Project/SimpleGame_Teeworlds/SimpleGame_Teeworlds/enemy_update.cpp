@@ -8,6 +8,9 @@ void Enemy::Update(float time) {
 	case left:
 		Move(-1.f);
 		break;
+	case stay:
+		Move(0.f);
+		break;
 	}
 	if (health <= 0) {
 		life = false;
@@ -17,12 +20,15 @@ void Enemy::Update(float time) {
 	if (name == "easyEnemy") {
 		Animation(time);
 		if (isMove) {
-			x += dx*time;
-			checkCollisionWithMap(dx, 0);
-			sprite.setPosition(x + w / 4, y + h / 3);
+			rect.left += boost.x*time;
+			checkCollisionWithMap(boost.x, 0);
+			sprite.setPosition(rect.left + rect.width / GET_FOURTH, rect.top + rect.height / GET_THIRD);
+			if (boost.x == 0) {
+				EnemyAction = right;
+			}
 		}
 	}
 	else if (name == "mediumEnemy") {
-		sprite.setPosition(x + w / 2, y + h / 2);
+		sprite.setPosition(rect.left + rect.width / GET_HALF, rect.top + rect.height / GET_HALF);
 	}
 }

@@ -2,7 +2,7 @@
 #include "player_init.h"
 
 struct Player: public Entity, PlayerInit  {
-	Player(Image &image, String Name, Level lvl, float x, float y, int w, int h);
+	Player(Image &image, String name, Level lvl, FloatRect rect);
 	void Update(float time);
 private:
 	void ControlDirection();

@@ -4,9 +4,9 @@
 
 struct World: public WorldInit {
 	void InitWorldObjects();
-	void UpdateWorld(float time, float mouseX, float mouseY, View &view);
+	void UpdateWorld(float time, Vector2f mousePos, View &view);
 	void DrawObjects(RenderWindow *window);
-	void Shoot(String subject, float mouseX, float mouseY);
+	void Shoot(String subject, Vector2f mousePos);
 	void InteractObjects(float time);
 private:
 	void InitImages();

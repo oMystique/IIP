@@ -4,8 +4,8 @@
 void World::DrawObjects(RenderWindow *window) {
 	window->draw(bgSprite);
 	lvl.Draw(*window);
-	for (it = entities.begin(); it != entities.end(); it++) {
-		window->draw((*it)->sprite);
+	for (Entity *&entity: entities) {
+		window->draw(entity->sprite);
 	}
 	window->draw(flagSprite);
 	window->draw(playerWeapon->playerWeaponSprite);

@@ -310,6 +310,7 @@ inline Object Level::GetObject(std::string name) {
 			return objects[i];
 		}
 	}
+	return objects[0]; //WHAT?
 }
 
 inline std::vector<Object> Level::GetObjects(std::string name)

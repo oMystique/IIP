@@ -1,20 +1,19 @@
 #include "bullet.h"
 
-Bullet::Bullet(Image &image, String name, Level lvl, float x, float y, int w, int h, float mouseX, float mouseY, float rotation) :Entity(image, name, x, y, w, h) {
-	tempX = mouseX;
-	tempY = mouseY;
-	dx = x;
-	dy = y;
+Bullet::Bullet(Image &image, String name, Level lvl, FloatRect rect, Vector2f mousePos, float rotation) :Entity(image, name, rect) {
+	temp = mousePos;
+	boost.x = rect.left;
+	boost.y = rect.top;
 	obj = lvl.GetObjects("solid");
-	sprite.setPosition(x, y);
-	speed = DEFAULT_UNIT_SPEED;
+	sprite.setPosition(rect.left, rect.top);
+	speed = DEFAULT_UNIT_SPEED / GET_HALF;
 	life = true;
 	sprite.setScale(BULLET_SCALE, BULLET_SCALE);
 	if (name == "Bullet") {
 		sprite.setRotation(rotation + QUARTER_CIRCLE);
-		sprite.setTextureRect(IntRect(339, 394, 27, 48));
+		sprite.setTextureRect(PLAYER_BULLET_RECT);
 	}
 	else if (name == "enemyBullet") {
-		sprite.setTextureRect(IntRect(321, 271, 60, 36));
+		sprite.setTextureRect(ENEMY_BULLET_RECT);
 	}
 }

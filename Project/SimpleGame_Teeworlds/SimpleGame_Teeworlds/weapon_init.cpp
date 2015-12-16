@@ -1,7 +1,7 @@
 #include "weapon.h"
 
 
-Weapon::Weapon(Image &image, String name, float x, float y, int w, int h) {
+Weapon::Weapon(Image &image, String name, FloatRect rect) {
 	weaponsTexture.loadFromImage(image);
 	playerWeaponSprite.setScale(WEAPON_SCALE, WEAPON_SCALE);
 	shootEnemyTimer = DEFAULT_ENEMY_SHOOT_SPEED;
@@ -12,7 +12,7 @@ Weapon::Weapon(Image &image, String name, float x, float y, int w, int h) {
 	if (name == "playerWeapon") {
 		playerWeaponSprite.setTexture(weaponsTexture);
 		playerWeaponSprite.setTextureRect(IntRect(0, 68, 265, 68));
-		playerWeaponSprite.setPosition(x, y);
+		playerWeaponSprite.setPosition(rect.left, rect.top);
 	}
 }
 

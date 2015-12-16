@@ -7,21 +7,21 @@ void Lifebar::Update(float healthCount, float armorCount, RenderWindow &window) 
 	float armorCounter = COUNT_PLAYER_HEALTH;
 	while (healthCounter != 0) {
 		if (healthCount < healthCounter) {
-			healthSprite.setTextureRect(IntRect(738, 2, 62, 62));
+			healthSprite.setTextureRect(LIFEBAR_NO_HP_RECT);
 		}
 		else {
-			healthSprite.setTextureRect(IntRect(673, 2, 62, 62));
+			healthSprite.setTextureRect(LIFEBAR_HP_RECT);
 		}
 		if (armorCount < armorCounter) {
-			armorSprite.setTextureRect(IntRect(738, 64, 62, 62));
+			armorSprite.setTextureRect(LIFEBAR_NO_ARM_RECT);
 		}
 		else {
-			armorSprite.setTextureRect(IntRect(673, 64, 62, 62));
+			armorSprite.setTextureRect(LIFEBAR_ARM_RECT);
 		}
 		healthCounter -= BONUS_HEALTH;
 		armorCounter -= BONUS_HEALTH;
 		healthSprite.setPosition(center.x + healthCounter / LIFEBAR_POS_CORRECTION.x, center.y - LIFEBAR_POS_CORRECTION.y);
-		armorSprite.setPosition(center.x + healthCounter / LIFEBAR_POS_CORRECTION.x, center.y - LIFEBAR_POS_CORRECTION.y + 30);
+		armorSprite.setPosition(center.x + healthCounter / LIFEBAR_POS_CORRECTION.x, center.y - LIFEBAR_POS_CORRECTION.y + LIFEBAR_ARM_POS_CORRECTION);
 		Draw(window);
 	}
 }

@@ -1,7 +1,7 @@
 #include "application.h"
 
 void Application::Update(float time) {
-	UpdateWorld(time, mouseX, mouseY, view);
+	UpdateWorld(time, mousePos, view);
 }
 
 
