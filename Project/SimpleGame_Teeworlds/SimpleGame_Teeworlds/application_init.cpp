@@ -15,19 +15,40 @@ void Application::InitMenu() {
 	menu->DrawMenu(*window);
 }
 
+void Application::GameOver() {
+	gameOver.setFont(font);
+	gameOver.setString("GAME OVER");
+	gameOver.setColor(Color::Red);
+	gameOver.setScale(2, 2);
+	gameOver.setPosition(window->getView().getCenter().x - 180, window->getView().getCenter().y - 100);
+	restart.setFont(font);
+	restart.setString("PRESS R TO RESTART GAME");
+	restart.setColor(Color::Red);
+	restart.setPosition(window->getView().getCenter().x - 200, window->getView().getCenter().y);
+	window->clear(Color(0, 0, 0, 255));
+	window->draw(gameOver);
+	window->draw(restart);
+	window->display();
+}
+
 void Application::Run() {
 	window->setMouseCursorVisible(false);
 	InitWorldObjects();
 	view.reset(FloatRect(player->rect.left, player->rect.top, DEFAULT_VIEW_SIZE.x, DEFAULT_VIEW_SIZE.y));
-	while ((window->isOpen()) && (!player->missionComplete)) {
+	while ((window->isOpen())) {
 		float time = float(clock.getElapsedTime().asMicroseconds());
 		clock.restart();
 		time = time / GAME_SPEED;
 		GetMouseCoords();
 		ProcessEvents();
-		InteractObjects(time);
-		Update(time);
-		Render();
+		if (!((countEnemies == 0) && (player->missionComplete))) {
+			InteractObjects(time);
+			Update(time);
+			Render();
+		}
+		else {
+			GameOver();
+		}
 	}
 	entities.clear();
 }

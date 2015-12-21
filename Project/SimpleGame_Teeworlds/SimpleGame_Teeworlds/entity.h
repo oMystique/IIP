@@ -5,9 +5,7 @@
 struct Entity {
 public:
 	vector<Object> obj;
-	//float dx, dy, x, y, speed, moveTimer, vec;
-	//int w, h, health;
-	Vector2f boost; //dx, dy
+	Vector2f boost;
 	FloatRect rect;
 	float speed;
 	float moveTimer;
@@ -19,7 +17,6 @@ public:
 	Sprite sprite;
 	String name;
 
-	//Entity(Image &image, String name, float x, float y, int w, int h);
 	Entity(Image &image, String Name, FloatRect Rect);
 
 	FloatRect getRect();

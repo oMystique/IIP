@@ -1,8 +1,7 @@
 #include "lifebar.h"
 
-void Lifebar::Update(float healthCount, float armorCount, RenderWindow &window) {
+void Lifebar::Update(float const healthCount, float const armorCount, RenderWindow &window) {
 	Vector2f center = window.getView().getCenter();
-	Vector2f size = window.getView().getSize();
 	float healthCounter = COUNT_PLAYER_HEALTH;
 	float armorCounter = COUNT_PLAYER_HEALTH;
 	while (healthCounter != 0) {

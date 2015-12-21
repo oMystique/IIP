@@ -7,6 +7,9 @@ struct Application: public World {
 	View view;
 	Clock clock;
 	Vector2f mousePos;
+	Text gameOver;
+	Text restart;
+	RectangleShape plashRect;
 
 	Application();
 private:
@@ -17,5 +20,5 @@ private:
 	void Render();
 	void Update(float time);
 	void GetMouseCoords();
-
+	void GameOver();
 };

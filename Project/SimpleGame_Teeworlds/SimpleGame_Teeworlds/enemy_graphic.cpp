@@ -3,23 +3,30 @@
 
 void Enemy::Animation(float time) {
 	if (isFight) {
-		sprite.setTexture(fightTexture);
+		offset.y = sprite.getTextureRect().height;
 	}
 	else {
-		sprite.setTexture(texture);
+		offset.y = 0;
+		if (name != "mediumEnemy") {
+			if (boost.x < 0) {
+				if (sprite.getScale().x < 0) {
+					sprite.setScale(-sprite.getScale().x, sprite.getScale().y);
+				}
+			}
+			else {
+				if (sprite.getScale().x > 0) {
+					sprite.setScale(-sprite.getScale().x, sprite.getScale().y);
+				}
+			}
+		}
 	}
 	currentFrame += FRAME_CORRECTION*time;
-	if (currentFrame > ANIMATION_FRAME) {
-		currentFrame -= ANIMATION_FRAME;
-		aX += EASY_ENEMY_RECT_BOUNDS.x;
+	if (currentFrame > countFrames) {
+		currentFrame -= countFrames;
+		offset.x += sprite.getTextureRect().width;
 	}
-	if (aX > EASY_ENEMY_RECT_BOUNDS.x + 1) {
-		aX = 0;
+	if (offset.x > sprite.getTextureRect().width + 1) {
+		offset.x = 0;
 	}
-	if (boost.x > 0) {
-		sprite.setTextureRect(IntRect(aX, 0, EASY_ENEMY_RECT_BOUNDS.x, EASY_ENEMY_RECT_BOUNDS.y));
-	}
-	else {
-		sprite.setTextureRect(IntRect(aX, 107, EASY_ENEMY_RECT_BOUNDS.x, EASY_ENEMY_RECT_BOUNDS.y));
-	}
+	sprite.setTextureRect(IntRect(offset.x, offset.y, sprite.getTextureRect().width, sprite.getTextureRect().height));
 }

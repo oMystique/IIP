@@ -6,12 +6,12 @@ void Player::Control(float &time) {
 	if (Keyboard::isKeyPressed(Keyboard::A)) {
 			Animation(time);
 			action = moveLeft;
-			speed = DEFAULT_UNIT_SPEED;
+			speed = 0.2;
 		}
 	if (Keyboard::isKeyPressed(Keyboard::D)) {
 			Animation(time);
 			action = moveRight;
-			speed = DEFAULT_UNIT_SPEED;
+			speed = 0.2;
 		}
 	if ((Keyboard::isKeyPressed(Keyboard::W)) && (onGround)) {
 			action = jump;

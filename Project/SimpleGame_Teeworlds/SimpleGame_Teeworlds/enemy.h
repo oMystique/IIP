@@ -12,11 +12,10 @@ public:
 	} EnemyAction;
 	
 	float currentFrame;
-	int aX;
-	//Enemy(Image &image, String name, Level &lvl, float x, float y, int w, int h);
-	Enemy(Image &image, String name, Level lvl, FloatRect rect);
+	float countFrames;
+	Vector2f offset;
 
-	Texture fightTexture; //TODO
+	Enemy(Image &image, String name, Level lvl, FloatRect rect);
 
 	SoundBuffer enemyDieBuffer;
 	Sound enemyDie;

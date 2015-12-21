@@ -15,7 +15,5 @@ struct PlayerInit {
 	float armor;
 	float weaponRotation;
 	float currentFrame;
-	/*int aX;
-	int aY;*/
 	Vector2f offset;
 };

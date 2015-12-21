@@ -17,7 +17,7 @@ void Enemy::Update(float time) {
 		enemyDie.play();
 		return;
 	}
-	if (name == "easyEnemy") {
+	if ((name == "easyEnemy") || (name == "hardEnemy")) {
 		Animation(time);
 		if (isMove) {
 			rect.left += boost.x*time;
@@ -29,6 +29,7 @@ void Enemy::Update(float time) {
 		}
 	}
 	else if (name == "mediumEnemy") {
+		Animation(time);
 		sprite.setPosition(rect.left + rect.width / GET_HALF, rect.top + rect.height / GET_HALF);
 	}
 }

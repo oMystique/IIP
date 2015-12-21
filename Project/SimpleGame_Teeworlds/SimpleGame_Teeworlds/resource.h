@@ -14,12 +14,13 @@ static const Vector2f DEFAULT_VIEW_SIZE = { 880.f, 370.f };
 static const float COUNT_PLAYER_HEALTH = 1000.f;
 static const float BONUS_HEALTH = 100.f;
 static const IntRect BONUS_HP_RECT = { 673, 2, 62, 62 };
+static const IntRect BONUS_ARM_RECT = { 673, 64, 62, 62 };
 static const float BOUND_BONUS_ANIMATION = 10.f;
 static const IntRect PLAYER_BULLET_RECT = { 339, 394, 27, 48 };
 static const IntRect ENEMY_BULLET_RECT = { 321, 271, 60, 36 };
 static const float ANIMATION_FRAME = 0.7f;
-static const Vector2i EASY_ENEMY_RECT_BOUNDS = { 149, 103 };
-static const Vector2i MEDIUM_ENEMY_RECT_BOUNDS = { 244, 230 };
+static const Vector2i EASY_ENEMY_RECT_BOUNDS = { 149, 106 };
+static const Vector2i MEDIUM_ENEMY_RECT_BOUNDS = { 301, 109 };
 static const IntRect LIFEBAR_HP_RECT = { 673, 2, 62, 62 };
 static const IntRect LIFEBAR_ARM_RECT = { 673, 64, 62, 62 };
 static const IntRect LIFEBAR_NO_HP_RECT = { 738, 2, 62, 62 };
@@ -40,13 +41,15 @@ static const Vector2f DEFAULT_UNIT_BOUNDS = { 36.f, 36.f };
 static const Vector2f DEFAULT_WEAPON_BOUNDS = { 227.f, 60.f };
 static const IntRect FLAG_SPRITE_RECT = { 387, 268, 127, 240 };
 static const IntRect SIGHT_SPRITE_RECT = { 0, 0, 61, 61 };
+static const float DEFAULT_BULLET_SPEED = 7.f;
+static const float HARD_ENEMY_ACT_DISTANCE = 65.f;
 
 
 //SCALE_____________________________:
 static const float WEAPON_SCALE = 0.3f;
 static const float BULLET_SCALE = 0.2f;
 static const float QUARTER_CIRCLE = 90.f;
-static const float MEDIUM_ENEMY_SCALE = 0.15f;
+static const float MEDIUM_ENEMY_SCALE = 0.3f;
 static const float ENTITY_BASE_SCALE = 0.4f;
 static const float FLAG_MAX_SCALE = 0.9f;
 static const float SIGHT_SCALE = 0.6f;
@@ -70,6 +73,8 @@ static const float ANIMATION_TIME_BOOST = 0.005f;
 static const float PLAYER_BOOST_CORRECTION = 0.0015f;
 static const Vector2f ENEMY_SHOOT_CORRECTION = { 11.f, 11.f };
 static const Vector2f FLAG_SPRITE_POS_CORRECTION = { 20.f, 45.f };
+static const Vector2f MISSION_TEXT_CORRECTION = { 430.f, 160.f };
+static const float COUNT_ENEMIES_TEXT_CORRECTION = 190.f;
 
 
 //OTHER______________________________:
@@ -78,7 +83,7 @@ static const float GET_HALF = 2.f;
 static const float GET_FOURTH = 4.f;
 static const float GET_THIRD = 3.f;
 static const float STEP_BONUSES_ANIMATION = 0.01f;
-static const float ENEMY_VIEW_RANGE = 450.f;
+static const float ENEMY_VIEW_RANGE = 430.f;
 static const float GET_CIRCLE_HALF = 180.f;
 static const float RANDOM_RANGE = 500.f;
 

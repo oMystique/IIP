@@ -4,6 +4,7 @@
 #include "weapon.h"
 #include "bonuses.h"
 #include <list>
+#include "additAnimation.h"
 #include "lifebar.h"
 
 
@@ -11,6 +12,7 @@ struct WorldInit {
 	Image heroImage;
 	Image easyEnemyImage;
 	Image mediumEnemyImage;
+	Image hardEnemyImage;
 	Image healthImage;
 	Image bulletImage;
 	Image weaponsImage;
@@ -46,12 +48,13 @@ struct WorldInit {
 
 	vector<Object> easyEnemyObj;
 	vector<Object> mediumEnemyObj;
-	vector<Object> healthPoints;
+	vector<Object> hardEnemyObj;
+	vector<Object> healthPointsObj;
+	vector<Object> armorPointsObj;
 	Object flagObj;
 
 	list<Entity*>  entities;
 	list<Entity*>::iterator it;
-	list<Entity*>::iterator at;
 
 	unique_ptr<Player> player = nullptr;
 	unique_ptr<View> view = nullptr;
@@ -59,4 +62,8 @@ struct WorldInit {
 	unique_ptr<Lifebar> lifebar = nullptr;
 
 	bool missionTarget; //TODO
+	int countEnemies;
+	Font font;
+	Text countEnemiesText;
+	Text missionTargetText;
 };

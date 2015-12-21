@@ -4,7 +4,7 @@
 
 struct World: public WorldInit {
 	void InitWorldObjects();
-	void UpdateWorld(float time, Vector2f mousePos, View &view);
+	void UpdateWorld(float time, Vector2f mousePos, View &view, RenderWindow &window);
 	void DrawObjects(RenderWindow *window);
 	void Shoot(String subject, Vector2f mousePos);
 	void InteractObjects(float time);
@@ -14,4 +14,5 @@ private:
 	void InitSounds();
 	void InitObjects();
 	void InitSprites();
+	float GetRotation(Vector2f mousePos, Vector2f playerPos);
 };

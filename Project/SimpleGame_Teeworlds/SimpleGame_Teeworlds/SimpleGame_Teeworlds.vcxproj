@@ -83,6 +83,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="addAnimAction.cpp" />
+    <ClCompile Include="addAnimInit.cpp" />
+    <ClCompile Include="addAnimUpdate.cpp" />
     <ClCompile Include="application_init.cpp" />
     <ClCompile Include="application_events.cpp" />
     <ClCompile Include="application_update_render.cpp" />
@@ -118,6 +121,7 @@
     <ClCompile Include="world_update.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="additAnimation.h" />
     <ClInclude Include="application.h" />
     <ClInclude Include="bonuses.h" />
     <ClInclude Include="bullet.h" />

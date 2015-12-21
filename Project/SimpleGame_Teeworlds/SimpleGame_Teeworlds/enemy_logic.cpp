@@ -1,9 +1,10 @@
 #include "enemy.h"
 
+
 void Enemy::Move(float direction) {
-	if (name == "easyEnemy") {
+	if ((name == "easyEnemy") || ((name == "hardEnemy"))) {
 		if (sprite.getColor() == (Color::Red)) {
-			boost.x = direction * DEFAULT_UNIT_SPEED * GET_HALF;
+			boost.x = direction * DEFAULT_UNIT_SPEED * GET_FOURTH;
 		}
 		else {
 			boost.x = direction * DEFAULT_UNIT_SPEED;
@@ -18,16 +19,12 @@ void Enemy::checkCollisionWithMap(float dX, float dY) {
 		{
 			if (dX > 0) {
 				rect.left = obj[i].rect.left - rect.width;
-				if (name == "easyEnemy") {
-					boost.x = -DEFAULT_UNIT_SPEED;
-				}
+				boost.x = -DEFAULT_UNIT_SPEED;
 				EnemyAction = left;
 			}
 			else {
 				rect.left = obj[i].rect.left + obj[i].rect.width;
-				if (name == "easyEnemy") {
-					boost.x = DEFAULT_UNIT_SPEED;
-				}
+				boost.x = DEFAULT_UNIT_SPEED;
 				EnemyAction = right;
 			}
 		}

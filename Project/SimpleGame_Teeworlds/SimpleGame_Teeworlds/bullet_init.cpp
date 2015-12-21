@@ -6,8 +6,7 @@ Bullet::Bullet(Image &image, String name, Level lvl, FloatRect rect, Vector2f mo
 	boost.y = rect.top;
 	obj = lvl.GetObjects("solid");
 	sprite.setPosition(rect.left, rect.top);
-	speed = DEFAULT_UNIT_SPEED / GET_HALF;
-	life = true;
+	speed = DEFAULT_BULLET_SPEED;
 	sprite.setScale(BULLET_SCALE, BULLET_SCALE);
 	if (name == "Bullet") {
 		sprite.setRotation(rotation + QUARTER_CIRCLE);
