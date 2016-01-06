@@ -9,9 +9,12 @@ void BulletTrackAnimation(RenderWindow &window, Entity &bullet, Sprite sprite) {
 }
 
 void Bullet::Update(float time) {
+	if (speed == DEFAULT_BULLET_SPEED) {
+		speed = time;
+	}
 	float distance = sqrt((temp.x - boost.x)*(temp.x - boost.x) + (temp.y - boost.y)*(temp.y - boost.y));
-	rect.left += speed * (temp.x - boost.x) / distance;
-	rect.top += speed * (temp.y - boost.y) / distance;
+	rect.left += (temp.x - boost.x) / distance * speed * GET_HALF;
+	rect.top +=  (temp.y - boost.y) / distance * speed * GET_HALF;
 
 	if (rect.left <= 0) rect.left = 1;
 	if (rect.top <= 0) rect.top = 1;

@@ -1,9 +1,10 @@
 #include "application.h"
 
 
-Application::Application() : World(),
+Application::Application() :
 	window(new RenderWindow(VideoMode(unsigned int(DEFAULT_WINDOW_SIZE.x), unsigned int(DEFAULT_WINDOW_SIZE.y)), "FirstGame. Ildarkin Alexey; PS-22.")) {
 	InitMenu();
+	appState = startGame;
 	Run();
 }
 
@@ -16,16 +17,21 @@ void Application::InitMenu() {
 }
 
 void Application::GameOver() {
-	gameOver.setFont(font);
+	gameOver.setFont(world->interfaceText->font);
 	gameOver.setString("GAME OVER");
 	gameOver.setColor(Color::Red);
 	gameOver.setScale(2, 2);
 	gameOver.setPosition(window->getView().getCenter().x - 180, window->getView().getCenter().y - 100);
-	restart.setFont(font);
-	restart.setString("PRESS R TO RESTART GAME");
+	restart.setFont(world->interfaceText->font);
+	restart.setString("PRESS R TO EXIT TO MENU");
 	restart.setColor(Color::Red);
-	restart.setPosition(window->getView().getCenter().x - 200, window->getView().getCenter().y);
-	window->clear(Color(0, 0, 0, 255));
+	restart.setPosition(window->getView().getCenter().x - 195, window->getView().getCenter().y);
+	plashRect.setFillColor(Color(0, 0, 0, 200));
+	plashRect.setSize(DEFAULT_WINDOW_SIZE);
+	plashRect.setPosition(window->getView().getCenter().x - DEFAULT_WINDOW_SIZE.x / GET_HALF, window->getView().getCenter().y - DEFAULT_WINDOW_SIZE.y / GET_HALF);
+	window->clear();
+	world->DrawObjects(window);
+	window->draw(plashRect);
 	window->draw(gameOver);
 	window->draw(restart);
 	window->display();
@@ -33,22 +39,39 @@ void Application::GameOver() {
 
 void Application::Run() {
 	window->setMouseCursorVisible(false);
-	InitWorldObjects();
-	view.reset(FloatRect(player->rect.left, player->rect.top, DEFAULT_VIEW_SIZE.x, DEFAULT_VIEW_SIZE.y));
+	window->setFramerateLimit(60);
+	world = new World();
+	world->InitWorldObjects();
+	view.reset(FloatRect(world->player->rect.left, world->player->rect.top, DEFAULT_VIEW_SIZE.x, DEFAULT_VIEW_SIZE.y));
+	appState = gaming;
 	while ((window->isOpen())) {
-		float time = float(clock.getElapsedTime().asMicroseconds());
-		clock.restart();
-		time = time / GAME_SPEED;
-		GetMouseCoords();
-		ProcessEvents();
-		if (!((countEnemies == 0) && (player->missionComplete))) {
-			InteractObjects(time);
-			Update(time);
-			Render();
+		if (appState == startGame) {
+			world->DestroyWorldObjects();
+			delete world;
+			world = new World();
+			world->InitWorldObjects();
+			appState = gaming;
 		}
-		else {
-			GameOver();
+		else if (appState == gameMenu) {
+			InitMenu();
+		}
+		else if (appState == gaming) {
+			float time = float(clock.getElapsedTime().asMicroseconds());
+			clock.restart();
+			time = time / GAME_SPEED;
+			GetMouseCoords();
+			ProcessEvents();
+			if (!((world->countEnemies == 0) && (world->player->missionComplete)) && (world->player->life)) {
+				world->InteractObjects(time);
+				Update(time);
+				Render();
+			}
+			else {
+				GameOver();
+			}
+		}
+		else if (appState == closeGame) {
+			window->close();
 		}
 	}
-	entities.clear();
 }

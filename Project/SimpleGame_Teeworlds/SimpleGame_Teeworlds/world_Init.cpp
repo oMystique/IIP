@@ -1,4 +1,14 @@
 #include "world.h"
+#include "entity.h"
+#include <vld.h>
+
+void InitLifeBarsForEnemy(list<Entity*> &entities, Image enemyLifeBar) { //TODO: запилить инициализацию баров внутри конструктора структур.
+	for (Entity *&object : entities) {
+		if (object->name == "easyEnemy" || object->name == "mediumEnemy" || object->name == "hardEnemy") {
+			object->lifebar = make_unique<Lifebar>(enemyLifeBar, Vector2f(0.f, 0.f), "enemy");
+		}
+	}
+}
 
 
 void World::InitObjects() {
@@ -6,29 +16,28 @@ void World::InitObjects() {
 
 	playerObj = lvl.GetObject("player");
 
-	player = make_unique<Player>(heroImage, "Player1", lvl, FloatRect(playerObj.rect.left, playerObj.rect.top, DEFAULT_UNIT_BOUNDS.x, DEFAULT_UNIT_BOUNDS.y));
+	cout << player.get() << endl;
+	player = make_unique<Player>(heroImage, "player", lvl, FloatRect(playerObj.rect.left, playerObj.rect.top, DEFAULT_UNIT_BOUNDS.x, DEFAULT_UNIT_BOUNDS.y));
 	playerWeapon = make_unique<Weapon>(weaponsImage, "playerWeapon", FloatRect(player->rect.left, player->rect.top, DEFAULT_WEAPON_BOUNDS.x, DEFAULT_WEAPON_BOUNDS.y));
-	lifebar = make_unique<Lifebar>(bulletImage, Vector2f(float(LIFEBAR_HP_RECT.width), float(LIFEBAR_HP_RECT.height)));
+	player->lifebar = make_unique<Lifebar>(bulletImage, Vector2f(float(PLAYER_LIFEBAR_HP_RECT.width), float(PLAYER_LIFEBAR_HP_RECT.height)), player->name);
 	view = make_unique<View>();
+
 
 	easyEnemyObj = lvl.GetObjects("easyEnemy");
 	for (unsigned int i = 0; i < easyEnemyObj.size(); i++) { 
 		entities.push_back(new Enemy(easyEnemyImage, "easyEnemy", lvl, FloatRect(easyEnemyObj[i].rect.left, easyEnemyObj[i].rect.top, DEFAULT_UNIT_BOUNDS.x, DEFAULT_UNIT_BOUNDS.y)));
 	}
-	easyEnemyObj.clear();
 
 	mediumEnemyObj = lvl.GetObjects("mediumEnemy");
 	for (unsigned int i = 0; i < mediumEnemyObj.size(); i++) { 
 		entities.push_back(new Enemy(mediumEnemyImage, "mediumEnemy", lvl, FloatRect(mediumEnemyObj[i].rect.left, mediumEnemyObj[i].rect.top, DEFAULT_UNIT_BOUNDS.x, DEFAULT_UNIT_BOUNDS.y)));
 	}
-	mediumEnemyObj.clear();
 
 	hardEnemyObj = lvl.GetObjects("hardEnemy"); 
 
 	for (unsigned int i = 0; i < hardEnemyObj.size(); i++) {
 		entities.push_back(new Enemy(hardEnemyImage, "hardEnemy", lvl, FloatRect(hardEnemyObj[i].rect.left, hardEnemyObj[i].rect.top, DEFAULT_UNIT_BOUNDS.x * GET_HALF, DEFAULT_UNIT_BOUNDS.y)));
 	}
-	hardEnemyObj.clear();
 
 	countEnemies = entities.size();
 
@@ -36,21 +45,17 @@ void World::InitObjects() {
 	for (unsigned int i = 0; i < healthPointsObj.size(); i++) {
 		entities.push_back(new Bonuses(bulletImage, "healthPoint", FloatRect(healthPointsObj[i].rect.left, healthPointsObj[i].rect.top, DEFAULT_BONUSES_BOUNDS.x, DEFAULT_BONUSES_BOUNDS.y * GET_HALF)));
 	}
-	healthPointsObj.clear();
 
 	armorPointsObj = lvl.GetObjects("armorPoint");
 	for (unsigned int i = 0; i < armorPointsObj.size(); i++) {
 		entities.push_back(new Bonuses(bulletImage, "armorPoint", FloatRect(armorPointsObj[i].rect.left, armorPointsObj[i].rect.top, DEFAULT_BONUSES_BOUNDS.x, DEFAULT_BONUSES_BOUNDS.y * GET_HALF)));
 	}
-	armorPointsObj.clear();
 
 	flagObj = lvl.GetObject("flag");
 
-	font.loadFromFile("font.ttf");
-	countEnemiesText.setFont(font);
-	countEnemiesText.setColor(Color::Blue);
-	missionTargetText.setFont(font);
-	missionTargetText.setColor(Color::Blue);
+	interfaceText = make_unique<InterfaceText>();
+
+	InitLifeBarsForEnemy(entities, enemyLifeBar);
 }
 
 
@@ -58,10 +63,10 @@ void World::InitImages() {
 	heroImage.loadFromFile("images/anim_player.png");
 	easyEnemyImage.loadFromFile("images/easy_enemy.png");
 	mediumEnemyImage.loadFromFile("images/medium_enemy.png");
-	mediumEnemyImage.createMaskFromColor(Color(255, 255, 255));
 	bulletImage.loadFromFile("images/weapons.png");
 	weaponsImage.loadFromFile("images/shotgun.png");
 	hardEnemyImage.loadFromFile("images/fireman.png");
+	enemyLifeBar.loadFromFile("images/enemyLife.png");
 }
 
 

@@ -2,7 +2,7 @@
 #include "menu.h"
 #include "world.h"
 
-struct Application: public World {
+struct Application {
 	RenderWindow *window;
 	View view;
 	Clock clock;
@@ -10,6 +10,14 @@ struct Application: public World {
 	Text gameOver;
 	Text restart;
 	RectangleShape plashRect;
+	World *world;
+
+	enum {
+		startGame,
+		gaming,
+		gameMenu,
+		closeGame
+	} appState;
 
 	Application();
 private:

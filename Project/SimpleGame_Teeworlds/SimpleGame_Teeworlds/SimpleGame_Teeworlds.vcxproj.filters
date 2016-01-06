@@ -195,6 +195,9 @@
     <ClCompile Include="interface.cpp">
       <Filter>Source Files\interface</Filter>
     </ClCompile>
+    <ClCompile Include="interface_text.cpp">
+      <Filter>Source Files\interface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -250,6 +253,9 @@
     </ClInclude>
     <ClInclude Include="additAnimation.h">
       <Filter>Header Files\addAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="interface_text.h">
+      <Filter>Header Files\interface</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

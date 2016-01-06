@@ -4,8 +4,10 @@
 #include "weapon.h"
 #include "bonuses.h"
 #include <list>
-#include "additAnimation.h"
-#include "lifebar.h"
+#include "enemy.h"
+#include "bullet.h"
+#include "interface_text.h"
+
 
 
 struct WorldInit {
@@ -16,6 +18,7 @@ struct WorldInit {
 	Image healthImage;
 	Image bulletImage;
 	Image weaponsImage;
+	Image enemyLifeBar;
 
 	Texture bgTexture;
 	Sprite bgSprite;
@@ -59,11 +62,8 @@ struct WorldInit {
 	unique_ptr<Player> player = nullptr;
 	unique_ptr<View> view = nullptr;
 	unique_ptr<Weapon> playerWeapon = nullptr;
-	unique_ptr<Lifebar> lifebar = nullptr;
+	unique_ptr<InterfaceText> interfaceText = nullptr;
 
 	bool missionTarget; //TODO
 	int countEnemies;
-	Font font;
-	Text countEnemiesText;
-	Text missionTargetText;
 };

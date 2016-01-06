@@ -12,11 +12,13 @@ Entity::Entity(Image &image, String Name, FloatRect Rect) {
 	life = true;
 	onGround = false;
 	isMove = false;
+	isDamaged = false;
 	sprite.setTexture(texture);
 	sprite.setOrigin(rect.width / GET_HALF, rect.height / GET_HALF);
 	sprite.setScale(ENTITY_BASE_SCALE, ENTITY_BASE_SCALE);
 }
 
+Entity::~Entity() {};
 
 FloatRect Entity::getRect() {//ф-ция получения прямоугольника. его коорд,размеры (шир,высот).
 	return FloatRect(rect.left, rect.top, rect.width, rect.height);//эта ф-ция нужна для проверки столкновений 

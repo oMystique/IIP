@@ -11,7 +11,7 @@ FloatRect GetSpriteRect(Sprite sprite) {
 float World::GetRotation(Vector2f mousePos, Vector2f playerPos) {
 	float dX = mousePos.x - playerPos.x;
 	float dY = mousePos.y - playerPos.y;
-	return float((atan2(dY, dX)) * GET_CIRCLE_HALF / M_PI); //получаем угол в радианах и переводим его в градусы
+	return float((atan2(dY, dX)) * GET_CIRCLE_HALF / M_PI);
 }
 
 
@@ -44,6 +44,9 @@ void CheckPerfomMissionTarget(Player &player, Sprite &flagSprite, bool &missionT
 
 
 void PlayerShootAtEnemy(Entity &bullet, Entity &enemy, Player &player, Sound &missSound) {
+	if (!enemy.isDamaged) {
+		enemy.isDamaged = true;
+	}
 	if ((enemy.name == "easyEnemy") && (player.weaponRotation < WEAPON_MISS_ROTATION.x) && (player.weaponRotation > WEAPON_MISS_ROTATION.y)) {
 		missSound.play();
 		bullet.speed *= -1;
@@ -54,6 +57,14 @@ void PlayerShootAtEnemy(Entity &bullet, Entity &enemy, Player &player, Sound &mi
 		if (enemy.name != "hardEnemy") {
 			enemy.health -= DAMAGE_WITH_PLAYER_WEAPON;
 			bullet.life = false;
+			if (enemy.sprite.getColor() != (Color::Red) && (enemy.sprite.getColor().a != 150) && (enemy.name == "easyEnemy")) {
+				if (enemy.action == enemy.moveLeft) {
+					enemy.action = enemy.moveRight;
+				}
+				else {
+					enemy.action = enemy.moveLeft;
+				}
+			}
 		}
 		else {
 			enemy.health -= DAMAGE_WITH_PLAYER_WEAPON / GET_HALF;
@@ -90,7 +101,10 @@ void EnemyShootAtPlayer(Level &lvl, Entity &enemy, Player &player, list<Entity*>
 }
 
 
-void EnemyDamagedPlayer(Sound &kickHit, Entity &enemy, Player &player) {
+void EnemyDamagedPlayer(Sound &kickHit, Entity &enemy, Player &player, float time) {
+	if (!player.isDamaged) {
+		player.isDamaged = true;
+	}
 	enemy.isMove = false;
 	if (!kickHit.getStatus()) {
 		kickHit.play();
@@ -108,11 +122,11 @@ void EnemyDamagedPlayer(Sound &kickHit, Entity &enemy, Player &player) {
 	else {
 		enemy.isFight = true;
 		if (player.armor > 0) {
-			player.health -= 0.3;
-			player.armor -= 0.6;
+			player.health -= 0.3 * time;
+			player.armor -= 0.6 * time; //TODO: REF;
 		}
 		else {
-			player.health -= 0.6;
+			player.health -= 0.5 * time;
 		}
 	}
 }
@@ -123,10 +137,27 @@ float GetDistance(Player &player, Entity &enemy) {
 }
 
 
-void ActHardEnemy(Player &player, Entity &enemy, float const distance) {
-	enemy.sprite.setPosition(player.sprite.getPosition().x + distance * -enemy.sprite.getScale().x, player.sprite.getPosition().y - 10);
-	enemy.rect.left = (player.rect.left + distance * -enemy.sprite.getScale().x);
-	enemy.rect.top = (player.rect.top - 10);
+bool ActHardEnemy(Player &player, Entity &enemy, float const distance, Sound kickHit, float time) {
+	if (distance > HARD_ENEMY_ACT_DISTANCE) {
+		enemy.onGround = true;
+		enemy.rect.top = player.rect.top;
+		enemy.isFight = false;
+		if (player.rect.left < enemy.rect.left) {
+			enemy.action = enemy.moveLeft;
+		}
+		else {
+			enemy.action = enemy.moveRight;
+		}
+		return false;
+	}
+	else {
+		EnemyDamagedPlayer(kickHit, enemy, player, time);
+		enemy.isMove = true;
+		enemy.isFight = true;
+		enemy.action = enemy.stay;
+		return true;
+	}
+	
 }
 
 
@@ -144,14 +175,17 @@ void World::InteractObjects(float time) {
 			if ((subject->name == "mediumEnemy") || (subject->name == "hardEnemy")) {
 				distance = GetDistance(*player, *subject);
 			}
-			if (IntersectsRects(subject->getRect(), player->getRect()) || ((subject->name == "hardEnemy") && (distance <= HARD_ENEMY_ACT_DISTANCE))) {
-				EnemyDamagedPlayer(kickHit, *subject, *player);
+			if (IntersectsRects(subject->getRect(), player->getRect()) || ((subject->name == "hardEnemy") && (distance <= ENEMY_VIEW_RANGE))) {
 				if (subject->name == "hardEnemy") {
-					ActHardEnemy(*player, *subject, distance);
+					ActHardEnemy(*player, *subject, distance, kickHit, time);
+				}
+				else {
+					EnemyDamagedPlayer(kickHit, *subject, *player, time);
 				}
 			}
 			else {
 				subject->isMove = true;
+				subject->onGround = false;
 				if (((IntersectsRects(subject->getEnemyView(), player->getRect())) && (subject->name == "easyEnemy")) || ((ENEMY_VIEW_RANGE > distance) && (subject->name == "mediumEnemy"))) {
 					if (subject->name == "mediumEnemy") {
 						FightRotateMediumEnemy(*subject, *player, GetRotation({ player->rect.left, player->rect.top }, { subject->rect.left, subject->rect.top }));
@@ -160,7 +194,7 @@ void World::InteractObjects(float time) {
 							break;
 						}
 					}
-					if ((subject->name != "hardEnemy") && (subject->name != "mediumEnemy")){
+					if (subject->name == "easyEnemy") {
 						subject->sprite.setColor(Color::Red);
 					}
 				}
@@ -185,12 +219,15 @@ void World::InteractObjects(float time) {
 
 
 void World::Shoot(String subject, Vector2f mousePos) {
-	if (subject == "player") {
-		shoot.play();
-		entities.push_back(new Bullet(bulletImage, "Bullet", lvl,
-			FloatRect(playerWeapon->rect.left + (playerWeapon->playerWeaponSprite.getGlobalBounds().width * playerWeapon->playerWeaponSprite.getScale().y), playerWeapon->rect.top - GET_FOURTH, BULLET_BOUNDS.x, BULLET_BOUNDS.y),
-			Vector2f(mousePos.x, mousePos.y + sightSprite.getGlobalBounds().height / GET_FOURTH),
-			playerWeapon->playerWeaponSprite.getRotation()));
-		playerWeapon->shootPlayerFlag = true;
-	}
+	/*int sign = (playerWeapon->playerWeaponSprite.getScale().y > 0) - (playerWeapon->playerWeaponSprite.getScale().y < 0);
+	double x = playerWeapon->playerWeaponSprite.getGlobalBounds().left + ((playerWeapon->playerWeaponSprite.getGlobalBounds().width / 10) * sign) * cos(player->weaponRotation * M_PI / 360 / 2);
+	double y = playerWeapon->playerWeaponSprite.getGlobalBounds().top + ((playerWeapon->playerWeaponSprite.getGlobalBounds().width / 10) * sign) * sin(player->weaponRotation * M_PI / 360 / 2);*/
+	double x = playerWeapon->playerWeaponSprite.getPosition().x - 8.f;
+	double y = playerWeapon->playerWeaponSprite.getPosition().y - 6.f;
+	shoot.play();
+	entities.push_back(new Bullet(bulletImage, "Bullet", lvl,
+		FloatRect(x, y, BULLET_BOUNDS.x, BULLET_BOUNDS.y),
+		Vector2f(mousePos.x, mousePos.y + sightSprite.getGlobalBounds().height / GET_FOURTH),
+		playerWeapon->playerWeaponSprite.getRotation()));
+	playerWeapon->shootPlayerFlag = true;
 }

@@ -11,4 +11,10 @@ Player::Player(Image &image, String name, Level lvl, FloatRect rect) : Entity(im
 	offset = { 0.f, 0.f };
 	missionComplete = false; //TODO
 	flag = false; //TODO
+	parachuteOpen = false; //TODO
+	parachuteTexture.loadFromFile("images/parachute.png");
+	parachuteSprite.setTexture(parachuteTexture); //TODO!!!
+	parachuteSprite.setTextureRect(IntRect(0, 0, 300, 372)); //^
+	parachuteSprite.setOrigin(300 / 2, 372); //^
+	parachuteSprite.setScale(0.5, 0.5); //^
 }

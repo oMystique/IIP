@@ -1,5 +1,5 @@
 #include "enemy.h"
-#include <iostream>
+
 
 Enemy::Enemy(Image &image, String name, Level lvl, FloatRect rect) : Entity(image, name, rect) {
 	obj = lvl.GetObjects("stopEnemy"); //инициализируем.получаем нужные объекты для взаимодействия врага с картой 
@@ -13,7 +13,7 @@ Enemy::Enemy(Image &image, String name, Level lvl, FloatRect rect) : Entity(imag
 	countFrames = ANIMATION_FRAME;
 	if (name == "easyEnemy") {
 		sprite.setTextureRect(IntRect(0, 0, EASY_ENEMY_RECT_BOUNDS.x, EASY_ENEMY_RECT_BOUNDS.y));
-		EnemyAction = stay;
+		action = stay;
 	}
 	else if (name == "mediumEnemy") {
 		sprite.setTextureRect(IntRect(0, 0, MEDIUM_ENEMY_RECT_BOUNDS.x, MEDIUM_ENEMY_RECT_BOUNDS.y));
@@ -23,6 +23,7 @@ Enemy::Enemy(Image &image, String name, Level lvl, FloatRect rect) : Entity(imag
 	}
 	else if (name == "hardEnemy") {
 		sprite.setTextureRect(IntRect(0, 0, 300, 148));
-		EnemyAction = stay;
+		sprite.setOrigin(sprite.getTextureRect().width / GET_HALF, DEFAULT_UNIT_BOUNDS.y);
+		action = stay;
 	}
 }

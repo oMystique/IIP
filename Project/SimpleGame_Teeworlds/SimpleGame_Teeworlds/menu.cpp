@@ -57,7 +57,7 @@ void Menu::DrawMenu(RenderWindow &window) {
 	newGame.setString("NEW GAME");
 	newGame.setPosition(30, 30);
 	aboutProgram.setFont(font);
-	aboutProgram.setString("ABOUT PROGRAM<<<IS DEV");
+	aboutProgram.setString("ABOUT PROGRAM");
 	aboutProgram.setPosition(30, 60);
 	exit.setFont(font);
 	exit.setString("EXIT");

@@ -21,10 +21,10 @@ static const IntRect ENEMY_BULLET_RECT = { 321, 271, 60, 36 };
 static const float ANIMATION_FRAME = 0.7f;
 static const Vector2i EASY_ENEMY_RECT_BOUNDS = { 149, 106 };
 static const Vector2i MEDIUM_ENEMY_RECT_BOUNDS = { 301, 109 };
-static const IntRect LIFEBAR_HP_RECT = { 673, 2, 62, 62 };
-static const IntRect LIFEBAR_ARM_RECT = { 673, 64, 62, 62 };
-static const IntRect LIFEBAR_NO_HP_RECT = { 738, 2, 62, 62 };
-static const IntRect LIFEBAR_NO_ARM_RECT = { 738, 64, 62, 62 };
+static const IntRect PLAYER_LIFEBAR_HP_RECT = { 673, 2, 62, 62 };
+static const IntRect PLAYER_LIFEBAR_ARM_RECT = { 673, 64, 62, 62 };
+static const IntRect PLAYER_LIFEBAR_NO_HP_RECT = { 738, 2, 62, 62 };
+static const IntRect PLAYER_LIFEBAR_NO_ARM_RECT = { 738, 64, 62, 62 };
 static const float PLAYER_SPRITE_BOUND = 90.f;
 static const float PLAYER_TEXTURE_RESOLUTION = 179.f;
 static const float WEAPON_ANIMATION_FRAME = 0.5f;
@@ -41,7 +41,7 @@ static const Vector2f DEFAULT_UNIT_BOUNDS = { 36.f, 36.f };
 static const Vector2f DEFAULT_WEAPON_BOUNDS = { 227.f, 60.f };
 static const IntRect FLAG_SPRITE_RECT = { 387, 268, 127, 240 };
 static const IntRect SIGHT_SPRITE_RECT = { 0, 0, 61, 61 };
-static const float DEFAULT_BULLET_SPEED = 7.f;
+static const float DEFAULT_BULLET_SPEED = 2.7f;
 static const float HARD_ENEMY_ACT_DISTANCE = 65.f;
 
 
@@ -72,7 +72,7 @@ static const float LIFEBAR_ARM_POS_CORRECTION = 30.f;
 static const float ANIMATION_TIME_BOOST = 0.005f;
 static const float PLAYER_BOOST_CORRECTION = 0.0015f;
 static const Vector2f ENEMY_SHOOT_CORRECTION = { 11.f, 11.f };
-static const Vector2f FLAG_SPRITE_POS_CORRECTION = { 20.f, 45.f };
+static const Vector2f FLAG_SPRITE_POS_CORRECTION = { 20.f, 50.f };
 static const Vector2f MISSION_TEXT_CORRECTION = { 430.f, 160.f };
 static const float COUNT_ENEMIES_TEXT_CORRECTION = 190.f;
 
@@ -83,7 +83,7 @@ static const float GET_HALF = 2.f;
 static const float GET_FOURTH = 4.f;
 static const float GET_THIRD = 3.f;
 static const float STEP_BONUSES_ANIMATION = 0.01f;
-static const float ENEMY_VIEW_RANGE = 430.f;
+static const float ENEMY_VIEW_RANGE = 440.f;
 static const float GET_CIRCLE_HALF = 180.f;
 static const float RANDOM_RANGE = 500.f;
 

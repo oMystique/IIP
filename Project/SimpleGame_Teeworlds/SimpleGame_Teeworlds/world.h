@@ -8,11 +8,12 @@ struct World: public WorldInit {
 	void DrawObjects(RenderWindow *window);
 	void Shoot(String subject, Vector2f mousePos);
 	void InteractObjects(float time);
+	void DestroyWorldObjects();
 private:
+	void InitObjects();
 	void InitImages();
 	void InitTextures();
 	void InitSounds();
-	void InitObjects();
 	void InitSprites();
 	float GetRotation(Vector2f mousePos, Vector2f playerPos);
 };

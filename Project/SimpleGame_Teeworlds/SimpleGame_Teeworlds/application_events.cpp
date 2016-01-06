@@ -2,8 +2,8 @@
 
 
 void Application::GetMouseCoords() {
-	Vector2i pixelPos = Mouse::getPosition(*window); //забираем коорд курсора
-	Vector2f pos = window->mapPixelToCoords(pixelPos); //переводим их в игровые (уходим от коорд окна)
+	Vector2i pixelPos = Mouse::getPosition(*window);
+	Vector2f pos = window->mapPixelToCoords(pixelPos); 
 	mousePos = pos;
 }
 
@@ -12,19 +12,24 @@ void Application::ProcessEvents() {
 	Event event;
 	while (window->pollEvent(event)) {
 		if (event.type == Event::Closed) {
-			player->missionComplete = false;
-			window->close();
+			appState = closeGame;
+		}
+		if (event.type == Event::Resized) {
+			system("pause");
 		}
 		if (event.type == sf::Event::KeyReleased) {
 			if (event.key.code == sf::Keyboard::Space) {
-				if (!player->missionComplete) {
-					Shoot("player", mousePos);
-				}
+				world->Shoot("player", mousePos);
 			}
 		}
 		if (event.type == sf::Event::KeyReleased) {
-			if ((event.key.code == Keyboard::R) && ((player->missionComplete))) {
-				window->close();
+			if ((event.key.code == Keyboard::R)) {
+				appState = startGame;
+			}
+		}
+		if (event.type == sf::Event::KeyReleased) {
+			if (event.key.code == Keyboard::Pause) {
+				appState = gameMenu;
 			}
 		}
 	}

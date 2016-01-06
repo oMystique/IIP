@@ -18,6 +18,14 @@ void Player::Control(float &time) {
 			boost.y = -PLAYER_JUMP_SPEED;
 			onGround = false;
 		}
+	if ((Keyboard::isKeyPressed(Keyboard::E)) && (!onGround)) {
+		action = jump;
+		boost.y = PLAYER_JUMP_SPEED / 10;
+		parachuteOpen = true;
+	}
+	else {
+		parachuteOpen = false;
+	}
 	sprite.setTextureRect(IntRect(int(offset.x), int(offset.y), int(PLAYER_SPRITE_BOUND), int(PLAYER_SPRITE_BOUND)));
 }
 

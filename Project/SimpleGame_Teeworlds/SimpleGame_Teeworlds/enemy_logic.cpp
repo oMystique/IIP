@@ -9,6 +9,9 @@ void Enemy::Move(float direction) {
 		else {
 			boost.x = direction * DEFAULT_UNIT_SPEED;
 		}
+		if (onGround) {
+			boost.x = direction * 0.195; //TODO: REF;
+		}
 		vec = direction * ENEMY_VIEW_RANGE;
 	}
 }
@@ -17,15 +20,20 @@ void Enemy::checkCollisionWithMap(float dX, float dY) {
 	for (unsigned int i = 0; i < obj.size(); i++) {
 		if (getRect().intersects(obj[i].rect)) //проверяем пересечение игрока с объектом
 		{
+			if (dY != 0) {
+				boost.y = 0;
+				rect.top = obj[i].rect.top - obj[i].rect.height;
+				onGround = true;
+			}
 			if (dX > 0) {
 				rect.left = obj[i].rect.left - rect.width;
 				boost.x = -DEFAULT_UNIT_SPEED;
-				EnemyAction = left;
+				action = moveLeft;
 			}
-			else {
+			else if (dX < 0) {
 				rect.left = obj[i].rect.left + obj[i].rect.width;
 				boost.x = DEFAULT_UNIT_SPEED;
-				EnemyAction = right;
+				action = moveRight;
 			}
 		}
 	}

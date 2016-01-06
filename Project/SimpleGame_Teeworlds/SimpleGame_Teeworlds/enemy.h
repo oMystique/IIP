@@ -1,18 +1,12 @@
 #pragma once
 #include "bullet.h"
 #include "weapon.h"
-#include <memory>
 
 struct Enemy :public Entity {
 public:
-	enum {
-		left,
-		right,
-		stay
-	} EnemyAction;
-	
 	float currentFrame;
 	float countFrames;
+	float dmgFrame;
 	Vector2f offset;
 
 	Enemy(Image &image, String name, Level lvl, FloatRect rect);
@@ -24,4 +18,6 @@ public:
 	void Move(float direction);
 	void checkCollisionWithMap(float dX, float dY);
 	void Update(float time);
+	void DieAnimation(float time);
+	void InitDie();
 };
