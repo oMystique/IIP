@@ -2,6 +2,7 @@
 #include "level.h"
 #include "lifebar.h"
 #include <memory>
+#include <list>
 
 struct Entity {
 public:
@@ -41,3 +42,7 @@ public:
 	virtual void Update(float time) = 0;
 	virtual ~Entity();
 };
+
+
+void SetUnitColor(Sprite &sprite, float &dmgFrame, bool &isDamaged, float &time);
+void IsUnitDamaged(float &time, bool &isDamaged, Sprite &sprite, float &dmgFrame);

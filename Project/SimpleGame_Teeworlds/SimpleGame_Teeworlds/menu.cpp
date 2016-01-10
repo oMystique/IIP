@@ -48,7 +48,15 @@ void Menu::GetChoose(RenderWindow &window) {
 	}
 }
 
-
+void MenuEvents(RenderWindow &window, bool &isMenu) {
+	Event event;
+	while (window.pollEvent(event)) {
+		if (event.type == Event::Closed) {
+			window.close();
+			isMenu = false;
+		}
+	}
+}
 
 void Menu::DrawMenu(RenderWindow &window) {
 	Font font;
@@ -63,11 +71,12 @@ void Menu::DrawMenu(RenderWindow &window) {
 	exit.setString("EXIT");
 	exit.setPosition(30, 90);
 	while (isMenu) {
+		window.clear();
 		newGame.setColor(Color::Red);
 		aboutProgram.setColor(Color::Red);
 		exit.setColor(Color::Red);
+		MenuEvents(window, isMenu);
 		GetChoose(window);
-		window.clear();
 		window.draw(sprite);
 		window.draw(newGame);
 		window.draw(aboutProgram);

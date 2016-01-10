@@ -79,12 +79,6 @@
     <Filter Include="Header Files\mission">
       <UniqueIdentifier>{a91e773f-f6fb-4a03-b083-62d476e051c0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\addAnimation">
-      <UniqueIdentifier>{4ff21451-54f7-4a9f-84d4-75e596d5750a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\addAnimation">
-      <UniqueIdentifier>{f4ad858e-9abe-41be-9ae3-42e7e89413cf}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -183,20 +177,17 @@
     <ClCompile Include="player_init.cpp">
       <Filter>Source Files\player</Filter>
     </ClCompile>
-    <ClCompile Include="addAnimInit.cpp">
-      <Filter>Source Files\addAnimation</Filter>
-    </ClCompile>
-    <ClCompile Include="addAnimUpdate.cpp">
-      <Filter>Source Files\addAnimation</Filter>
-    </ClCompile>
-    <ClCompile Include="addAnimAction.cpp">
-      <Filter>Source Files\addAnimation</Filter>
-    </ClCompile>
     <ClCompile Include="interface.cpp">
       <Filter>Source Files\interface</Filter>
     </ClCompile>
     <ClCompile Include="interface_text.cpp">
       <Filter>Source Files\interface</Filter>
+    </ClCompile>
+    <ClCompile Include="player_action.cpp">
+      <Filter>Source Files\player</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy_action.cpp">
+      <Filter>Source Files\enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -250,9 +241,6 @@
     </ClInclude>
     <ClInclude Include="menu.h">
       <Filter>Header Files\interface\menu</Filter>
-    </ClInclude>
-    <ClInclude Include="additAnimation.h">
-      <Filter>Header Files\addAnimation</Filter>
     </ClInclude>
     <ClInclude Include="interface_text.h">
       <Filter>Header Files\interface</Filter>

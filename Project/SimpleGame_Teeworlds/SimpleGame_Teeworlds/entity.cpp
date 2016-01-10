@@ -28,3 +28,23 @@ FloatRect Entity::getRect() {//ф-ция получения прямоугольника. его коорд,размеры
 FloatRect Entity::getEnemyView() {//ф-ция получения поля зрения врага.
 	return FloatRect(rect.left, rect.top, rect.width + vec, rect.height);// vec вектор взгляда врага
 }
+
+
+void IsUnitDamaged(float &time, bool &isDamaged, Sprite &sprite, float &dmgFrame) {
+	dmgFrame += ANIMATION_TIME_BOOST*time;
+	if (dmgFrame > ANIMATION_FRAME) {
+		isDamaged = false;
+	}
+}
+
+
+void SetUnitColor(Sprite &sprite, float &dmgFrame, bool &isDamaged, float &time) {
+	if (isDamaged) {
+		sprite.setColor(Color(sprite.getColor().r, sprite.getColor().g, sprite.getColor().b, 150));
+		IsUnitDamaged(time, isDamaged, sprite, dmgFrame);
+	}
+	else {
+		dmgFrame = 0;
+		sprite.setColor(Color(sprite.getColor().r, sprite.getColor().g, sprite.getColor().b, 255));
+	}
+}

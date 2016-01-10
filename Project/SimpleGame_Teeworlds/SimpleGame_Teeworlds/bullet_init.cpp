@@ -5,6 +5,8 @@ Bullet::Bullet(Image &image, String name, Level lvl, FloatRect rect, Vector2f mo
 	boost.x = rect.left;
 	boost.y = rect.top;
 	obj = lvl.GetObjects("solid");
+	currentFrame = 0;
+	offset = { 0.f, 0.f };
 	sprite.setPosition(rect.left, rect.top);
 	speed = DEFAULT_BULLET_SPEED;
 	sprite.setScale(BULLET_SCALE, BULLET_SCALE);

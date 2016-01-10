@@ -1,6 +1,7 @@
 #pragma once
 #include "bullet.h"
-#include "weapon.h"
+#include "player.h"
+#include <list>
 
 struct Enemy :public Entity {
 public:
@@ -21,3 +22,9 @@ public:
 	void DieAnimation(float time);
 	void InitDie();
 };
+
+
+void EnemyShootAtPlayer(Level &lvl, Entity &enemy, Player &player, list<Entity*> &entities, Weapon &playerWeapon, Image &bulletImage);
+void EnemyDamagedPlayer(Sound &kickHit, Entity &enemy, Player &player, float time);
+bool ActHardEnemy(Player &player, Entity &enemy, float const distance, Sound kickHit, float time);
+void FightRotateMediumEnemy(Entity &enemy, float const rotation);

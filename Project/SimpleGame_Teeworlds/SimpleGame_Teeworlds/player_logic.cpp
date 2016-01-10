@@ -1,35 +1,6 @@
 #include "player.h"
 
 
-void Player::Control(float &time) {
-	ControlDirection();
-	if (Keyboard::isKeyPressed(Keyboard::A)) {
-			Animation(time);
-			action = moveLeft;
-			speed = 0.2;
-		}
-	if (Keyboard::isKeyPressed(Keyboard::D)) {
-			Animation(time);
-			action = moveRight;
-			speed = 0.2;
-		}
-	if ((Keyboard::isKeyPressed(Keyboard::W)) && (onGround)) {
-			action = jump;
-			boost.y = -PLAYER_JUMP_SPEED;
-			onGround = false;
-		}
-	if ((Keyboard::isKeyPressed(Keyboard::E)) && (!onGround)) {
-		action = jump;
-		boost.y = PLAYER_JUMP_SPEED / 10;
-		parachuteOpen = true;
-	}
-	else {
-		parachuteOpen = false;
-	}
-	sprite.setTextureRect(IntRect(int(offset.x), int(offset.y), int(PLAYER_SPRITE_BOUND), int(PLAYER_SPRITE_BOUND)));
-}
-
-
 void Player::CheckCollisionWithMap(float dX, float dY) {
 	for (unsigned int i = 0; i < obj.size(); i++) {
 		if (getRect().intersects(obj[i].rect)) {

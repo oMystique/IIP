@@ -58,7 +58,8 @@ static const float FLAG_MIN_SCALE = 0.3f;
 
 
 //SPEED______________________________:
-static const float GAME_SPEED = 800.f;
+static const float DEFAULT_GAME_SPEED = 800.f;
+static const float SLOW_GAME_SPEED = 2000.f;
 static const float DEFAULT_UNIT_SPEED = 0.1f;
 static const float PLAYER_JUMP_SPEED = 0.6f;
 static const float DEFAULT_ENEMY_SHOOT_SPEED = 2000.f;
@@ -66,7 +67,7 @@ static const float DEFAULT_ENEMY_SHOOT_SPEED = 2000.f;
 
 //CORRECTION_________________________:
 static const float FRAME_CORRECTION = 0.005f;
-static const float SOUND_VOLUME = 40.f;
+static const float SOUND_VOLUME = 20.f;
 static const Vector2f LIFEBAR_POS_CORRECTION = { 2.3f, 176.f };
 static const float LIFEBAR_ARM_POS_CORRECTION = 30.f;
 static const float ANIMATION_TIME_BOOST = 0.005f;

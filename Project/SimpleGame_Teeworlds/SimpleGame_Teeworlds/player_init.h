@@ -1,6 +1,6 @@
 #pragma once
-#include "entity.h"
 #include "memory"
+#include "weapon.h"
 
 struct PlayerInit {
 	bool flag; //TODO
@@ -13,4 +13,7 @@ struct PlayerInit {
 	bool parachuteOpen;
 	Vector2f offset;
 	float dmgFrame;
+
+	SoundBuffer parachuteOpenBuffer;
+	Sound parachuteOpenSound;
 };

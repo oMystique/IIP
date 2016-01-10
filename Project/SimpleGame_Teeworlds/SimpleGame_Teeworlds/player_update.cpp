@@ -1,22 +1,8 @@
 #include "player.h"
 
-void IsDamaged(float &time, bool &isDamaged, Sprite &sprite, float &currentFrame) {
-	currentFrame += ANIMATION_TIME_BOOST*time;
-	if (currentFrame > ANIMATION_FRAME) {
-		isDamaged = false;
-	}
-}
-
 
 void Player::Update(float time) {
-	if (!isDamaged) {
-		dmgFrame = 0;
-		sprite.setColor(Color::White);
-	}
-	else {
-		IsDamaged(time, isDamaged, sprite, dmgFrame);
-		sprite.setColor(Color(sprite.getColor().r, sprite.getColor().g, sprite.getColor().b, 150));
-	}
+	SetUnitColor(sprite, dmgFrame, isDamaged, time);
 	Control(time);
 	switch (action)
 	{
@@ -41,5 +27,11 @@ void Player::Update(float time) {
 	boost.y = boost.y + PLAYER_BOOST_CORRECTION*time;
 	if (parachuteOpen) { //TODO
 		parachuteSprite.setPosition(sprite.getPosition().x + 10, sprite.getPosition().y); //^
+		if (!parachuteOpenSound.getStatus()) {
+			parachuteOpenSound.play();
+		}
 	} //^
+	else {
+		parachuteOpenSound.stop();
+	}
 }

@@ -1,14 +1,46 @@
 #include "bullet.h"
 
-void BulletTrackAnimation(RenderWindow &window, Entity &bullet, Sprite sprite) {
-	float scale = rand() % 1;
-	sprite.setTextureRect(IntRect(255, 34, 33, 29));
-	sprite.setScale(scale, scale);
-	sprite.setPosition(bullet.sprite.getPosition().x + rand() % 3, bullet.sprite.getPosition().y + rand() % 3);
-	window.draw(sprite);
+
+void Bullet::DieAnimation(float time) {
+	currentFrame += ANIMATION_TIME_BOOST*time;
+	if (currentFrame > 0.6) {
+		currentFrame -= 0.6;
+		offset.x += sprite.getTextureRect().width;
+	}
+	if (offset.x > 600) {
+		life = false;
+	}
+	sprite.setTextureRect(IntRect(offset.x, offset.y, sprite.getTextureRect().width, sprite.getTextureRect().height));
 }
 
+void Bullet::InitDie() {
+	texture.loadFromFile("images/die.png");
+	sprite.setTextureRect(IntRect(111, 0, 111, 117));
+	sprite.setOrigin(85 / 2, 117 / 2);
+	sprite.setRotation(0);
+	sprite.setScale(0.2, 0.2);
+	if (name == "Bullet") {
+		sprite.setColor(Color::Blue);
+	}
+	else {
+		sprite.setColor(Color::Red);
+	}
+	offset = { 111.f, 0.f };
+	name = "die";
+	onGround = false;
+	currentFrame = 0;
+	speed = 0;
+}
+
+
 void Bullet::Update(float time) {
+	if (name == "die") {
+		DieAnimation(time);
+	}
+	else if (health <= 0) {
+		InitDie();
+		return;
+	}
 	if (speed == DEFAULT_BULLET_SPEED) {
 		speed = time;
 	}
@@ -21,7 +53,7 @@ void Bullet::Update(float time) {
 
 	for (unsigned int i = 0; i < obj.size(); i++) {
 		if (getRect().intersects(obj[i].rect)) {
-			life = false;
+			health = 0;
 		}
 	}
 	sprite.setPosition(rect.left + rect.width / GET_HALF, rect.top + rect.height / GET_HALF);

@@ -1,20 +1,13 @@
 #include "enemy.h"
 
 
-void IsDamaged(float time, bool &isDamaged, Sprite &sprite, float &currentFrame) {
-	currentFrame += ANIMATION_TIME_BOOST*time;
-	if (currentFrame > ANIMATION_FRAME) {
-		isDamaged = false;
-	}
-}
-
 void Enemy::InitDie() {
-	texture.loadFromFile("images/die.png");
-	sprite.setTextureRect(IntRect(0, 0, 111, 117));
+	texture.loadFromFile("images/unitDie.png");
+	sprite.setTextureRect(IntRect(0, 0, 111, 118));
 	sprite.setOrigin(85 / 2, 117 / 2);
 	sprite.setRotation(0);
 	sprite.setScale(0.5, 0.5);
-	offset = { 0.f ,0.f };
+	offset = { 0.f, 0.f };
 	name = "diedEnemy";
 	onGround = false;
 	currentFrame = 0;
@@ -22,14 +15,7 @@ void Enemy::InitDie() {
 
 
 void Enemy::Update(float time) {
-	if (!isDamaged) {
-		dmgFrame = 0;
-		sprite.setColor(Color(sprite.getColor().r, sprite.getColor().g, sprite.getColor().b, 255));
-	}
-	else {
-		IsDamaged(time, isDamaged, sprite, dmgFrame);
-		sprite.setColor(Color(sprite.getColor().r, sprite.getColor().g, sprite.getColor().b, 150));
-	}
+	SetUnitColor(sprite, dmgFrame, isDamaged, time);
 	switch (action) {
 	case moveRight:
 		Move(1.f);

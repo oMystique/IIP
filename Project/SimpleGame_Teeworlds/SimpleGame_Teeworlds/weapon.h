@@ -1,5 +1,5 @@
 #pragma once
-#include "player.h"
+#include "entity.h"
 
 struct Weapon {
 	Weapon(Image &image, String name, FloatRect rect);

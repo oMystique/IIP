@@ -19,6 +19,7 @@ struct WorldInit {
 	Image bulletImage;
 	Image weaponsImage;
 	Image enemyLifeBar;
+	Image motionBonusImage;
 
 	Texture bgTexture;
 	Sprite bgSprite;
@@ -43,6 +44,9 @@ struct WorldInit {
 	SoundBuffer missSoundBuffer;
 	Sound missSound;
 
+	SoundBuffer motionBuffer;
+	Sound motionSound;
+
 	Music bgMusic;
 
 	Level lvl;
@@ -54,16 +58,19 @@ struct WorldInit {
 	vector<Object> hardEnemyObj;
 	vector<Object> healthPointsObj;
 	vector<Object> armorPointsObj;
+	vector<Object> motionBonusObj;
 	Object flagObj;
 
 	list<Entity*>  entities;
-	list<Entity*>::iterator it;
 
 	unique_ptr<Player> player = nullptr;
 	unique_ptr<View> view = nullptr;
 	unique_ptr<Weapon> playerWeapon = nullptr;
 	unique_ptr<InterfaceText> interfaceText = nullptr;
+	unique_ptr<Lifebar> slowMotionBar = nullptr;
 
 	bool missionTarget; //TODO
+	bool slowMotion;
+	RectangleShape slowMotionRect;
 	int countEnemies;
 };

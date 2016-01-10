@@ -16,6 +16,7 @@ void Enemy::Move(float direction) {
 	}
 }
 
+
 void Enemy::checkCollisionWithMap(float dX, float dY) {
 	for (unsigned int i = 0; i < obj.size(); i++) {
 		if (getRect().intersects(obj[i].rect)) //проверяем пересечение игрока с объектом

@@ -6,7 +6,7 @@ struct World: public WorldInit {
 	void InitWorldObjects();
 	void UpdateWorld(float time, Vector2f mousePos, View &view, RenderWindow &window);
 	void DrawObjects(RenderWindow *window);
-	void Shoot(String subject, Vector2f mousePos);
+	void ShootEvent(Vector2f mousePos);
 	void InteractObjects(float time);
 	void DestroyWorldObjects();
 private:

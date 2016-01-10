@@ -16,8 +16,8 @@ void InterfaceText::UpdateText(RenderWindow &window, int const countEnemies, boo
 		missionTargetText.setString("");
 	}
 	else {
-		countEnemiesText.setString("Count enemies: " + to_string(countEnemies));
-		if (countEnemies == 0) {
+		countEnemiesText.setString("Count enemies " + to_string(countEnemies));
+		if (!countEnemies) {
 			countEnemiesText.setColor(Color::Red);
 		}
 		if (missionTarget) {

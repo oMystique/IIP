@@ -10,3 +10,4 @@ void Player::Animation(float time) {
 		offset.x = 0;
 	}
 }
+

@@ -1,4 +1,5 @@
 #include "lifebar.h"
+#include <iostream>
 
 void Lifebar::UpdatePlayerLifeBar(float const healthCount, float const armorCount, RenderWindow &window) {
 	Vector2f center = window.getView().getCenter();
@@ -26,6 +27,36 @@ void Lifebar::UpdatePlayerLifeBar(float const healthCount, float const armorCoun
 }
 
 
+void Lifebar::SetParameterForMotion() {
+	healthSprite.setTextureRect(IntRect(4, 16, 114, 8)); //TODO: REF
+}
+
+bool Lifebar::BurnMotionParameter(float time) {
+	if (healthSprite.getTextureRect().width > 0) {
+		currentFrame += ANIMATION_TIME_BOOST*time;
+		healthSprite.setScale(1.05f, 1.05f);
+		armorSprite.setScale(1.05f, 1.05f);
+		if (currentFrame > ANIMATION_FRAME) {
+			currentFrame -= ANIMATION_FRAME;
+			healthSprite.setTextureRect(IntRect(healthSprite.getTextureRect().left, healthSprite.getTextureRect().top, healthSprite.getTextureRect().width * 0.95, healthSprite.getTextureRect().height));
+			healthSprite.setScale(1, 1);
+			armorSprite.setScale(1, 1);
+		}
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+
+void Lifebar::UpdateSlowMotionBar(RenderWindow &window) {
+	Vector2f center = window.getView().getCenter();
+	healthSprite.setTextureRect(IntRect(healthSprite.getTextureRect().left, healthSprite.getTextureRect().top, healthSprite.getTextureRect().width, healthSprite.getTextureRect().height));
+	healthSprite.setPosition(center.x + 360, center.y + 170);
+	armorSprite.setPosition(center.x + 360, center.y + 170);
+}
+
 void Lifebar::UpdateEnemyLifeBar(float const healthCount, Vector2f const pos) {
 	healthSprite.setTextureRect(IntRect(healthSprite.getTextureRect().left, healthSprite.getTextureRect().top, healthCount + 14, healthSprite.getTextureRect().height));
 	healthSprite.setPosition(pos.x + 15, pos.y - 23);
@@ -39,6 +70,10 @@ void Lifebar::Update(float const healthCount, float const armorCount, RenderWind
 	}
 	else if (name == "enemy") {
 		UpdateEnemyLifeBar(healthCount, pos);
+		Draw(window);
+	}
+	else if (name == "motionBar") {
+		UpdateSlowMotionBar(window);
 		Draw(window);
 	}
 }

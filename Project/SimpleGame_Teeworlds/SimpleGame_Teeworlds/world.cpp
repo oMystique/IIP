@@ -10,6 +10,7 @@ void World::InitWorldObjects() {
 }
 
 void World::DestroyWorldObjects() {
+	list<Entity*>::iterator it;
 	for (it = entities.begin(); it != entities.end();) {
 		Entity *b = *it;
 		it = entities.erase(it);

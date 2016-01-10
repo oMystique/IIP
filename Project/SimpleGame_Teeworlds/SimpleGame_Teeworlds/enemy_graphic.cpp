@@ -39,7 +39,7 @@ void Enemy::DieAnimation(float time) {
 		currentFrame -= 0.6;
 		offset.x += sprite.getTextureRect().width;
 	}
-	if (offset.x > 600) {
+	if (offset.x > 1684) {
 		life = false;
 	}
 	sprite.setTextureRect(IntRect(offset.x, offset.y, sprite.getTextureRect().width, sprite.getTextureRect().height));

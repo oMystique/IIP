@@ -17,4 +17,8 @@ Player::Player(Image &image, String name, Level lvl, FloatRect rect) : Entity(im
 	parachuteSprite.setTextureRect(IntRect(0, 0, 300, 372)); //^
 	parachuteSprite.setOrigin(300 / 2, 372); //^
 	parachuteSprite.setScale(0.5, 0.5); //^
+
+
+	parachuteOpenBuffer.loadFromFile("sounds/openParachute.ogg");
+	parachuteOpenSound.setBuffer(parachuteOpenBuffer);
 }

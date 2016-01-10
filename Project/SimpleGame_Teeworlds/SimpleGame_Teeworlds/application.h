@@ -7,6 +7,7 @@ struct Application {
 	View view;
 	Clock clock;
 	Vector2f mousePos;
+	float gameSpeed;
 	Text gameOver;
 	Text restart;
 	RectangleShape plashRect;

@@ -83,9 +83,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="addAnimAction.cpp" />
-    <ClCompile Include="addAnimInit.cpp" />
-    <ClCompile Include="addAnimUpdate.cpp" />
     <ClCompile Include="application_init.cpp" />
     <ClCompile Include="application_events.cpp" />
     <ClCompile Include="application_update_render.cpp" />
@@ -93,6 +90,7 @@
     <ClCompile Include="bonuses_update.cpp" />
     <ClCompile Include="bullet_init.cpp" />
     <ClCompile Include="bullet_update.cpp" />
+    <ClCompile Include="enemy_action.cpp" />
     <ClCompile Include="enemy_graphic.cpp" />
     <ClCompile Include="enemy_init.cpp" />
     <ClCompile Include="enemy_logic.cpp" />
@@ -104,6 +102,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="interface.cpp" />
     <ClCompile Include="menu.cpp" />
+    <ClCompile Include="player_action.cpp" />
     <ClCompile Include="player_init.cpp" />
     <ClCompile Include="player_graphic.cpp" />
     <ClCompile Include="player_logic.cpp" />
@@ -122,7 +121,6 @@
     <ClCompile Include="world_update.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="additAnimation.h" />
     <ClInclude Include="application.h" />
     <ClInclude Include="bonuses.h" />
     <ClInclude Include="bullet.h" />
