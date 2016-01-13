@@ -16,11 +16,4 @@ void World::DestroyWorldObjects() {
 		it = entities.erase(it);
 		delete b;
 	}
-	entities.clear();
-	easyEnemyObj.clear();
-	mediumEnemyObj.clear();
-	hardEnemyObj.clear();
-	healthPointsObj.clear();
-	armorPointsObj.clear();
-	player.release();
 }

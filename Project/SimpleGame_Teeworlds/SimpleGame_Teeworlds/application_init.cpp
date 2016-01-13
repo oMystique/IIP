@@ -12,10 +12,13 @@ void Application::InitMenu() {
 	unique_ptr<Image> menuImage = make_unique<Image>();
 	menuImage->loadFromFile("images/bgmenu.png");
 	menu = make_unique<Menu>(*menuImage, Vector2f(DEFAULT_WINDOW_SIZE.x, DEFAULT_WINDOW_SIZE.y));
-	menu->DrawMenu(*window);
+	numberLevel = menu->DrawMenu(*window);
 }
 
 void Application::GameOver() {
+	Text gameOver;
+	Text restart;
+	RectangleShape plashRect;
 	gameOver.setFont(world->interfaceText->font);
 	gameOver.setString("GAME STOPPED");
 	gameOver.setColor(Color::Red);
@@ -45,46 +48,66 @@ void Application::GameOver() {
 	window->display();
 }
 
+void Application::CheckWorldState() {
+	if (!world->player->life) {
+		appState = gameMenu;
+	}
+	else if ((world->countEnemies == 0) && (world->player->missionComplete)) {
+		if (numberLevel < GET_THIRD) {
+			numberLevel++;
+			appState = startGame;
+		}
+		else {
+			appState = gameMenu;
+		}
+	}
+}
+
+void DestructWorld(World *world) {
+	if (world != nullptr) {
+		world->DestroyWorldObjects();
+		delete world;
+	}
+}
+
+
+void Application::StartGame() {
+	DestructWorld(world);
+	world = new World;
+	world->numberLvl = numberLevel;
+	world->InitWorldObjects();
+	view.reset(FloatRect(world->player->rect.left, world->player->rect.top, DEFAULT_VIEW_SIZE.x, DEFAULT_VIEW_SIZE.y));
+	appState = gaming;
+}
+
 void Application::Run() {
 	window->setMouseCursorVisible(false);
 	window->setVerticalSyncEnabled(false);
 	window->setFramerateLimit(60);
-	world = new World;
-	world->InitWorldObjects();
-	view.reset(FloatRect(world->player->rect.left, world->player->rect.top, DEFAULT_VIEW_SIZE.x, DEFAULT_VIEW_SIZE.y));
 	gameSpeed = DEFAULT_GAME_SPEED;
-	appState = gaming;
+	appState = startGame;
 	while ((window->isOpen())) {
+		float time = float(clock.getElapsedTime().asMicroseconds());
+		clock.restart();
+		time = time / gameSpeed;
+		GetMouseCoords();
+		ProcessEvents();
 		if (appState == startGame) {
-			world->DestroyWorldObjects();
-			delete world;
-			world = new World;
-			world->InitWorldObjects();
-			appState = gaming;
+			StartGame();
 		}
-		else if (appState == gaming || appState == gameMenu) {
-			if (appState == gameMenu) {
-				GameOver();
-			}
-			float time = float(clock.getElapsedTime().asMicroseconds());
-			clock.restart();
-			time = time / gameSpeed;
-			GetMouseCoords();
-			ProcessEvents();
-			if (!((world->countEnemies == 0) && (world->player->missionComplete)) && (world->player->life) && (appState != gameMenu)) {
+		else if (appState == gaming) {
 				world->InteractObjects(time);
 				Update(time);
 				Render();
-			}
-			else {
-				GameOver();
-			}
+		}
+		else if (appState == gameMenu) {
+			GameOver();
 		}
 		else if (appState == closeGame) {
 			window->close();
 		}
+		CheckWorldState();
 	}
-	world->DestroyWorldObjects();
-	delete world;
+	DestructWorld(world);
 	delete window;
 }

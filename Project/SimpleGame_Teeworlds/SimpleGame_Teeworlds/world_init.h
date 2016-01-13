@@ -50,8 +50,10 @@ struct WorldInit {
 	Music bgMusic;
 
 	Level lvl;
+	int numberLvl;
 
 	Object playerObj;
+	Object flagObj;
 
 	vector<Object> easyEnemyObj;
 	vector<Object> mediumEnemyObj;
@@ -59,7 +61,6 @@ struct WorldInit {
 	vector<Object> healthPointsObj;
 	vector<Object> armorPointsObj;
 	vector<Object> motionBonusObj;
-	Object flagObj;
 
 	list<Entity*>  entities;
 

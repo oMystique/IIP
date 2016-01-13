@@ -29,6 +29,9 @@ void DrawEntities(list<Entity*> &entities, RenderWindow &window) {
 			}
 			window.draw(entity->sprite);
 		}
+		else if (entity->name == "Bullet") {
+			entity->life = false;
+		}
 	}
 }
 
@@ -38,9 +41,11 @@ void World::DrawObjects(RenderWindow *window) {
 	lvl.Draw(*window);
 	DrawEntities(entities, *window);
 	window->draw(flagSprite);
-	window->draw(playerWeapon->playerWeaponSprite);
-	if (player->parachuteOpen) {
-		window->draw(player->parachuteSprite);
+	if (player->health > 0) {
+		window->draw(playerWeapon->playerWeaponSprite);
+		if (player->parachuteOpen) {
+			window->draw(player->parachuteSprite);
+		}
 	}
 	window->draw(player->sprite);
 	player->lifebar->Update(player->health, player->armor, *window, { 0,0 }); 

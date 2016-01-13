@@ -3,7 +3,7 @@
 #include <vld.h>
 
 void World::InitObjects() {
-	lvl.LoadFromFile("new_map.tmx");
+	lvl.LoadFromFile(to_string(numberLvl) + ".tmx");
 
 	playerObj = lvl.GetObject("player");
 
@@ -43,11 +43,9 @@ void World::InitObjects() {
 	}
 
 	motionBonusObj = lvl.GetObjects("motionBonus");
-	for (unsigned int i = 0; i < armorPointsObj.size(); i++) {
+	for (unsigned int i = 0; i < motionBonusObj.size(); i++) {
 		entities.push_back(new Bonuses(motionBonusImage, "motionBonus", FloatRect(motionBonusObj[i].rect.left, motionBonusObj[i].rect.top, DEFAULT_BONUSES_BOUNDS.x, DEFAULT_BONUSES_BOUNDS.y * GET_HALF)));
 	}
-
-
 
 	flagObj = lvl.GetObject("flag");
 
@@ -80,6 +78,7 @@ void World::InitTextures() {
 void World::InitSprites() {
 	bgSprite.setTexture(bgTexture);
 	bgSprite.setOrigin(bgSprite.getGlobalBounds().width / GET_HALF, bgSprite.getGlobalBounds().height / GET_HALF);
+	bgSprite.setScale(0.47, 0.47);
 
 	flagSprite.setTexture(objectsTexture);
 	flagSprite.setTextureRect(FLAG_SPRITE_RECT);
@@ -105,7 +104,7 @@ void World::InitSounds() {
 	missSoundBuffer.loadFromFile("sounds/miss1.ogg");
 	missSound.setBuffer(missSoundBuffer);
 
-	bgMusic.openFromFile("sounds/fonMM.ogg");
+	bgMusic.openFromFile("sounds/" + to_string(numberLvl) + ".ogg");
 	bgMusic.play();
 	bgMusic.setVolume(SOUND_VOLUME);
 	bgMusic.setLoop(true);

@@ -7,6 +7,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "TinyXML/tinyxml.h"
+#include "resource.h"
 
 
 
@@ -340,7 +341,9 @@ inline void Level::Draw(sf::RenderWindow &window)
 	// рисуем все тайлы (объекты не рисуем!)
 	for (unsigned int layer = 0; layer < layers.size(); layer++)
 		for (unsigned int tile = 0; tile < layers[layer].tiles.size(); tile++)
-			window.draw(layers[layer].tiles[tile]);
+			if (layers[layer].tiles[tile].getGlobalBounds().intersects(FloatRect(window.getView().getCenter().x - DEFAULT_WINDOW_SIZE.x / GET_HALF, window.getView().getCenter().y - DEFAULT_WINDOW_SIZE.y / GET_HALF, window.getSize().x, window.getSize().y))) {
+				window.draw(layers[layer].tiles[tile]);
+			}
 }
 
 

@@ -22,7 +22,7 @@ void Application::ProcessEvents() {
 			}
 		}
 		if (event.type == sf::Event::KeyReleased) {
-			if ((event.key.code == sf::Keyboard::Space) && (appState != gameMenu)) {
+			if ((event.key.code == Keyboard::Space) && (appState != gameMenu)) {
 				world->ShootEvent(mousePos);
 			}
 			if ((event.key.code == Keyboard::R)) {

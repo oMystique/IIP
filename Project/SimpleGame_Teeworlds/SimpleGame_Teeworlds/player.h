@@ -9,6 +9,8 @@ private:
 	void Control(float &time);
 	void CheckCollisionWithMap(float dX, float dY);
 	void Animation(float time);
+	void InitDie();
+	void DieAnimation(float time);
 };
 
 

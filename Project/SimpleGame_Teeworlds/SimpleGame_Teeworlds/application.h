@@ -8,10 +8,8 @@ struct Application {
 	Clock clock;
 	Vector2f mousePos;
 	float gameSpeed;
-	Text gameOver;
-	Text restart;
-	RectangleShape plashRect;
-	World *world;
+	World *world = nullptr;
+	int numberLevel;
 
 	enum {
 		startGame,
@@ -29,5 +27,7 @@ private:
 	void Render();
 	void Update(float time);
 	void GetMouseCoords();
+	void CheckWorldState();
+	void StartGame();
 	void GameOver();
 };
