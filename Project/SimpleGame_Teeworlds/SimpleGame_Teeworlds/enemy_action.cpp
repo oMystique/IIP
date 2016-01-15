@@ -1,18 +1,18 @@
 #include "enemy.h"
 
 
-void EnemyShootAtPlayer(Level &lvl, Entity &enemy, Player &player, list<Entity*> &entities, Weapon &playerWeapon, Image &bulletImage) {
-	enemy.isFight = true;
-	entities.push_back(new Bullet(bulletImage, "enemyBullet", lvl,
-		FloatRect(enemy.rect.left, enemy.rect.top + 10, BULLET_BOUNDS.x, BULLET_BOUNDS.y),
+void EnemyShootAtPlayer(Level &lvl, Entity &subject, Player &player, vector<Entity*> &entities, Weapon &playerWeapon, Image &bulletImage) {
+	subject.isFight = true;
+	entities.push_back(new Bullet(bulletImage, ENEMY_BULLET, lvl,
+		FloatRect(subject.rect.left, subject.rect.top + 10.f, BULLET_BOUNDS.x, BULLET_BOUNDS.y),
 		Vector2f(player.rect.left + ENEMY_SHOOT_CORRECTION.x, player.rect.top + ENEMY_SHOOT_CORRECTION.y),
-		enemy.sprite.getRotation()));
+		subject.sprite.getRotation()));
 	playerWeapon.shootEnemyFlag = true;
 	playerWeapon.shootEnemyTimer = 0;
 }
 
 
-bool ActHardEnemy(Player &player, Entity &enemy, float const distance, Sound kickHit, float time) {
+void ActHardEnemy(Player &player, Entity &enemy, float const distance, Sound kickHit, float time) {
 	if (distance > HARD_ENEMY_ACT_DISTANCE) {
 		enemy.onGround = true;
 		enemy.rect.top = player.rect.top;
@@ -23,27 +23,19 @@ bool ActHardEnemy(Player &player, Entity &enemy, float const distance, Sound kic
 		else {
 			enemy.action = enemy.moveRight;
 		}
-		return false;
-	}
-	else {
-		EnemyDamagedPlayer(kickHit, enemy, player, time);
-		enemy.isMove = true;
-		enemy.isFight = true;
-		enemy.action = enemy.stay;
-		return true;
 	}
 }
 
-void FightRotateMediumEnemy(Entity &enemy, float const rotation) {
-	enemy.sprite.setRotation(rotation);
+void FightRotateMediumEnemy(Sprite &sprite, float const rotation) {
+	sprite.setRotation(rotation);
 	if ((-QUARTER_CIRCLE <= rotation) && (rotation <= QUARTER_CIRCLE)) {
-		if (enemy.sprite.getScale().y < 0) {
-			enemy.sprite.setScale(-MEDIUM_ENEMY_SCALE, MEDIUM_ENEMY_SCALE);
+		if (sprite.getScale().y < 0) {
+			sprite.setScale(-MEDIUM_ENEMY_SCALE, MEDIUM_ENEMY_SCALE);
 		}
 	}
 	else {
-		if (enemy.sprite.getScale().y > 0) {
-			enemy.sprite.setScale(-MEDIUM_ENEMY_SCALE, -MEDIUM_ENEMY_SCALE);
+		if (sprite.getScale().y > 0) {
+			sprite.setScale(-MEDIUM_ENEMY_SCALE, -MEDIUM_ENEMY_SCALE);
 		}
 	}
 }
@@ -57,8 +49,8 @@ void EnemyDamagedPlayer(Sound &kickHit, Entity &enemy, Player &player, float tim
 	if (!kickHit.getStatus()) {
 		kickHit.play();
 	}
-	if (enemy.name == "enemyBullet") {
-		if (player.armor > 0) {
+	if (enemy.name == ENEMY_BULLET) {
+		if (player.armor > BONUS_HEALTH) {
 			player.health -= DAMAGE_TO_PLAYER_WITH_WEAPON / GET_HALF;
 			player.armor -= DAMAGE_TO_PLAYER_WITH_WEAPON;
 		}
@@ -70,11 +62,11 @@ void EnemyDamagedPlayer(Sound &kickHit, Entity &enemy, Player &player, float tim
 	else {
 		enemy.isFight = true;
 		if (player.armor > 0) {
-			player.health -= 0.3 * time;
-			player.armor -= 0.6 * time; //TODO: REF;
+			player.health -= ENEMY_MELEE_DAMAGE * time;
+			player.armor -= ENEMY_MELEE_DAMAGE * GET_HALF * time;
 		}
 		else {
-			player.health -= 0.5 * time;
+			player.health -= ENEMY_MELEE_DAMAGE * GET_HALF * time;
 		}
 	}
 }

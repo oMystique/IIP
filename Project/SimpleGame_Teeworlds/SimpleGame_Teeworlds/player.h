@@ -5,6 +5,7 @@ struct Player: public Entity, PlayerInit  {
 	Player(Image &image, String name, Level lvl, FloatRect rect);
 	void Update(float time);
 private:
+	void SetPlayerAction();
 	void ControlDirection();
 	void Control(float &time);
 	void CheckCollisionWithMap(float dX, float dY);
@@ -15,4 +16,3 @@ private:
 
 
 void PlayerShootAtEnemy(Entity &bullet, Entity &enemy, Player &player, Sound &missSound);
-void PlayerShoot(Vector2f mousePos, Weapon &playerWeapon, Sound &shoot, list<Entity*> &entities, Image &bulletImage, Level lvl, Sprite sightSprite);

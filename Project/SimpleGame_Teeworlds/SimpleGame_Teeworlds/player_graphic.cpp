@@ -3,14 +3,15 @@
 
 void Player::DieAnimation(float time) {
 	currentFrame += ANIMATION_TIME_BOOST*time;
-	if (currentFrame > 0.6) {
-		currentFrame -= 0.6;
+	if (currentFrame > 0.6f) {
+		currentFrame -= 0.6f;
 		offset.x += sprite.getTextureRect().width;
 	}
-	if (offset.x > 1684) {
+	if (offset.x > 1684.f) {
 		life = false;
 	}
-	sprite.setTextureRect(IntRect(offset.x, offset.y, sprite.getTextureRect().width, sprite.getTextureRect().height));
+	sprite.setColor(Color::White);
+	sprite.setTextureRect(IntRect(int(offset.x), int(offset.y), sprite.getTextureRect().width, sprite.getTextureRect().height));
 }
 
 

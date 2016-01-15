@@ -2,7 +2,7 @@
 
 
 void Enemy::InitDie() {
-	texture.loadFromFile("images/unitDie.png");
+	texture.loadFromFile(DIE_BIG_TEXTURE_PATH);
 	sprite.setTextureRect(IntRect(0, 0, 111, 118));
 	sprite.setOrigin(85 / 2, 117 / 2);
 	sprite.setRotation(0);
@@ -43,7 +43,7 @@ void Enemy::Update(float time) {
 		InitDie();
 		return;
 	}
-	if ((name == "easyEnemy") || (name == "hardEnemy")) {
+	if ((name == EASY_ENEMY) || (name == HARD_ENEMY)) {
 		Animation(time);
 		if (isMove) {
 			rect.left += boost.x*time;
@@ -56,7 +56,7 @@ void Enemy::Update(float time) {
 			}
 		}
 	}
-	else if (name == "mediumEnemy") {
+	else if (name == MEDIUM_ENEMY) {
 		Animation(time);
 		sprite.setPosition(rect.left + rect.width / GET_HALF, rect.top + rect.height / GET_HALF);
 	}

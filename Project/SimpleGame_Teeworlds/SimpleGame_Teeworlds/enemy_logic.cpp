@@ -2,7 +2,7 @@
 
 
 void Enemy::Move(float direction) {
-	if ((name == "easyEnemy") || ((name == "hardEnemy"))) {
+	if ((name == EASY_ENEMY) || ((name == HARD_ENEMY))) {
 		if (sprite.getColor() == (Color::Red)) {
 			boost.x = direction * DEFAULT_UNIT_SPEED * GET_FOURTH;
 		}
@@ -10,7 +10,7 @@ void Enemy::Move(float direction) {
 			boost.x = direction * DEFAULT_UNIT_SPEED;
 		}
 		if (onGround) {
-			boost.x = direction * 0.195; //TODO: REF;
+			boost.x = direction * HARD_ENEMY_BOOST_SPEED;
 		}
 		vec = direction * ENEMY_VIEW_RANGE;
 	}
@@ -19,8 +19,7 @@ void Enemy::Move(float direction) {
 
 void Enemy::checkCollisionWithMap(float dX, float dY) {
 	for (unsigned int i = 0; i < obj.size(); i++) {
-		if (getRect().intersects(obj[i].rect)) //проверяем пересечение игрока с объектом
-		{
+		if (getRect().intersects(obj[i].rect)) {
 			if (dY != 0) {
 				boost.y = 0;
 				rect.top = obj[i].rect.top - obj[i].rect.height;

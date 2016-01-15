@@ -1,51 +1,56 @@
 #include "world.h"
 #include "entity.h"
-#include <vld.h>
 
 void World::InitObjects() {
 	lvl.LoadFromFile(to_string(numberLvl) + ".tmx");
 
-	playerObj = lvl.GetObject("player");
+	playerObj = lvl.GetObject(PLAYER_BAR);
 
-	player = make_unique<Player>(heroImage, "player", lvl, FloatRect(playerObj.rect.left, playerObj.rect.top, DEFAULT_UNIT_BOUNDS.x, DEFAULT_UNIT_BOUNDS.y));
-	playerWeapon = make_unique<Weapon>(weaponsImage, "playerWeapon", FloatRect(player->rect.left, player->rect.top, DEFAULT_WEAPON_BOUNDS.x, DEFAULT_WEAPON_BOUNDS.y));
+	player = make_unique<Player>(heroImage, PLAYER_BAR, lvl, FloatRect(playerObj.rect.left, playerObj.rect.top, DEFAULT_UNIT_BOUNDS.x, DEFAULT_UNIT_BOUNDS.y));
+	playerWeapon = make_unique<Weapon>(weaponsImage, PLAYER_WEAPON, FloatRect(player->rect.left, player->rect.top, DEFAULT_WEAPON_BOUNDS.x, DEFAULT_WEAPON_BOUNDS.y));
 	player->lifebar = make_unique<Lifebar>(bulletImage, Vector2f(float(PLAYER_LIFEBAR_HP_RECT.width), float(PLAYER_LIFEBAR_HP_RECT.height)), player->name);
-	slowMotionBar = make_unique<Lifebar>(enemyLifeBar, Vector2f(0.f, 0.f), "motionBar");
+	slowMotionBar = make_unique<Lifebar>(enemyLifeBar, Vector2f(0.f, 0.f), MOTION_BAR);
 	view = make_unique<View>();
 
 
-	easyEnemyObj = lvl.GetObjects("easyEnemy");
+	easyEnemyObj = lvl.GetObjects(EASY_ENEMY);
 	for (unsigned int i = 0; i < easyEnemyObj.size(); i++) { 
-		entities.push_back(new Enemy(easyEnemyImage, "easyEnemy", lvl, FloatRect(easyEnemyObj[i].rect.left, easyEnemyObj[i].rect.top, DEFAULT_UNIT_BOUNDS.x, DEFAULT_UNIT_BOUNDS.y)));
+		entities.push_back(new Enemy(easyEnemyImage, EASY_ENEMY, lvl, FloatRect(easyEnemyObj[i].rect.left, easyEnemyObj[i].rect.top, DEFAULT_UNIT_BOUNDS.x, DEFAULT_UNIT_BOUNDS.y)));
 	}
+	easyEnemyObj.clear();
 
-	mediumEnemyObj = lvl.GetObjects("mediumEnemy");
+	mediumEnemyObj = lvl.GetObjects(MEDIUM_ENEMY);
 	for (unsigned int i = 0; i < mediumEnemyObj.size(); i++) { 
-		entities.push_back(new Enemy(mediumEnemyImage, "mediumEnemy", lvl, FloatRect(mediumEnemyObj[i].rect.left, mediumEnemyObj[i].rect.top, DEFAULT_UNIT_BOUNDS.x, DEFAULT_UNIT_BOUNDS.y)));
+		entities.push_back(new Enemy(mediumEnemyImage, MEDIUM_ENEMY, lvl, FloatRect(mediumEnemyObj[i].rect.left, mediumEnemyObj[i].rect.top, DEFAULT_UNIT_BOUNDS.x, DEFAULT_UNIT_BOUNDS.y)));
 	}
+	mediumEnemyObj.clear();
 
-	hardEnemyObj = lvl.GetObjects("hardEnemy"); 
+	hardEnemyObj = lvl.GetObjects(HARD_ENEMY); 
 
 	for (unsigned int i = 0; i < hardEnemyObj.size(); i++) {
-		entities.push_back(new Enemy(hardEnemyImage, "hardEnemy", lvl, FloatRect(hardEnemyObj[i].rect.left, hardEnemyObj[i].rect.top, DEFAULT_UNIT_BOUNDS.x * GET_HALF, DEFAULT_UNIT_BOUNDS.y)));
+		entities.push_back(new Enemy(hardEnemyImage, HARD_ENEMY, lvl, FloatRect(hardEnemyObj[i].rect.left, hardEnemyObj[i].rect.top, DEFAULT_UNIT_BOUNDS.x * GET_HALF, DEFAULT_UNIT_BOUNDS.y)));
 	}
+	hardEnemyObj.clear();
 
 	countEnemies = entities.size();
 
-	healthPointsObj = lvl.GetObjects("healthPoint");
+	healthPointsObj = lvl.GetObjects(HEALTH_BONUS);
 	for (unsigned int i = 0; i < healthPointsObj.size(); i++) {
-		entities.push_back(new Bonuses(bulletImage, "healthPoint", FloatRect(healthPointsObj[i].rect.left, healthPointsObj[i].rect.top, DEFAULT_BONUSES_BOUNDS.x, DEFAULT_BONUSES_BOUNDS.y * GET_HALF)));
+		entities.push_back(new Bonuses(bulletImage, HEALTH_BONUS, FloatRect(healthPointsObj[i].rect.left, healthPointsObj[i].rect.top, DEFAULT_BONUSES_BOUNDS.x, DEFAULT_BONUSES_BOUNDS.y * GET_HALF)));
 	}
+	healthPointsObj.clear();
 
-	armorPointsObj = lvl.GetObjects("armorPoint");
+	armorPointsObj = lvl.GetObjects(ARMOR_BONUS);
 	for (unsigned int i = 0; i < armorPointsObj.size(); i++) {
-		entities.push_back(new Bonuses(bulletImage, "armorPoint", FloatRect(armorPointsObj[i].rect.left, armorPointsObj[i].rect.top, DEFAULT_BONUSES_BOUNDS.x, DEFAULT_BONUSES_BOUNDS.y * GET_HALF)));
+		entities.push_back(new Bonuses(bulletImage, ARMOR_BONUS, FloatRect(armorPointsObj[i].rect.left, armorPointsObj[i].rect.top, DEFAULT_BONUSES_BOUNDS.x, DEFAULT_BONUSES_BOUNDS.y * GET_HALF)));
 	}
+	armorPointsObj.clear();
 
-	motionBonusObj = lvl.GetObjects("motionBonus");
+	motionBonusObj = lvl.GetObjects(MOTION_BONUS);
 	for (unsigned int i = 0; i < motionBonusObj.size(); i++) {
-		entities.push_back(new Bonuses(motionBonusImage, "motionBonus", FloatRect(motionBonusObj[i].rect.left, motionBonusObj[i].rect.top, DEFAULT_BONUSES_BOUNDS.x, DEFAULT_BONUSES_BOUNDS.y * GET_HALF)));
+		entities.push_back(new Bonuses(motionBonusImage, MOTION_BONUS, FloatRect(motionBonusObj[i].rect.left, motionBonusObj[i].rect.top, DEFAULT_BONUSES_BOUNDS.x, DEFAULT_BONUSES_BOUNDS.y * GET_HALF)));
 	}
+	motionBonusObj.clear();
 
 	flagObj = lvl.GetObject("flag");
 
@@ -56,29 +61,26 @@ void World::InitObjects() {
 	slowMotion = false;
 }
 
-
 void World::InitImages() {
-	heroImage.loadFromFile("images/anim_player.png");
-	easyEnemyImage.loadFromFile("images/easy_enemy.png");
-	mediumEnemyImage.loadFromFile("images/medium_enemy.png");
-	bulletImage.loadFromFile("images/weapons.png");
-	weaponsImage.loadFromFile("images/shotgun.png");
-	hardEnemyImage.loadFromFile("images/fireman.png");
-	enemyLifeBar.loadFromFile("images/enemyLife.png");
-	motionBonusImage.loadFromFile("images/motionBonus.png");
+	heroImage.loadFromFile(PLAYER_IMAGE_PATH);
+	easyEnemyImage.loadFromFile(EASY_ENEMY_IMAGE_PATH);
+	mediumEnemyImage.loadFromFile(MEDIUM_ENEMY_IMAGE_PATH);
+	bulletImage.loadFromFile(TEXTURE_COLLECTION_PATH);
+	weaponsImage.loadFromFile(PLAYER_WEAPON_IMAGE_PATH);
+	hardEnemyImage.loadFromFile(HARD_ENEMY_IMAGE_PATH);
+	enemyLifeBar.loadFromFile(ENEMY_LIFEBAR_IMAGE_PATH);
+	motionBonusImage.loadFromFile(MOTION_BONUS_IMAGE_PATH);
 }
-
 
 void World::InitTextures() {
-	bgTexture.loadFromFile("images/fon-nebo.png");
-	objectsTexture.loadFromFile("images/weapons.png");
+	bgTexture.loadFromFile(BACKGROUND_TEXTURE_PATH);
+	objectsTexture.loadFromFile(TEXTURE_COLLECTION_PATH);
 }
-
 
 void World::InitSprites() {
 	bgSprite.setTexture(bgTexture);
 	bgSprite.setOrigin(bgSprite.getGlobalBounds().width / GET_HALF, bgSprite.getGlobalBounds().height / GET_HALF);
-	bgSprite.setScale(0.47, 0.47);
+	bgSprite.setScale(BG_SPRITE_SCALE, BG_SPRITE_SCALE);
 
 	flagSprite.setTexture(objectsTexture);
 	flagSprite.setTextureRect(FLAG_SPRITE_RECT);
@@ -91,17 +93,16 @@ void World::InitSprites() {
 	sightSprite.setScale(SIGHT_SCALE, SIGHT_SCALE);
 }
 
-
 void World::InitSounds() {
-	shootBuffer.loadFromFile("sounds/shoot.ogg");
+	shootBuffer.loadFromFile(SHOOT_SOUND_PATH);
 	shoot.setBuffer(shootBuffer);
 	shoot.setVolume(SOUND_VOLUME);
 
-	kickHitBuffer.loadFromFile("sounds/kickHit.ogg");
+	kickHitBuffer.loadFromFile(DAMAGED_SOUND_PATH);
 	kickHit.setBuffer(kickHitBuffer);
 	kickHit.setVolume(SOUND_VOLUME);
 
-	missSoundBuffer.loadFromFile("sounds/miss1.ogg");
+	missSoundBuffer.loadFromFile(MISS_SOUND_PATH);
 	missSound.setBuffer(missSoundBuffer);
 
 	bgMusic.openFromFile("sounds/" + to_string(numberLvl) + ".ogg");
@@ -109,6 +110,6 @@ void World::InitSounds() {
 	bgMusic.setVolume(SOUND_VOLUME);
 	bgMusic.setLoop(true);
 
-	motionBuffer.loadFromFile("sounds/motionSound.ogg");
+	motionBuffer.loadFromFile(MOTION_SOUND_PATH);
 	motionSound.setBuffer(motionBuffer);
 }

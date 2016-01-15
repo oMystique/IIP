@@ -1,7 +1,7 @@
 #include "interface_text.h"
 
 InterfaceText::InterfaceText() {
-	font.loadFromFile("font.ttf");
+	font.loadFromFile(INTERFACE_FONT_PATH);
 	countEnemiesText.setFont(font);
 	countEnemiesText.setColor(Color::Blue);
 	missionTargetText.setFont(font);
@@ -12,20 +12,20 @@ InterfaceText::InterfaceText() {
 void InterfaceText::UpdateText(RenderWindow &window, int const countEnemies, bool const missionTarget) {
 	Vector2f center = window.getView().getCenter();
 	if ((countEnemiesText.getColor() == (Color::Red) && (missionTargetText.getColor() == (Color::Red)))) {
-		countEnemiesText.setString("TAKE FLAG AT THE END.");
+		countEnemiesText.setString(TAKE_FLAG_AT_THE_END);
 		missionTargetText.setString("");
 	}
 	else {
-		countEnemiesText.setString("Count enemies " + to_string(countEnemies));
+		countEnemiesText.setString(COUNT_ENEMIES + to_string(countEnemies));
 		if (!countEnemies) {
 			countEnemiesText.setColor(Color::Red);
 		}
 		if (missionTarget) {
-			missionTargetText.setString("Flag captured");
+			missionTargetText.setString(FLAG_CAPTURED);
 			missionTargetText.setColor(Color::Red);
 		}
 		else {
-			missionTargetText.setString("Flag is not captured");
+			missionTargetText.setString(FLAG_NOT_CAPTURED);
 		}
 	}
 	missionTargetText.setPosition(center.x - MISSION_TEXT_CORRECTION.x, center.y - MISSION_TEXT_CORRECTION.y);

@@ -4,9 +4,8 @@
 Entity::Entity(Image &image, String Name, FloatRect Rect) {
 	rect = Rect;
 	name = Name;
-	moveTimer = 0;
 	speed = 0;
-	health = 100.f;
+	health = BONUS_HEALTH;
 	boost = { 0.f, 0.f };
 	texture.loadFromImage(image);
 	life = true;
@@ -16,6 +15,10 @@ Entity::Entity(Image &image, String Name, FloatRect Rect) {
 	sprite.setTexture(texture);
 	sprite.setOrigin(rect.width / GET_HALF, rect.height / GET_HALF);
 	sprite.setScale(ENTITY_BASE_SCALE, ENTITY_BASE_SCALE);
+	currentFrame = 0;
+	countFrames = 0;
+	dmgFrame = 0;
+	offset = { 0.f, 0.f };
 }
 
 Entity::~Entity() {};

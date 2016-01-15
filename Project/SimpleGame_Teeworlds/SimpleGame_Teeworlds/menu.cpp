@@ -3,7 +3,7 @@
 
 Menu::Menu(Image &image, Vector2f bounds): Interface(image, bounds) {
 	sprite.setTextureRect(IntRect(0, 0, int(bounds.x), int(bounds.y)));
-	menuMusic.openFromFile("sounds/menuMusic(avicii).ogg");
+	menuMusic.openFromFile(MENU_MUSIC_PATH);
 	menuMusic.play();
 	menuMusic.setVolume(SOUND_VOLUME);
 	menuMusic.setLoop(true);
@@ -31,6 +31,9 @@ void Menu::PreviewAnimation(float time) {
 	else if (numberLevel == 2) {
 		secondLvlPreviewTexture.loadFromFile("lvlPreview/" + to_string(numberLevel) + "lvl/lvl_" + to_string(currentImage) + ".png");
 	}
+	else if (numberLevel == 3) {
+		thirdLvlPreviewTexture.loadFromFile("lvlPreview/" + to_string(numberLevel) + "lvl/lvl_" + to_string(currentImage) + ".png");
+	}
 }
 
 void Menu::GetChooseLevel(RenderWindow &window) {
@@ -49,6 +52,10 @@ void Menu::GetChooseLevel(RenderWindow &window) {
 		numberLevel = 2;
 		PreviewAnimation(time);
 	}
+	else if (thirdLvlPreviewSprite.getGlobalBounds().contains(float(Mouse::getPosition(window).x), float(Mouse::getPosition(window).y))) {
+		numberLevel = 3;
+		PreviewAnimation(time);
+	}
 	if (Mouse::isButtonPressed(Mouse::Left)) {
 		ChooseLevel(window);
 	}
@@ -60,6 +67,7 @@ void Menu::DrawLvlPreview(RenderWindow &window) {
 	window.draw(chooseLevelSprite);
 	window.draw(firstLvlPreviewSprite);
 	window.draw(secondLvlPreviewSprite);
+	window.draw(thirdLvlPreviewSprite);
 }
 
 void Menu::Choose(RenderWindow &window) {
@@ -120,7 +128,7 @@ void MenuEvents(RenderWindow &window, bool &isMenu) {
 
 int Menu::DrawMenu(RenderWindow &window) {
 	Font font;
-	font.loadFromFile("font.ttf");
+	font.loadFromFile(INTERFACE_FONT_PATH);
 	newGame.setFont(font);
 	newGame.setString("NEW GAME");
 	newGame.setPosition(30, 30);
@@ -142,10 +150,12 @@ int Menu::DrawMenu(RenderWindow &window) {
 	secondLvlPreviewTexture.loadFromFile("lvlPreview/2lvl/lvl_0.png");
 	secondLvlPreviewSprite.setTexture(secondLvlPreviewTexture);
 	secondLvlPreviewSprite.setPosition(800, 253);
+	thirdLvlPreviewTexture.loadFromFile("lvlPreview/3lvl/lvl_0.png");
+	thirdLvlPreviewSprite.setTexture(thirdLvlPreviewTexture);
+	thirdLvlPreviewSprite.setPosition(800, 434);
 	chooseLevelTexture.loadFromFile("images/plashPreview.png");
 	chooseLevelSprite.setTexture(chooseLevelTexture);
 	chooseLevelSprite.setPosition(window.getSize().x / GET_HALF, 30);
-	
 	currentFrame = 0;
 	currentImage = 0;
 	isPreview = false;

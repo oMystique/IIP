@@ -5,20 +5,10 @@ Player::Player(Image &image, String name, Level lvl, FloatRect rect) : Entity(im
 	sprite.setPosition(rect.left, rect.top);
 	action = down;
 	obj = lvl.GetAllObjects();
-	currentFrame = 0.f;
 	health = COUNT_PLAYER_HEALTH;
 	armor = COUNT_PLAYER_HEALTH;
-	offset = { 0.f, 0.f };
-	missionComplete = false; //TODO
-	flag = false; //TODO
-	parachuteOpen = false; //TODO
-	parachuteTexture.loadFromFile("images/parachute.png");
-	parachuteSprite.setTexture(parachuteTexture); //TODO!!!
-	parachuteSprite.setTextureRect(IntRect(0, 0, 300, 372)); //^
-	parachuteSprite.setOrigin(300 / 2, 372); //^
-	parachuteSprite.setScale(0.5, 0.5); //^
+	missionComplete = false; 
+	flag = false; 
 
-
-	parachuteOpenBuffer.loadFromFile("sounds/openParachute.ogg");
-	parachuteOpenSound.setBuffer(parachuteOpenBuffer);
+	parachute = make_unique<Parachute>();
 }

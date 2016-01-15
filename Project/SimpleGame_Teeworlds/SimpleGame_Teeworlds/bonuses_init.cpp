@@ -1,17 +1,15 @@
 #include "bonuses.h"
 
 Bonuses::Bonuses(Image &image, String name, FloatRect rect) :Entity(image, name, rect) {
-	if (name == "healthPoint") {
+	if (name == HEALTH_BONUS) {
 		sprite.setTextureRect(BONUS_HP_RECT);
 	}
-	else if (name == "armorPoint") {
+	else if (name == ARMOR_BONUS) {
 		sprite.setTextureRect(BONUS_ARM_RECT);
 	}
-	else if (name == "motionBonus") {
-		sprite.scale(0.4, 0.4);
+	else if (name == MOTION_BONUS) {
+		sprite.scale(ENTITY_BASE_SCALE, ENTITY_BASE_SCALE);
 	}
-	offset = { 0.f, 0.f };
-	currentFrame = 0;
 	boost.y = 0;
 	startYPos = rect.top;
 }

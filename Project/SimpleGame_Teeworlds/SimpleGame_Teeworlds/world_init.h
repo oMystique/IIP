@@ -62,7 +62,7 @@ struct WorldInit {
 	vector<Object> armorPointsObj;
 	vector<Object> motionBonusObj;
 
-	list<Entity*>  entities;
+	vector<Entity*>  entities;
 
 	unique_ptr<Player> player = nullptr;
 	unique_ptr<View> view = nullptr;

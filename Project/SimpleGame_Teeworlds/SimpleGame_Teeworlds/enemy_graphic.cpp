@@ -3,11 +3,11 @@
 
 void Enemy::Animation(float time) {
 	if (isFight) {
-		offset.y = sprite.getTextureRect().height;
+		offset.y = float(sprite.getTextureRect().height);
 	}
 	else {
 		offset.y = 0;
-		if (name != "mediumEnemy") {
+		if (name != MEDIUM_ENEMY) {
 			if (boost.x < 0) {
 				if (sprite.getScale().x < 0) {
 					sprite.setScale(-sprite.getScale().x, sprite.getScale().y);
@@ -28,19 +28,19 @@ void Enemy::Animation(float time) {
 	if (offset.x > sprite.getTextureRect().width + 1) {
 		offset.x = 0;
 	}
-	sprite.setTextureRect(IntRect(offset.x, offset.y, sprite.getTextureRect().width, sprite.getTextureRect().height));
+	sprite.setTextureRect(IntRect(int(offset.x), int(offset.y), sprite.getTextureRect().width, sprite.getTextureRect().height));
 }
 
 
 
 void Enemy::DieAnimation(float time) {
 	currentFrame += ANIMATION_TIME_BOOST*time;
-	if (currentFrame > 0.6) {
-		currentFrame -= 0.6;
+	if (currentFrame > 0.6f) {
+		currentFrame -= 0.6f;
 		offset.x += sprite.getTextureRect().width;
 	}
-	if (offset.x > 1684) {
+	if (offset.x > 1684.f) {
 		life = false;
 	}
-	sprite.setTextureRect(IntRect(offset.x, offset.y, sprite.getTextureRect().width, sprite.getTextureRect().height));
+	sprite.setTextureRect(IntRect(int(offset.x), int(offset.y), sprite.getTextureRect().width, sprite.getTextureRect().height));
 }

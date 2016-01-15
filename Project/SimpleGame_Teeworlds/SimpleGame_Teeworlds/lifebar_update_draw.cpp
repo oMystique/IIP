@@ -28,17 +28,17 @@ void Lifebar::UpdatePlayerLifeBar(float const healthCount, float const armorCoun
 
 
 void Lifebar::SetParameterForMotion() {
-	healthSprite.setTextureRect(IntRect(4, 16, 114, 8)); //TODO: REF
+	healthSprite.setTextureRect(IntRect(4, 16, 114, 8)); 
 }
 
-bool Lifebar::BurnMotionParameter(float time) {
+bool Lifebar::IsBurnMotionParameter(float time) {
 	if (healthSprite.getTextureRect().width > 0) {
 		currentFrame += ANIMATION_TIME_BOOST*time;
-		healthSprite.setScale(1.05f, 1.05f);
-		armorSprite.setScale(1.05f, 1.05f);
+		healthSprite.setScale(BURN_MOTION_SPRITE_SCALE, BURN_MOTION_SPRITE_SCALE);
+		armorSprite.setScale(BURN_MOTION_SPRITE_SCALE, BURN_MOTION_SPRITE_SCALE);
 		if (currentFrame > ANIMATION_FRAME) {
 			currentFrame -= ANIMATION_FRAME;
-			healthSprite.setTextureRect(IntRect(healthSprite.getTextureRect().left, healthSprite.getTextureRect().top, healthSprite.getTextureRect().width * 0.95, healthSprite.getTextureRect().height));
+			healthSprite.setTextureRect(IntRect(healthSprite.getTextureRect().left, healthSprite.getTextureRect().top, int(healthSprite.getTextureRect().width * 0.95f), healthSprite.getTextureRect().height));
 			healthSprite.setScale(1, 1);
 			armorSprite.setScale(1, 1);
 		}
@@ -53,26 +53,26 @@ bool Lifebar::BurnMotionParameter(float time) {
 void Lifebar::UpdateSlowMotionBar(RenderWindow &window) {
 	Vector2f center = window.getView().getCenter();
 	healthSprite.setTextureRect(IntRect(healthSprite.getTextureRect().left, healthSprite.getTextureRect().top, healthSprite.getTextureRect().width, healthSprite.getTextureRect().height));
-	healthSprite.setPosition(center.x + 360, center.y + 170);
-	armorSprite.setPosition(center.x + 360, center.y + 170);
+	healthSprite.setPosition(center.x + 360.f, center.y + 190.f);
+	armorSprite.setPosition(center.x + 360.f, center.y + 190.f);
 }
 
 void Lifebar::UpdateEnemyLifeBar(float const healthCount, Vector2f const pos) {
-	healthSprite.setTextureRect(IntRect(healthSprite.getTextureRect().left, healthSprite.getTextureRect().top, healthCount + 14, healthSprite.getTextureRect().height));
-	healthSprite.setPosition(pos.x + 15, pos.y - 23);
-	armorSprite.setPosition(pos.x + 15, pos.y - 23);
+	healthSprite.setTextureRect(IntRect(healthSprite.getTextureRect().left, healthSprite.getTextureRect().top, int(healthCount + 14), healthSprite.getTextureRect().height));
+	healthSprite.setPosition(pos.x + 15.f, pos.y - 23.f);
+	armorSprite.setPosition(pos.x + 15.f, pos.y - 23.f);
 }
 
 
 void Lifebar::Update(float const healthCount, float const armorCount, RenderWindow &window, Vector2f pos) {
-	if (name == "player") {
+	if (name == PLAYER_BAR) {
 		UpdatePlayerLifeBar(healthCount, armorCount, window);
 	}
-	else if (name == "enemy") {
+	else if (name == ENEMY_BAR) {
 		UpdateEnemyLifeBar(healthCount, pos);
 		Draw(window);
 	}
-	else if (name == "motionBar") {
+	else if (name == MOTION_BAR) {
 		UpdateSlowMotionBar(window);
 		Draw(window);
 	}

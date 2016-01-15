@@ -4,13 +4,24 @@
 void Player::CheckCollisionWithMap(float dX, float dY) {
 	for (unsigned int i = 0; i < obj.size(); i++) {
 		if (getRect().intersects(obj[i].rect)) {
-			if (obj[i].name == "solid") {
-				if (dY > 0) { rect.top = obj[i].rect.top - rect.height;  boost.y = 0; onGround = true; }
-				if (dY < 0) { rect.top = obj[i].rect.top + obj[i].rect.height;   boost.y = 0; }
-				if (dX > 0) { rect.left = obj[i].rect.left - rect.width; }
-				if (dX < 0) { rect.left = obj[i].rect.left + obj[i].rect.width; }
+			if (obj[i].name == SOLID_COLLISION) {
+				if (dY > 0) {
+					rect.top = obj[i].rect.top - rect.height;
+					boost.y = 0;
+					onGround = true;
+				}
+				if (dY < 0) {
+					rect.top = obj[i].rect.top + obj[i].rect.height;
+					boost.y = 0;
+				}
+				if (dX > 0) { 
+					rect.left = obj[i].rect.left - rect.width; 
+				}
+				if (dX < 0) { 
+					rect.left = obj[i].rect.left + obj[i].rect.width;
+				}
 			}
-			else if ((obj[i].name == "finish") && (flag)) {
+			else if ((obj[i].name == FINISH) && (flag)) {
 				missionComplete = true;
 			}
 		}

@@ -6,14 +6,14 @@
 
 struct Entity {
 public:
+	Entity(Image &image, String Name, FloatRect Rect);
+
 	vector<Object> obj;
 	Vector2f boost;
 	FloatRect rect;
 	float speed;
-	float moveTimer;
 	float vec;
 	float health;
-
 	enum {
 		moveLeft,
 		moveRight,
@@ -30,11 +30,11 @@ public:
 	Texture texture;
 	Sprite sprite;
 	String name;
-
-	Entity(Image &image, String Name, FloatRect Rect);
-
-	unique_ptr<Lifebar> lifebar;
-
+	unique_ptr<Lifebar> lifebar = nullptr;
+	float currentFrame;
+	float countFrames;
+	float dmgFrame;
+	Vector2f offset;
 
 	FloatRect getRect();
 	FloatRect getEnemyView();

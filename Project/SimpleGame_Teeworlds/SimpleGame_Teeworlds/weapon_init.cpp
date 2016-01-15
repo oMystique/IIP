@@ -9,7 +9,7 @@ Weapon::Weapon(Image &image, String name, FloatRect rect) {
 	currentFrame = 0;
 	shootPlayerFlag = false;
 
-	if (name == "playerWeapon") {
+	if (name == PLAYER_WEAPON) {
 		playerWeaponSprite.setTexture(weaponsTexture);
 		playerWeaponSprite.setTextureRect(IntRect(0, 68, 265, 68));
 		playerWeaponSprite.setPosition(rect.left, rect.top);

@@ -3,17 +3,18 @@
 
 struct Weapon {
 	Weapon(Image &image, String name, FloatRect rect);
-	Image weaponsImage;
+
 	float shootEnemyTimer;
 	bool shootEnemyFlag;
-	FloatRect rect;
-	float currentFrame;
 	bool shootPlayerFlag;
-
-	Texture weaponsTexture;
 	Sprite playerWeaponSprite;
-	String name;
 
 	void Update(float time, float rotation, Vector2f temp, String name);
+private:
+	Texture weaponsTexture;
+	String name;
+	float currentFrame;
+	FloatRect rect;
+
 	void Animation(float time);
 };

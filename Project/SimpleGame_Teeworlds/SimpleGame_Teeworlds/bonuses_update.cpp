@@ -9,24 +9,24 @@ void DontMoveWhileDownload(float &boostY) {
 
 void Bonuses::DieAnimation(float time) {
 	currentFrame += ANIMATION_TIME_BOOST*time;
-	if (currentFrame > 0.6) {
-		currentFrame -= 0.6;
+	if (currentFrame > 0.6f) {
+		currentFrame -= 0.6f;
 		offset.x += sprite.getTextureRect().width;
 	}
 	if (offset.x > 600) {
 		life = false;
 	}
-	sprite.setTextureRect(IntRect(offset.x, offset.y, sprite.getTextureRect().width, sprite.getTextureRect().height));
+	sprite.setTextureRect(IntRect(int(offset.x), int(offset.y), sprite.getTextureRect().width, sprite.getTextureRect().height));
 }
 
 void Bonuses::InitDie() {
-	texture.loadFromFile("images/die.png");
+	texture.loadFromFile(DIE_SMALL_TEXTURE_PATH);
 	sprite.setTextureRect(IntRect(111, 0, 111, 117));
 	sprite.setOrigin(85 / 2, 117 / 2);
 	sprite.setRotation(0);
-	sprite.setScale(0.4, 0.4);
+	sprite.setScale(ENTITY_BASE_SCALE, ENTITY_BASE_SCALE);
 	offset = { 111.f, 0.f };
-	name = "die";
+	name = DIE;
 	onGround = false;
 	currentFrame = 0;
 	speed = 0;
@@ -45,7 +45,7 @@ void Bonuses::Move() {
 
 void Bonuses::Update(float time) {
 	rect.top += boost.y*time;
-	if (name == "die") {
+	if (name == DIE) {
 		DieAnimation(time);
 	}
 	else if (health <= 0) {

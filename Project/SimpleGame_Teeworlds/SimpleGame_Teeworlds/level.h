@@ -9,7 +9,7 @@
 #include "TinyXML/tinyxml.h"
 #include "resource.h"
 
-
+/*Код заимствовать с сайта kychka-pc.ru*/
 
 struct Object {
 	int GetPropertyInt(std::string name);//номер свойства объекта в нашем списке
@@ -311,6 +311,7 @@ inline Object Level::GetObject(std::string name) {
 			return objects[i];
 		}
 	}
+	return objects[1];
 }
 
 inline std::vector<Object> Level::GetObjects(std::string name)
@@ -341,7 +342,7 @@ inline void Level::Draw(sf::RenderWindow &window)
 	// рисуем все тайлы (объекты не рисуем!)
 	for (unsigned int layer = 0; layer < layers.size(); layer++)
 		for (unsigned int tile = 0; tile < layers[layer].tiles.size(); tile++)
-			if (layers[layer].tiles[tile].getGlobalBounds().intersects(FloatRect(window.getView().getCenter().x - DEFAULT_WINDOW_SIZE.x / GET_HALF, window.getView().getCenter().y - DEFAULT_WINDOW_SIZE.y / GET_HALF, window.getSize().x, window.getSize().y))) {
+			if (IntRect(layers[layer].tiles[tile].getGlobalBounds()).intersects(IntRect(int(window.getView().getCenter().x - DEFAULT_VIEW_SIZE.x / GET_HALF), int(window.getView().getCenter().y - DEFAULT_VIEW_SIZE.y / GET_HALF), int(DEFAULT_VIEW_SIZE.x), int(DEFAULT_VIEW_SIZE.y)))) {
 				window.draw(layers[layer].tiles[tile]);
 			}
 }

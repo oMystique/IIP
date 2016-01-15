@@ -20,6 +20,8 @@ private:
 	Sprite secondLvlPreviewSprite;
 	Texture chooseLevelTexture;
 	Sprite chooseLevelSprite;
+	Texture thirdLvlPreviewTexture;
+	Sprite thirdLvlPreviewSprite;
 	Clock clock;
 	float currentFrame;
 	int currentImage;

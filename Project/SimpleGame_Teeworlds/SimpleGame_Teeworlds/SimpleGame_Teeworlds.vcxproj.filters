@@ -76,8 +76,14 @@
     <Filter Include="Source Files\interface\menu">
       <UniqueIdentifier>{cc8b7b56-6f5e-41ad-ba6b-c9f5e6d5d1e6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\mission">
-      <UniqueIdentifier>{a91e773f-f6fb-4a03-b083-62d476e051c0}</UniqueIdentifier>
+    <Filter Include="Source Files\world\world_events">
+      <UniqueIdentifier>{6eeee93c-5771-4b42-ae47-d8da1e576662}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\otherObjects">
+      <UniqueIdentifier>{45d20296-3766-41be-a75f-ee97ab228a41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\otherObjects">
+      <UniqueIdentifier>{ac092a85-9dd5-43af-8891-267945435233}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -103,9 +109,6 @@
       <Filter>Source Files\world</Filter>
     </ClCompile>
     <ClCompile Include="world_Init.cpp">
-      <Filter>Source Files\world</Filter>
-    </ClCompile>
-    <ClCompile Include="world_events.cpp">
       <Filter>Source Files\world</Filter>
     </ClCompile>
     <ClCompile Include="world_draw.cpp">
@@ -189,6 +192,15 @@
     <ClCompile Include="enemy_action.cpp">
       <Filter>Source Files\enemy</Filter>
     </ClCompile>
+    <ClCompile Include="world_events.cpp">
+      <Filter>Source Files\world\world_events</Filter>
+    </ClCompile>
+    <ClCompile Include="world_calculation.cpp">
+      <Filter>Source Files\world\world_events</Filter>
+    </ClCompile>
+    <ClCompile Include="parachute.cpp">
+      <Filter>Source Files\otherObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -244,6 +256,12 @@
     </ClInclude>
     <ClInclude Include="interface_text.h">
       <Filter>Header Files\interface</Filter>
+    </ClInclude>
+    <ClInclude Include="string_consts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="parachute.h">
+      <Filter>Header Files\otherObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

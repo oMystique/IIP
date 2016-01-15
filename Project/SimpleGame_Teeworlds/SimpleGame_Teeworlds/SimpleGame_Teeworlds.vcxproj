@@ -102,6 +102,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="interface.cpp" />
     <ClCompile Include="menu.cpp" />
+    <ClCompile Include="parachute.cpp" />
     <ClCompile Include="player_action.cpp" />
     <ClCompile Include="player_init.cpp" />
     <ClCompile Include="player_graphic.cpp" />
@@ -115,6 +116,7 @@
     <ClCompile Include="weapon_init.cpp" />
     <ClCompile Include="weapon_update.cpp" />
     <ClCompile Include="world.cpp" />
+    <ClCompile Include="world_calculation.cpp" />
     <ClCompile Include="world_draw.cpp" />
     <ClCompile Include="world_events.cpp" />
     <ClCompile Include="world_Init.cpp" />
@@ -131,9 +133,11 @@
     <ClInclude Include="interface.h" />
     <ClInclude Include="lifebar.h" />
     <ClInclude Include="menu.h" />
+    <ClInclude Include="parachute.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="player_init.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="string_consts.h" />
     <ClInclude Include="TinyXML\tinystr.h" />
     <ClInclude Include="TinyXML\tinyxml.h" />
     <ClInclude Include="weapon.h" />

@@ -23,9 +23,9 @@ void Application::ProcessEvents() {
 		}
 		if (event.type == sf::Event::KeyReleased) {
 			if ((event.key.code == Keyboard::Space) && (appState != gameMenu)) {
-				world->ShootEvent(mousePos);
+				world->PlayerShootEvent(mousePos);
 			}
-			if ((event.key.code == Keyboard::R)) {
+			if (event.key.code == Keyboard::R) {
 				appState = startGame;
 			}
 			if (event.key.code == Keyboard::Pause) {

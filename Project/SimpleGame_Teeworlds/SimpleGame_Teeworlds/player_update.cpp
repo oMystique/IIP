@@ -1,23 +1,25 @@
 #include "player.h"
 
+
 void Player::InitDie() {
-	texture.loadFromFile("images/unitDie.png");
+	texture.loadFromFile(DIE_BIG_TEXTURE_PATH);
 	sprite.setTextureRect(IntRect(0, 0, 111, 118));
 	sprite.setOrigin(111 / 2, 90);
 	sprite.setRotation(0);
 	offset = { 0.f, 0.f };
-	sprite.setScale(3, 3);
-	name = "die";
+	sprite.setScale(GET_HALF, GET_HALF);
+	name = DIE;
 	currentFrame = 0;
 }
 
+
 void Player::Update(float time) {
-	if (name == "die") {
+	if (name == DIE && onGround) {
 		action = stay;
 		DieAnimation(time);
 	}
 	else {
-		if (health <= 0) {
+		if (health < BONUS_HEALTH) {
 			InitDie();
 		}
 		else {
@@ -25,14 +27,7 @@ void Player::Update(float time) {
 			Control(time);
 		}
 	}
-	switch (action)
-	{
-	case moveRight: boost.x = speed; break;
-	case moveLeft: boost.x = -speed; break;
-	case jump: break;
-	case stay: break;
-	case down: boost.y = 0; break;
-	}
+	SetPlayerAction();
 	rect.left += boost.x*time;
 	CheckCollisionWithMap(boost.x, 0);
 	rect.top += boost.y*time;
@@ -42,13 +37,5 @@ void Player::Update(float time) {
 		speed = 0;
 	}
 	boost.y = boost.y + PLAYER_BOOST_CORRECTION*time;
-	if (parachuteOpen) { //TODO
-		parachuteSprite.setPosition(sprite.getPosition().x + 10, sprite.getPosition().y); //^
-		if (!parachuteOpenSound.getStatus()) {
-			parachuteOpenSound.play();
-		}
-	} //^
-	else {
-		parachuteOpenSound.stop();
-	}
+	parachute->Update(sprite.getPosition());
 }

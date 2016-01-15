@@ -3,14 +3,16 @@
 #include "world.h"
 
 struct Application {
-	RenderWindow *window;
+	Application();
+	~Application();
+private:
+	RenderWindow *window = nullptr;
+	World *world = nullptr;
 	View view;
 	Clock clock;
 	Vector2f mousePos;
 	float gameSpeed;
-	World *world = nullptr;
 	int numberLevel;
-
 	enum {
 		startGame,
 		gaming,
@@ -18,9 +20,7 @@ struct Application {
 		closeGame
 	} appState;
 
-	Application();
-private:
-	unique_ptr<Menu> menu;
+	unique_ptr<Menu> menu = nullptr;
 	void InitMenu();
 	void Run();
 	void ProcessEvents();
